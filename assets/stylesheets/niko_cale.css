@@ -1,0 +1,14 @@
+table	{
+	border-collapse: collapse;	border-spacing: 0;
+	margin-bottom: 30px;
+}
+
+th	{
+	padding: 5px 10px;
+	color: #1D5C79;
+}
+td	{
+	padding: 5px 10px;
+	color: #1D5C79;
+}
+

@@ -1,0 +1,18 @@
+= Niko-cale plugin for Redmine
+
+This is a Redmine plugin that makes member's feeling visible.
+If you wont to know more about Niko-cale(Niko-niko Calender), see the following page.
+http://www.geocities.jp/nikonikocalendar/index_en.html
+
+=== Plugin installation
+
+1. Copy the plugin directory into the vendor/plugins directory
+
+2. Migrate plugin:
+   rake db:migrate_plugins RAILS_ENV=production
+
+3. Start Redmine
+
+4. Add the Niko-cale module into your project.
+
+5. Setup the permissions for the Niko-cale module for your roles.

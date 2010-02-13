@@ -1,0 +1,78 @@
+<%
+# Niko-cale plugin for Redmine
+# Copyright (C) 2010  Yuki Kita
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%>
+
+
+<%= stylesheet_link_tag "niko_cale.css", :plugin => "redmine_niko_cale", :media => "screen" %>
+<% content_for :sidebar do %>
+  <% if @project.users.include?(User.current) %>
+    <h3><%= l(:label_niko_cale_how_do_you_feel_today) %></h3>
+    <% form_tag({:action=>:submit_feeling, :controller=>:niko_cale}, {:method=>:put}) do %>
+        <%= hidden_field_tag 'project_id', @project.id %>
+        <%= radio_button_tag "level", 2, false %><%= l(:label_niko_cale_good) %><br>
+        <%= radio_button_tag "level", 1, true  %><%= l(:label_niko_cale_ordinary) %><br>
+        <%= radio_button_tag "level", 0, false %><%= l(:label_niko_cale_bad) %><br><br>
+	<%= l(:label_niko_cale_comment) %><br>
+        <%= text_field_tag :comment, "", :size=>"24"  %><br>
+      <p><%= submit_tag l(:label_niko_cale_submit), :class => 'button-small', :name => nil %></p>
+    <% end %>
+  <% end %>
+
+  <% form_tag({}, {:method => :get}) do %>
+  <h3><%= l(:label_niko_cale_setting) %></h3>
+    <%= hidden_field_tag 'project_id', @project.id %>
+    <%= text_field_tag :start_date, @start_date, :size=>'10' %>
+    <br>
+    <%= calendar_for("start_date") %>
+    <%=l(:label_niko_cale_start_date)%>
+    <br>
+    <% if @project.descendants.active.any? %>
+      <%= hidden_field_tag 'with_subprojects', 0 %>
+      <br /><label><%= check_box_tag 'with_subprojects', 1, @with_subprojects %> <%=l(:label_niko_cale_show_subprojects_members)%></label>
+    <% end %>
+    <p><%= submit_tag l(:label_niko_cale_apply), :class => 'button-small', :name => nil %></p>
+  <% end %>
+<% end %>
+
+
+<h2><%= l(:label_niko_niko_calender) %></h2>
+
+<table border="1">
+ <tr>
+  <th bgcolor = "#CAE5F1"><p align="center"><i><b><%= l(:label_niko_cale_member) %></b></i></td>
+  <% @dates.each do |date| %>
+    <th bgcolor=<%= (date == Date.today) ? '"#87CEFA"' : '"#CAE5F1"' %>><p align="center"><i><b><%= format_date(date) %></b></i></td>
+  <% end %>
+ </tr>
+ <% @users.each do |user| %>
+  <tr> 
+    <td bgcolor="#F4FAFC"><p align="center"><i><b><%= link_to_user user %></b></i></td> 
+    <% @dates.each do |date| %>
+      <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
+      <% image = feeling ? image_tag((feeling.good? ? "good.jpg" : (feeling.bad? ? "bad.jpg" : "ordinary.jpg")),
+	 {:plugin=>:redmine_niko_cale, :title=>feeling.comment}) : image_tag("null.jpg", :plugin=>:redmine_niko_cale) %>
+      <td><p align="center"><i><b><%= image %></b></i></td>
+    <% end %>
+  </tr> 
+ <% end %>
+</table>
+
+
+
+
+
+

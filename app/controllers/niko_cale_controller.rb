@@ -1,0 +1,53 @@
+# Niko-cale plugin for Redmine
+# Copyright (C) 2010  Yuki Kita
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+class NikoCaleController < ApplicationController
+  unloadable
+
+  def index
+    find_project
+    begin
+      @start_date = params[:start_date].to_date
+    rescue ArgumentError, NoMethodError
+      @start_date = (Date.today - 13)
+    end
+    @dates = (@start_date..(@start_date + 13)).map
+    @with_subprojects = params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
+    projects = @with_subprojects ? @project.self_and_descendants : [@project]
+    @users = projects.inject([]) {|result, project| result + project.users}.uniq
+    @feelings_per_user = {}
+    @users.each do |user|
+      @feelings_per_user[user] = Feeling.find_by_user_and_date_range(user, @dates)
+    end
+  end
+  def submit_feeling
+    feeling = Feeling.for(User.current)
+    case params[:level].to_i
+    when 0
+      feeling.bad!(params[:comment])
+    when 1
+      feeling.ordinary!(params[:comment])
+    when 2
+      feeling.good!(params[:comment])
+    else
+      raise "must not happen"
+    end
+    redirect_to(:action=>:index, :project_id=>params[:project_id])
+  end
+  private
+  def find_project
+    @project = Project.find(params[:project_id])
+  end
+end

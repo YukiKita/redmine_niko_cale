@@ -1,0 +1,15 @@
+# English strings go here for Rails i18n
+en:
+  label_niko_cale: "Niko-cale"
+  label_niko_niko_calender: "Niko-niko Calender"
+  label_niko_cale_member: "Member"
+  label_niko_cale_start_date: "Start date"
+  label_niko_cale_setting: "Setting"
+  label_niko_cale_how_do_you_feel_today: "How do you feel today?"
+  label_niko_cale_apply: "Apply"
+  label_niko_cale_submit: "Submit"
+  label_niko_cale_good: "Good"
+  label_niko_cale_ordinary: "Ordinary"
+  label_niko_cale_bad: "Bad"
+  label_niko_cale_comment: "Comment(if any)"
+  label_niko_cale_show_subprojects_members: "Subproject's members"
