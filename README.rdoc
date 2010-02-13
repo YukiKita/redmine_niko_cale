@@ -16,3 +16,7 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
 === Note
 
 This plugin works only Redmine 0.9.0 or higher.
+
+=== License
+
+This plugin is licensed under GNU General Public License version 3.
