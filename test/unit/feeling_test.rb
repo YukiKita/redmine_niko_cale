@@ -118,5 +118,10 @@ class FeelingTest < ActiveSupport::TestCase
     assert mood.add(Feeling.new{|f| f.at=(Date.today); f.comment="aa"; f.level=1; f.user=User.find(1)})
     assert mood.add(Feeling.new{|f| f.at=(Date.today); f.comment="aa"; f.level=2; f.user=User.find(1)})
     assert mood.ordinary?
+    mood = Mood.new(:at => Date.today)
+    assert_nil mood.level
+    assert_equal mood.good?, false
+    assert_equal mood.ordinary?, false
+    assert_equal mood.bad?, false
   end
 end
