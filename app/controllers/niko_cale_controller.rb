@@ -48,7 +48,7 @@ class NikoCaleController < ApplicationController
         feelings = Feeling.find_by_user_and_date_range(user, @dates)
         @feelings_per_user[user] = feelings
         feelings.each do |feeling|
-          @moods[@dates.index(feeling.at)].add feeling
+          @moods[@dates.index(feeling.at)] << feeling
         end
       end
     end

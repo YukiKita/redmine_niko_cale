@@ -1,5 +1,5 @@
 class Mood < Feeling
-  def add feeling
+  def << feeling
     if feeling.at == self.at
       @feelings ||= []
       @feelings << feeling
