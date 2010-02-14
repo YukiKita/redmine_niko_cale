@@ -33,12 +33,12 @@
   <% end %>
 
   <% form_tag({}, {:method => :get}) do %>
-  <h3><%= l(:label_niko_cale_setting) %></h3>
+  <h3><%= l(:label_niko_cale_scope) %></h3>
     <%= hidden_field_tag 'project_id', @project.id %>
-    <%= text_field_tag :start_date, @start_date, :size=>'10' %>
+    <%= text_field_tag :date_scope, @date_scope, :size=>'10' %>
     <br>
-    <%= calendar_for("start_date") %>
-    <%=l(:label_niko_cale_start_date)%>
+    <%= calendar_for("date_scope") %>
+    <%=l(:label_niko_cale_date_scope)%>
     <br>
     <% if @project.descendants.active.any? %>
       <%= hidden_field_tag 'with_subprojects', 0 %>
