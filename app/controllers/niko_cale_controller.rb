@@ -27,6 +27,10 @@ class NikoCaleController < ApplicationController
     @with_subprojects = params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
     projects = @with_subprojects ? @project.self_and_descendants : [@project]
     @users = projects.inject([]) {|result, project| result + project.users}.uniq
+    if @users.include? User.current
+      @users.delete(User.current)
+      @users.unshift(User.current)
+    end
     @feelings_per_user = {}
     @users.each do |user|
       @feelings_per_user[user] = Feeling.find_by_user_and_date_range(user, @dates)
