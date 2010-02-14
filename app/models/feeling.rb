@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class Feeling < ActiveRecord::Base
-  feeling_names = ["bad", "ordinary", "good"]
+  FEELING_TYPES = ["bad", "ordinary", "good"]
   belongs_to :user
-  validates_inclusion_of :level, :in=>0...feeling_names.size
+  validates_inclusion_of :level, :in=>0...FEELING_TYPES.size
 
-  feeling_names.each do |f|
-    class_eval "def #{f}?;self.level == #{feeling_names.index(f)};end"
+  FEELING_TYPES.each do |f|
+    class_eval "def #{f}?;self.level == #{FEELING_TYPES.index(f)};end"
     class_eval "def #{f}(comment='')
-self.level = #{feeling_names.index(f)}
+self.level = #{FEELING_TYPES.index(f)}
 self.comment = comment
 self
 end
