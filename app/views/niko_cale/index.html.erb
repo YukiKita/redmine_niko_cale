@@ -60,12 +60,12 @@
   <tr>
    <th bgcolor = "#CAE5F1"><p align="center"></td>
    <% @dates.each do |date| %>
-     <th bgcolor=<%= (date == Date.today) ? '"#87CEFA"' : '"#CAE5F1"' %>><p align="center"><i><b><%= format_date(date) %></b></i></td>
+     <th bgcolor=<%= (date == Date.today) ? '"#87CEFA"' : '"#CAE5F1"' %>><p align="center"><b><%= format_date(date) %></b></td>
    <% end %>
   </tr>
   <tr>
   <% unless @moods.empty? %>
-    <td bgcolor="#C4CACC"><p align="center"><i><b><%= l(:label_niko_cale_mood) %></b></i></td> 
+    <td bgcolor="#C4CACC"><p align="center"><b><%= l(:label_niko_cale_mood) %></b></td> 
     <% @dates.each do |date| %>
       <% mood = @moods.find {|m| m.at == date} %>
       <% image = image_tag((mood.good? ? "good.jpg" : (mood.ordinary? ? "ordinary.jpg" : (mood.bad? ? "bad.jpg" : "null.jpg"))),
