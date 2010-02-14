@@ -76,7 +76,7 @@
   </tr>
   <% @users.each do |user| %>
   <tr> 
-    <td bgcolor="#F4FAFC"><p align="center"><i><b><%= link_to_user user %></b></i></td> 
+    <td bgcolor="#F4FAFC"><p align="center"><b><%= link_to_user user %></b></td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <% image = feeling ? image_tag((feeling.good? ? "good.jpg" : (feeling.bad? ? "bad.jpg" : "ordinary.jpg")),
