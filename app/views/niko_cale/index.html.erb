@@ -35,7 +35,8 @@
   <% form_tag({}, {:method => :get}) do %>
   <h3><%= l(:label_niko_cale_scope) %></h3>
     <%= hidden_field_tag 'project_id', @project.id %>
-    <%= text_field_tag :date_scope, @date_scope, :size=>'10' %>
+    <%= @dates.first %> -
+    <%= text_field_tag :date_scope, @dates.last, :size=>'10' %>
     <br>
     <%= calendar_for("date_scope") %>
     <%=l(:label_niko_cale_date_scope)%>

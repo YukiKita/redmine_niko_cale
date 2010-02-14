@@ -19,11 +19,11 @@ class NikoCaleController < ApplicationController
   def index
     find_project
     begin
-      @date_scope = params[:date_scope].to_date
+      date_scope = params[:date_scope].to_date
     rescue ArgumentError, NoMethodError
-      @date_scope = Date.today
+      date_scope = Date.today
     end
-    @dates = ((@date_scope - 13)..(@date_scope)).map
+    @dates = ((date_scope - 13)..(date_scope)).map
     @with_subprojects = params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
     projects = @with_subprojects ? @project.self_and_descendants : [@project]
     @users = projects.inject([]) {|result, project| result + project.users}.uniq
