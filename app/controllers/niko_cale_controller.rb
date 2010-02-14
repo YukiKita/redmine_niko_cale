@@ -23,10 +23,19 @@ class NikoCaleController < ApplicationController
     rescue ArgumentError, NoMethodError
       date_scope = Date.today
     end
+    @givable_roles = Role.find_all_givable
+    @selected_role_ids = (params[:role_ids] || @givable_roles.map{|r| r.id}).map{|r| r.to_i}
     @dates = ((date_scope - 13)..(date_scope)).map
     @with_subprojects = params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
     projects = @with_subprojects ? @project.self_and_descendants : [@project]
-    @users = projects.inject([]) {|result, project| result + project.users}.uniq
+    members = projects.inject([]) {|result, project| result + project.members}.uniq
+    @users = members.inject([]) do |result, m|
+      if (m.roles.map{|r| r.id} & @selected_role_ids).empty?
+        result
+      else
+        result << m.user         
+      end
+    end
     if @users.include? User.current
       @users.delete(User.current)
       @users.unshift(User.current)
