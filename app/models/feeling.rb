@@ -20,10 +20,14 @@ class Feeling < ActiveRecord::Base
 
   feeling_names.each do |f|
     class_eval "def #{f}?;self.level == #{feeling_names.index(f)};end"
-    class_eval "def #{f}!(comment='')
+    class_eval "def #{f}(comment='')
 self.level = #{feeling_names.index(f)}
 self.comment = comment
-self.save
+self
+end
+"
+    class_eval "def #{f}!(comment='')
+self.#{f}(comment).save
 self
 end
 "
