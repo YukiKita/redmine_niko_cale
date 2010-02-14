@@ -41,8 +41,16 @@ class NikoCaleController < ApplicationController
       @users.unshift(User.current)
     end
     @feelings_per_user = {}
-    @users.each do |user|
-      @feelings_per_user[user] = Feeling.find_by_user_and_date_range(user, @dates)
+    @moods = []
+    unless @users.empty?
+      @moods = @dates.map {|date| Mood.new(:at =>date)}
+      @users.each do |user|
+        feelings = Feeling.find_by_user_and_date_range(user, @dates)
+        @feelings_per_user[user] = feelings
+        feelings.each do |feeling|
+          @moods[@dates.index(feeling.at)].add feeling
+        end
+      end
     end
   end
   def submit_feeling
