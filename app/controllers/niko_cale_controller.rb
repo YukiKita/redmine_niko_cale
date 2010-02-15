@@ -25,6 +25,7 @@ class NikoCaleController < ApplicationController
     projects = get_projects @project, @with_subprojects
     @users = find_all_users(projects, @selected_role_ids)
     @feelings_per_user, @moods = get_feelings_per_user_and_moods(@users, @dates)
+    @feeling_submittable = feeling_submittable? @project, @givable_roles
   end
   def submit_feeling
     feeling = Feeling.for(User.current)
@@ -43,11 +44,20 @@ class NikoCaleController < ApplicationController
     redirect_to(:action=>:index, :project_id=>params[:project_id])
   end
   private
+  def feeling_submittable? project, givable_roles
+    current_user = User.current
+    current_member = project.members.detect{|m| m.user == current_user}
+    if current_member
+      (!(givable_roles & current_member.roles).empty?)
+    else
+      false
+    end
+  end
   def find_project
     @project = Project.find(params[:project_id])
   end
   def find_givable_roles
-    Role.find_all_givable
+    Role.find_all_givable.select{|role| role.has_permission?(:submit_feeling)}
   end
   def find_all_users projects, selected_role_ids
     members = projects.inject([]) {|result, project| result + project.members}.uniq
