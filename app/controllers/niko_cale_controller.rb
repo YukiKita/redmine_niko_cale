@@ -29,16 +29,18 @@ class NikoCaleController < ApplicationController
   end
   def submit_feeling
     feeling = Feeling.for(User.current)
+    message = nil
     case params[:level].to_i
     when 0
-      feeling.bad!(params[:comment])
+      message = :bad!
     when 1
-      feeling.ordinary!(params[:comment])
+      message = :ordinary!
     when 2
-      feeling.good!(params[:comment])
+      message = :good!
     else
       raise "must not happen"
     end
+    feeling.__send__(message, params[:comment])
     redirect_to(:action=>:index, :project_id=>params[:project_id])
   end
   private
