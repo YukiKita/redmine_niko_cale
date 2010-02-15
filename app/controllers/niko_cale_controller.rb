@@ -18,40 +18,14 @@ class NikoCaleController < ApplicationController
 
   def index
     find_project
-    begin
-      date_scope = params[:date_scope].to_date
-    rescue ArgumentError, NoMethodError
-      date_scope = Date.today
-    end
-    @givable_roles = Role.find_all_givable
-    @selected_role_ids = (params[:role_ids] || @givable_roles.map{|r| r.id}).map{|r| r.to_i}
+    date_scope = get_date_scope
+    @givable_roles = find_givable_roles
+    @selected_role_ids = get_selected_role_ids(@givable_roles)
     @dates = ((date_scope - 13)..(date_scope)).map
     @with_subprojects = params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
     projects = @with_subprojects ? @project.self_and_descendants : [@project]
-    members = projects.inject([]) {|result, project| result + project.members}.uniq
-    @users = members.inject([]) do |result, m|
-      if (m.roles.map{|r| r.id} & @selected_role_ids).empty?
-        result
-      else
-        result << m.user         
-      end
-    end
-    if @users.include? User.current
-      @users.delete(User.current)
-      @users.unshift(User.current)
-    end
-    @feelings_per_user = {}
-    @moods = []
-    unless @users.empty?
-      @moods = @dates.map {|date| Mood.new(:at =>date)}
-      @users.each do |user|
-        feelings = Feeling.find_by_user_and_date_range(user, @dates)
-        @feelings_per_user[user] = feelings
-        feelings.each do |feeling|
-          @moods[@dates.index(feeling.at)] << feeling
-        end
-      end
-    end
+    @users = find_all_users(projects)
+    @feelings_per_user, @moods = get_feelings_per_user_and_moods(@users, @dates)
   end
   def submit_feeling
     feeling = Feeling.for(User.current)
@@ -70,5 +44,48 @@ class NikoCaleController < ApplicationController
   private
   def find_project
     @project = Project.find(params[:project_id])
+  end
+  def find_givable_roles
+    Role.find_all_givable
+  end
+  def get_date_scope
+    begin
+      date_scope = params[:date_scope].to_date
+    rescue ArgumentError, NoMethodError
+      date_scope = Date.today
+    end
+  end
+  def find_all_users projects
+    members = projects.inject([]) {|result, project| result + project.members}.uniq
+    users = members.inject([]) do |result, m|
+      if (m.roles.map{|r| r.id} & @selected_role_ids).empty?
+        result
+      else
+        result << m.user         
+      end
+    end
+    if users.include? User.current
+      users.delete(User.current)
+      users.unshift(User.current)
+    end
+    users
+  end
+  def get_feelings_per_user_and_moods(users, dates)
+    moods = []
+    feelings_per_user = {}
+    unless users.empty?
+      moods = dates.map {|date| Mood.new(:at =>date)}
+      users.each do |user|
+        feelings = Feeling.find_by_user_and_date_range(user, dates)
+        feelings_per_user[user] = feelings
+        feelings.each do |feeling|
+          moods[dates.index(feeling.at)] << feeling
+        end
+      end
+    end
+    return feelings_per_user, moods
+  end
+  def get_selected_role_ids givable_roles
+    (params[:role_ids] || @givable_roles.map{|r| r.id}).map{|r| r.to_i}
   end
 end
