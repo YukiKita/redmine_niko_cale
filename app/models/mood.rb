@@ -17,5 +17,6 @@ class Mood < Feeling
         return (i - 1)
       end
     end
+    raise "must not happen"
   end
 end
