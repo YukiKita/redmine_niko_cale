@@ -22,8 +22,8 @@ class NikoCaleController < ApplicationController
     @selected_role_ids = get_selected_role_ids(@givable_roles)
     @dates = get_dates
     @with_subprojects = with_subprojects?
-    projects = get_projects @with_subprojects
-    @users = find_all_users(projects)
+    projects = get_projects @project, @with_subprojects
+    @users = find_all_users(projects, @selected_role_ids)
     @feelings_per_user, @moods = get_feelings_per_user_and_moods(@users, @dates)
   end
   def submit_feeling
@@ -49,10 +49,10 @@ class NikoCaleController < ApplicationController
   def find_givable_roles
     Role.find_all_givable
   end
-  def find_all_users projects
+  def find_all_users projects, selected_role_ids
     members = projects.inject([]) {|result, project| result + project.members}.uniq
     users = members.inject([]) do |result, m|
-      if (m.roles.map{|r| r.id} & @selected_role_ids).empty?
+      if (m.roles.map{|r| r.id} & selected_role_ids).empty?
         result
       else
         result << m.user         
@@ -80,13 +80,13 @@ class NikoCaleController < ApplicationController
     return feelings_per_user, moods
   end
   def get_selected_role_ids givable_roles
-    (params[:role_ids] || @givable_roles.map{|r| r.id}).map{|r| r.to_i}
+    (params[:role_ids] || givable_roles.map{|r| r.id}).map{|r| r.to_i}
   end
   def with_subprojects?
     params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
   end
-  def get_projects with_subprojects
-    with_subprojects ? @project.self_and_descendants : [@project]
+  def get_projects project, with_subprojects
+    with_subprojects ? project.self_and_descendants : [project]
   end
   def get_dates
     begin
