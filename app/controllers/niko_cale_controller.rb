@@ -18,12 +18,11 @@ class NikoCaleController < ApplicationController
 
   def index
     find_project
-    date_scope = get_date_scope
     @givable_roles = find_givable_roles
     @selected_role_ids = get_selected_role_ids(@givable_roles)
-    @dates = ((date_scope - 13)..(date_scope)).map
-    @with_subprojects = params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
-    projects = @with_subprojects ? @project.self_and_descendants : [@project]
+    @dates = get_dates
+    @with_subprojects = with_subprojects?
+    projects = get_projects @with_subprojects
     @users = find_all_users(projects)
     @feelings_per_user, @moods = get_feelings_per_user_and_moods(@users, @dates)
   end
@@ -49,13 +48,6 @@ class NikoCaleController < ApplicationController
   end
   def find_givable_roles
     Role.find_all_givable
-  end
-  def get_date_scope
-    begin
-      date_scope = params[:date_scope].to_date
-    rescue ArgumentError, NoMethodError
-      date_scope = Date.today
-    end
   end
   def find_all_users projects
     members = projects.inject([]) {|result, project| result + project.members}.uniq
@@ -89,5 +81,19 @@ class NikoCaleController < ApplicationController
   end
   def get_selected_role_ids givable_roles
     (params[:role_ids] || @givable_roles.map{|r| r.id}).map{|r| r.to_i}
+  end
+  def with_subprojects?
+    params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
+  end
+  def get_projects with_subprojects
+    with_subprojects ? @project.self_and_descendants : [@project]
+  end
+  def get_dates
+    begin
+      date_scope = params[:date_scope].to_date
+    rescue ArgumentError, NoMethodError
+      date_scope = Date.today
+    end
+    ((date_scope - 13)..(date_scope)).map
   end
 end
