@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module NikoCaleHelper
-  def good_image title=l(:label_niko_cale_good)
-    image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title})
+  def good_image title=l(:label_niko_cale_good), onclick=""
+    image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
   end
-  def ordinary_image title=l(:label_niko_cale_ordinary)
-    image_tag("ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title})
+  def ordinary_image title=l(:label_niko_cale_ordinary), onclick=""
+    image_tag("ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
   end
-  def bad_image title=l(:label_niko_cale_bad)
-    image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title})
+  def bad_image title=l(:label_niko_cale_bad), onclick=""
+    image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
   end
   def null_image
     image_tag("null.png", {:plugin=>:redmine_niko_cale, :title=>""})
