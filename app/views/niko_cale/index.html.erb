@@ -26,15 +26,15 @@
         <table border="0">
         <tr>
           <td><%= good_image(l(:label_niko_cale_good), "document.forms.submit_feeling.level[0].click()") %></td>
-	  <td><%= radio_button_tag("level", 2, false, {:onclick=>"document.forms.submit_feeling.comment.focus()"}) %></td>
+	  <td><%= radio_button_tag("level", 2, @todays_feeling.level ? @todays_feeling.good? : true, {:onclick=>"document.forms.submit_feeling.comment.focus()"}) %></td>
         </tr>
         <tr>
           <td><%= ordinary_image(l(:label_niko_cale_ordinary), "document.forms.submit_feeling.level[1].click()") %></td>
-	  <td><%= radio_button_tag("level", 1, true, {:onclick=>"document.forms.submit_feeling.comment.focus()"})  %></td>
+	  <td><%= radio_button_tag("level", 1, @todays_feeling.ordinary?, {:onclick=>"document.forms.submit_feeling.comment.focus()"})  %></td>
         </tr>
         <tr>
           <td><%= bad_image(l(:label_niko_cale_bad), "document.forms.submit_feeling.level[2].click()") %></td>
-	  <td><%= radio_button_tag("level", 0, false, {:onclick=>"document.forms.submit_feeling.comment.focus()"}) %></td>
+	  <td><%= radio_button_tag("level", 0, @todays_feeling.bad?, {:onclick=>"document.forms.submit_feeling.comment.focus()"}) %></td>
         </tr>
 	</table>
         <%= l(:label_niko_cale_comment) %><br>

@@ -26,6 +26,7 @@ class NikoCaleController < ApplicationController
     @users = find_all_users(projects, @selected_role_ids)
     @feelings_per_user, @moods = get_feelings_per_user_and_moods(@users, @dates)
     @feeling_submittable = feeling_submittable? @project, @givable_roles
+    @todays_feeling = Feeling.for(User.current)
   end
   def submit_feeling
     feeling = Feeling.for(User.current)
