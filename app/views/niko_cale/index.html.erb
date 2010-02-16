@@ -66,14 +66,14 @@
 
 <table border="1">
   <tr>
-   <th bgcolor = "#CAE5F1"><p align="center"></td>
+   <th><p align="center"></td>
    <% @dates.each do |date| %>
-     <th bgcolor=<%= (date == Date.today) ? '"#87CEFA"' : '"#CAE5F1"' %>><p align="center"><b><%= format_date(date) %></b></td>
+     <th bgcolor=<%= (date == Date.today) ? blue : light_blue %>><p align="center"><b><%= format_date(date) %></b></td>
    <% end %>
   </tr>
   <tr>
   <% unless @moods.empty? %>
-    <td bgcolor="#C4CACC"><p align="center"><b><%= l(:label_niko_cale_mood) %></b></td> 
+    <td bgcolor=<%=gray%>><p align="center"><b><%= l(:label_niko_cale_mood) %></b></td> 
     <% @dates.each do |date| %>
       <% mood = @moods.find {|m| m.at == date} %>
       <% image = mood.good? ? good_image : (mood.ordinary? ? ordinary_image : (mood.bad? ? bad_image : null_image)) %>
@@ -81,13 +81,13 @@
     <% end %>
   <% end %>
   </tr>
-  <% @users.each do |user| %>
+  <% @users.each_with_index do |user, index| %>
   <tr> 
-    <td bgcolor="#F4FAFC"><p align="center"><b><%= link_to_user user %></b></td> 
-    <% @dates.each do |date| %>
+    <td bgcolor=<%=light_yellow%>><p align="center"><b><%= link_to_user user %></b></td> 
+    <% @dates.each_with_index do |date, i| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <% image = feeling ? (feeling.good? ? good_image(feeling.comment) : (feeling.bad? ? bad_image(feeling.comment) : ordinary_image(feeling.comment))) : null_image %>
-      <td><p align="center"><i><b><%= image %></b></i></td>
+      <td <%= index.even? ? "bgcolor=#{light_gray}" : "" %> ><p align="center"><i><b><%= image %></b></i></td>
     <% end %>
   </tr> 
  <% end %>

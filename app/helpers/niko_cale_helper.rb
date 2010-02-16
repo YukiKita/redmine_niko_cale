@@ -40,4 +40,19 @@ module NikoCaleHelper
     end     
     '<font color="' + color + '">' + formatted_date + "</font>"
   end
+  def gray
+    "#C4CACC"
+  end
+  def light_blue
+    '"#CAE5F1"'
+  end
+  def blue
+    '"#87CEFA"'
+  end
+  def light_yellow
+    "#F4FAA0"
+  end
+  def light_gray
+    "#DCDCDC"
+  end
 end
