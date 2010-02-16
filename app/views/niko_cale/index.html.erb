@@ -23,8 +23,6 @@
     <h3><%= l(:label_niko_cale_how_do_you_feel_today) %></h3>
     <% form_tag({:action=>:submit_feeling, :controller=>:niko_cale}, {:method=>:put}) do %>
         <%= hidden_field_tag 'project_id', @project.id %>
-	<%= l(:label_niko_cale_comment) %><br>
-        <%= text_field_tag :comment, "", :size=>"24"  %><br>
         <table border="0">
         <tr>
           <td><%= good_image %></td><td><%= radio_button_tag "level", 2, false %></td>
@@ -36,7 +34,9 @@
           <td><%= bad_image %></td><td><%= radio_button_tag "level", 0, false %></td>
         </tr>
 	</table>
-        <p><%= submit_tag l(:label_niko_cale_submit), :class => 'button-small', :name => nil %></p>
+        <%= l(:label_niko_cale_comment) %><br>
+	<%= text_field_tag :comment, "", :size=>"18"  %>
+        <%= submit_tag l(:label_niko_cale_submit), :class => 'button-small', :name => nil %>
     <% end %>
   <% end %>
 
