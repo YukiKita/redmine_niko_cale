@@ -27,6 +27,7 @@ class NikoCaleController < ApplicationController
     @feelings_per_user, @moods = get_feelings_per_user_and_moods(@users, @dates)
     @feeling_submittable = feeling_submittable? @project, @givable_roles
     @todays_feeling = Feeling.for(User.current)
+    @issues_count_per_user = issues_count_per_user @users
   end
   def submit_feeling
     feeling = Feeling.for(User.current)
@@ -46,6 +47,12 @@ class NikoCaleController < ApplicationController
     redirect_to(:action=>:index, :project_id=>params[:project_id])
   end
   private
+  def issues_count_per_user users
+    users.inject({}) do |result, user|
+      result[user] = Issue.find(:all, :conditions=>{:assigned_to_id=>User.find(user)}).reject{|i| i.status.is_closed?}.size
+      result
+    end
+  end
   def feeling_submittable? project, givable_roles
     current_user = User.current
     current_member = project.members.detect{|m| m.user == current_user}
