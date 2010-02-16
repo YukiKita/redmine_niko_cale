@@ -41,6 +41,7 @@ class NikoCaleController < ApplicationController
       raise "must not happen"
     end
     feeling.__send__(message, params[:comment])
+    flash[:notice] = l(:notice_successful_update)
     redirect_to(:action=>:index, :project_id=>params[:project_id])
   end
   private
