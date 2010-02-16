@@ -68,7 +68,7 @@
     <td bgcolor="#C4CACC"><p align="center"><b><%= l(:label_niko_cale_mood) %></b></td> 
     <% @dates.each do |date| %>
       <% mood = @moods.find {|m| m.at == date} %>
-      <% image = image_tag((mood.good? ? "good.jpg" : (mood.ordinary? ? "ordinary.jpg" : (mood.bad? ? "bad.jpg" : "null.jpg"))),
+      <% image = image_tag((mood.good? ? "good.png" : (mood.ordinary? ? "ordinary.png" : (mood.bad? ? "bad.png" : "null.jpg"))),
        {:plugin=>:redmine_niko_cale}) %>
         <td><p align="center"><i><b><%= image %></b></i></td>
     <% end %>
@@ -79,7 +79,7 @@
     <td bgcolor="#F4FAFC"><p align="center"><b><%= link_to_user user %></b></td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
-      <% image = feeling ? image_tag((feeling.good? ? "good.jpg" : (feeling.bad? ? "bad.jpg" : "ordinary.jpg")),
+      <% image = feeling ? image_tag((feeling.good? ? "good.png" : (feeling.bad? ? "bad.png" : "ordinary.png")),
 	 {:plugin=>:redmine_niko_cale, :title=>feeling.comment}) : image_tag("null.jpg", :plugin=>:redmine_niko_cale) %>
       <td><p align="center"><i><b><%= image %></b></i></td>
     <% end %>
