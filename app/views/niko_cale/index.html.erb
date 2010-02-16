@@ -87,8 +87,7 @@
     <td bgcolor="#F4FAFC"><p align="center"><b><%= link_to_user user %></b></td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
-      <% image = feeling ? image_tag((feeling.good? ? "good.png" : (feeling.bad? ? "bad.png" : "ordinary.png")),
-	 {:plugin=>:redmine_niko_cale, :title=>feeling.comment}) : image_tag("null.png", :plugin=>:redmine_niko_cale) %>
+      <% image = feeling ? (feeling.good? ? good_image(feeling.comment) : (feeling.bad? ? bad_image(feeling.comment) : ordinary_image(feeling.comment))) : null_image %>
       <td><p align="center"><i><b><%= image %></b></i></td>
     <% end %>
   </tr> 
