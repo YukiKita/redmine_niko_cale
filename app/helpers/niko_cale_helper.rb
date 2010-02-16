@@ -14,6 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module NikoCaleHelper
+  def good_image title=l(:label_niko_cale_good)
+    image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title})
+  end
+  def ordinary_image title=l(:label_niko_cale_ordinary)
+    image_tag("ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title})
+  end
+  def bad_image title=l(:label_niko_cale_bad)
+    image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title})
+  end
   def format_date date
     d = date.to_s.split("-")
     formatted_date = d[0] + "<br>" + d[1] + "/" + d[2]
