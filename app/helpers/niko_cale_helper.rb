@@ -61,7 +61,7 @@ module NikoCaleHelper
   def comment_of feeling
     user = feeling.user
     name = user ? user.name : l(:label_niko_cale_morale)
-    [feeling.at, name, feeling.comment].join("<br>")
+    [feeling.at.to_s.gsub(/-/, "/"), name, feeling.comment].join("<br>")
   end
   def image_for feeling
     if feeling
