@@ -14,13 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module NikoCaleHelper
-  def good_image title=l(:label_niko_cale_good), onclick=""
+  def good_image title="", onclick=""
     image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
   end
-  def ordinary_image title=l(:label_niko_cale_ordinary), onclick=""
+  def ordinary_image title="", onclick=""
     image_tag("ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
   end
-  def bad_image title=l(:label_niko_cale_bad), onclick=""
+  def bad_image title="", onclick=""
     image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
   end
   def null_image
@@ -55,7 +55,20 @@ module NikoCaleHelper
   def light_gray
     "#DCDCDC"
   end
-  def with_baloon object, message
+  def with_baloon object, message=""
     '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
+  end
+  def comment_of feeling
+    user = feeling.user
+    name = user ? user.name : l(:label_niko_cale_morale)
+    [feeling.at, name, feeling.comment].join("<br>")
+  end
+  def image_for feeling
+    if feeling
+      image = feeling.good? ? good_image : (feeling.bad? ? bad_image : feeling.ordinary? ? ordinary_image : null_image)
+      with_baloon(image, comment_of(feeling))
+    else
+      null_image
+    end
   end
 end
