@@ -24,7 +24,7 @@ module NikoCaleHelper
     image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
   end
   def null_image
-    image_tag("null.png", {:plugin=>:redmine_niko_cale, :title=>""})
+    "<br><br><br>"
   end
   def format_date date
     d = date.to_s.split("-")
