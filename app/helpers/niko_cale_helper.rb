@@ -55,4 +55,7 @@ module NikoCaleHelper
   def light_gray
     "#DCDCDC"
   end
+  def with_baloon object, message
+    '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
+  end
 end
