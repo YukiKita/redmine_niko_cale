@@ -124,4 +124,12 @@ class FeelingTest < ActiveSupport::TestCase
     assert_equal morale.ordinary?, false
     assert_equal morale.bad?, false
   end
+  test "has_comment?" do
+    feeling = Feeling.for(User.find(1))
+    assert_equal feeling.has_comment?, false
+    assert_equal feeling.good("").has_comment?, false
+    assert_equal feeling.good(nil).has_comment?, false
+    assert feeling.good(" ").has_comment?
+    assert feeling.good("1     2").has_comment?
+  end
 end
