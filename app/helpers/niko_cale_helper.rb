@@ -47,7 +47,7 @@ module NikoCaleHelper
     '"#CAE5F1"'
   end
   def pink
-    '"#FFE4E1"'
+    '"#FFD4D1"'
   end
   def blue
     '"#87CEFA"'
