@@ -1,4 +1,4 @@
-class Mood < Feeling
+class Morale < Feeling
   def << feeling
     if feeling.at == self.at
       @feelings ||= []
