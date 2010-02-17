@@ -19,7 +19,7 @@
 	position:relative;
 	top:-8px;
 	font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
-	font-size:11px;
+	font-size:16px;
 }
 #bubble_tooltip .bubble_bottom{
 	background-image: url('../images/bubble_bottom.gif');
@@ -36,11 +36,11 @@ table	{
 }
 
 th	{
-	padding: 4px 8px;
+	padding: 5px 10px;
 	color: #1D5C79;
 }
 td	{
-	padding: 4px 8px;
+	padding: 5px 10px;
 	color: #1D5C79;
 }
 

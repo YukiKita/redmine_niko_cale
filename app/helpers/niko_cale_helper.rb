@@ -61,8 +61,8 @@ module NikoCaleHelper
   def comment_of feeling, default_comment
     user = feeling.user
     name = user ? user.name : l(:label_niko_cale_morale)
-    comment = feeling.comment || default_comment
-    feeling.at.to_s + "<br>" + name + '<br>' + comment
+    comment = (feeling.comment && !feeling.comment.empty? && feeling.comment) || default_comment
+    [feeling.at, name, comment].join("<br>")
   end
   def image_for feeling
     if feeling
