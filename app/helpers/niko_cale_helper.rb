@@ -58,15 +58,18 @@ module NikoCaleHelper
   def with_baloon object, message=""
     '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
   end
-  def comment_of feeling
+  def comment_of feeling, default_comment
     user = feeling.user
     name = user ? user.name : l(:label_niko_cale_morale)
-    [feeling.at, name, feeling.comment].join("<br>")
+    comment = feeling.comment || default_comment
+    feeling.at.to_s + "<br>" + name + '<br>' + comment
   end
   def image_for feeling
     if feeling
-      image = feeling.good? ? good_image : (feeling.bad? ? bad_image : feeling.ordinary? ? ordinary_image : null_image)
-      with_baloon(image, comment_of(feeling))
+      image, default_comment = feeling.good? ? [good_image, l(:label_niko_cale_good)] : 
+        (feeling.bad? ? [bad_image, l(:label_niko_cale_bad)] :
+         feeling.ordinary? ? [ordinary_image, l(:label_niko_cale_ordinary)] : [null_image, ""])
+      with_baloon(image, comment_of(feeling, default_comment))
     else
       null_image
     end
