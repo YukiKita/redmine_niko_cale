@@ -74,13 +74,13 @@
      <th bgcolor=<%= (date == Date.today) ? blue : light_blue %>><p align="center"><%= format_date(date) %></td>
    <% end %>
   </tr>
-  <% @users.each_with_index do |user, index| %>
+  <% @users.each do |user| %>
   <tr> 
     <td bgcolor=<%=light_yellow%>><p align="center"><i><%= link_to_user user %></i><br><font color=black>(<%= @issues_count_per_user[user] %>)</font></td> 
     <% @dates.each_with_index do |date, i| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <% image = feeling ? (feeling.good? ? good_image(feeling.comment) : (feeling.bad? ? bad_image(feeling.comment) : ordinary_image(feeling.comment))) : null_image %>
-      <td <%= index.even? ? "bgcolor=#{light_gray}" : "" %> ><p align="center"><i><%= image %></i></td>
+      <td><p align="center"><%= image %></td>
     <% end %>
   </tr> 
   <% end %>
@@ -90,7 +90,7 @@
     <% @dates.each do |date| %>
       <% mood = @moods.find {|m| m.at == date} %>
       <% image = mood.good? ? good_image : (mood.ordinary? ? ordinary_image : (mood.bad? ? bad_image : null_image)) %>
-        <td><p align="center"><i><%= image %></i></td>
+        <td bgcolor=<%=gray%>><p align="center"><i><%= image %></i></td>
     <% end %>
   </tr>
   <% end %>
