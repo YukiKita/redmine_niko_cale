@@ -24,7 +24,7 @@ class NikoCaleController < ApplicationController
     @with_subprojects = with_subprojects?
     projects = get_projects @project, @with_subprojects
     @users = find_all_users(projects, @selected_role_ids)
-    @feelings_per_user, @moods = get_feelings_per_user_and_moods(@users, @dates)
+    @feelings_per_user, @morales = get_feelings_per_user_and_morales(@users, @dates)
     @feeling_submittable = feeling_submittable? @project, @givable_roles
     @todays_feeling = Feeling.for(User.current)
     @issues_count_per_user = issues_count_per_user @users
@@ -52,7 +52,7 @@ class NikoCaleController < ApplicationController
     users.inject({}) do |result, user|
       issues = Issue.find(:all, :conditions=>{:assigned_to_id=>User.find(user), :status_id=>open_issue_statuses}).size
       result[user] = issues
-      result[:mood] = (result[:mood] || 0) + issues
+      result[:morale] = (result[:morale] || 0) + issues
       result
     end
   end
@@ -86,20 +86,20 @@ class NikoCaleController < ApplicationController
     end
     users
   end
-  def get_feelings_per_user_and_moods(users, dates)
-    moods = []
+  def get_feelings_per_user_and_morales(users, dates)
+    morales = []
     feelings_per_user = {}
     unless users.empty?
-      moods = dates.map {|date| Mood.new(:at =>date)}
+      morales = dates.map {|date| Morale.new(:at =>date)}
       users.each do |user|
         feelings = Feeling.find_by_user_and_date_range(user, dates)
         feelings_per_user[user] = feelings
         feelings.each do |feeling|
-          moods[dates.index(feeling.at)] << feeling
+          morales[dates.index(feeling.at)] << feeling
         end
       end
     end
-    return feelings_per_user, moods
+    return feelings_per_user, morales
   end
   def get_selected_role_ids givable_roles
     (params[:role_ids] || givable_roles.map{|r| r.id}).map{|r| r.to_i}

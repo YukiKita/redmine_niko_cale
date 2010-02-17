@@ -86,12 +86,12 @@
     <% end %>
   </tr> 
   <% end %>
-  <% unless @moods.empty? %>
+  <% unless @morales.empty? %>
   <tr>
-    <td bgcolor=<%=gray%>><p align="center"><font color=black><%= l(:label_niko_cale_mood) %><br>(<%= @issues_count_per_user[:mood] %>)</font></td> 
+    <td bgcolor=<%=gray%>><p align="center"><font color=black><%= l(:label_niko_cale_morale) %><br>(<%= @issues_count_per_user[:morale] %>)</font></td> 
     <% @dates.each do |date| %>
-      <% mood = @moods.find {|m| m.at == date} %>
-      <% image = mood.good? ? good_image : (mood.ordinary? ? ordinary_image : (mood.bad? ? bad_image : null_image)) %>
+      <% morale = @morales.find {|m| m.at == date} %>
+      <% image = morale.good? ? good_image : (morale.ordinary? ? ordinary_image : (morale.bad? ? bad_image : null_image)) %>
         <td bgcolor=<%=gray%>><p align="center"><i><%= image %></i></td>
     <% end %>
   </tr>
