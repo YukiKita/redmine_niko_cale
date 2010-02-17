@@ -85,7 +85,7 @@
   </tr>
   <% @users.each do |user| %>
   <tr> 
-    <td bgcolor=<%=light_yellow%>><p align="center"><i><%= link_to_user user %></i><br><font color=black>(<%= @issues_count_per_user[user] %>)</font></td> 
+    <td bgcolor=<%=light_yellow%>><p align="center"><%= link_to_user user %><br><font color=black>(<%= @issues_count_per_user[user] %>)</font></td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <td><p align="center"><%= image_for(feeling) %></td>
