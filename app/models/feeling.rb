@@ -32,6 +32,9 @@ self
 end
 "
   end
+  def has_comment?
+    self.comment && (!self.comment.empty?)
+  end
   def self.for(user)
     Feeling.find(:first, :conditions=>{:user_id=>user, :at=>Date.today}) || self.new{|f| f.at = Date.today; f.user = user}
   end
