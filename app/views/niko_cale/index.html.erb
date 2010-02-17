@@ -80,7 +80,7 @@
   <tr>
    <th bgcolor=<%= light_blue %>><p align="center"><font color=black><%= l(:label_member) %><br>(<%= l(:label_niko_cale_issues_count) %>)</font><br></td>
    <% @dates.each do |date| %>
-     <th bgcolor=<%= (date == Date.today) ? blue : light_blue %>><p align="center"><%= format_date(date) %></td>
+     <th bgcolor=<%= light_blue %>><p align="center"><%= format_date(date) %></td>
    <% end %>
   </tr>
   <% @users.each do |user| %>
@@ -88,7 +88,7 @@
     <td bgcolor=<%=light_yellow%>><p align="center"><%= link_to_user user %><br><font color=black>(<%= @issues_count_per_user[user] %>)</font><br></td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
-      <td><p align="center"><%= image_for(feeling) %></td>
+      <td bgcolor=<%= ((User.current == user) && (date == Date.today)) ? pink : "" %>><p align="center"><%= image_for(feeling) %></td>
     <% end %>
   </tr> 
   <% end %>

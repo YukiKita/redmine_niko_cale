@@ -46,6 +46,9 @@ module NikoCaleHelper
   def light_blue
     '"#CAE5F1"'
   end
+  def pink
+    '"#FFE4E1"'
+  end
   def blue
     '"#87CEFA"'
   end
