@@ -17,17 +17,11 @@ class NikoCaleController < ApplicationController
   unloadable
 
   def index
-    find_project
-    @givable_roles = find_givable_roles
-    @selected_role_ids = get_selected_role_ids(@givable_roles)
-    @dates = get_dates
-    @with_subprojects = with_subprojects?
-    projects = get_projects @project, @with_subprojects
-    @users = find_all_users(projects, @selected_role_ids)
-    @feelings_per_user, @morales = get_feelings_per_user_and_morales(@users, @dates)
-    @feeling_submittable = feeling_submittable? @project, @givable_roles
-    @todays_feeling = Feeling.for(User.current)
-    @issues_count_per_user = issues_count_per_user @users
+    update_information
+  end
+  def show
+    update_information
+    render :partial=>"show"
   end
   def submit_feeling
     feeling = Feeling.for(User.current)
@@ -47,6 +41,19 @@ class NikoCaleController < ApplicationController
     redirect_to(:action=>:index, :project_id=>params[:project_id])
   end
   private
+  def update_information
+    find_project
+    @givable_roles = find_givable_roles
+    @selected_role_ids = get_selected_role_ids(@givable_roles)
+    @dates = get_dates
+    @with_subprojects = with_subprojects?
+    projects = get_projects @project, @with_subprojects
+    @users = find_all_users(projects, @selected_role_ids)
+    @feelings_per_user, @morales = get_feelings_per_user_and_morales(@users, @dates)
+    @feeling_submittable = feeling_submittable? @project, @givable_roles
+    @todays_feeling = Feeling.for(User.current)
+    @issues_count_per_user = issues_count_per_user @users
+  end
   def issues_count_per_user users
     open_issue_statuses = IssueStatus.find(:all, :conditions=>{:is_closed=>false})
     users.inject({}) do |result, user|

@@ -45,7 +45,7 @@
     <% end %>
   <% end %>
 
-  <% form_tag({}, {:method => :get}) do %>
+  <% form_remote_tag(:url=>{:action=>:show}, :update=>"niko_niko_calender", :html=>{:method => :get}) do %>
   <h3><%= l(:label_niko_cale_scope) %></h3>
     <%= hidden_field_tag 'project_id', @project.id %>
     <%= @dates.first %> -
