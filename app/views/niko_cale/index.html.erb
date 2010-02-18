@@ -23,7 +23,7 @@
 <% content_for :sidebar do %>
   <% if @feeling_submittable %>
     <h3><%= l(:label_niko_cale_how_do_you_feel_today) %></h3>
-    <% form_tag({:action=>:submit_feeling, :controller=>:niko_cale}, {:name=>:submit_feeling, :method=>:put}) do %>
+    <% form_tag({:action=>:submit_feeling, :controller=>:niko_cale}, {:id=>:submit_feeling, :method=>:put}) do %>
         <%= hidden_field_tag 'project_id', @project.id %>
         <table border="0">
         <tr>
@@ -45,7 +45,7 @@
     <% end %>
   <% end %>
 
-  <% form_remote_tag(:url=>{:action=>:show}, :update=>"niko_niko_calender", :html=>{:method => :get}) do %>
+  <% form_remote_tag(:update=>"niko_niko_calender",  :url=>{:action=>"show"}, :html=>{:method=>:get}) do %>
   <h3><%= l(:label_niko_cale_scope) %></h3>
     <%= hidden_field_tag 'project_id', @project.id %>
     <%= @dates.first %> -
@@ -65,7 +65,6 @@
     <p><%= submit_tag l(:label_niko_cale_apply), :class => 'button-small', :name => nil %></p>
   <% end %>
 <% end %>
-
 
 <div id="bubble_tooltip">
 	<div class="bubble_top"><span></span></div>
