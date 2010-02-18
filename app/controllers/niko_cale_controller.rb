@@ -17,7 +17,7 @@ class NikoCaleController < ApplicationController
   unloadable
 
   def index
-    params[:role_ids] = find_givable_roles.map{|r| r.id}.map{|r| r.to_i}
+    params[:role_ids] = find_givable_roles.map{|r| r.id}
     update_information
   end
   def show
@@ -46,7 +46,6 @@ class NikoCaleController < ApplicationController
     find_project
     @givable_roles = find_givable_roles
     @selected_role_ids = get_selected_role_ids
-    p @selected_role_ids
     @dates = get_dates
     @with_subprojects = with_subprojects?
     projects = get_projects @project, @with_subprojects
