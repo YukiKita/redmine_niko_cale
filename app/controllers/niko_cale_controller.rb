@@ -80,17 +80,18 @@ class NikoCaleController < ApplicationController
     Role.find_all_givable.select{|role| role.has_permission?(:submit_feeling)}
   end
   def find_all_users projects, selected_role_ids
-    members = projects.inject([]) {|result, project| result + project.members}.uniq
+    members = projects.inject([]) {|result, project| result + project.members}
     users = members.inject([]) do |result, m|
       if (m.roles.map{|r| r.id} & selected_role_ids).empty?
         result
       else
         result << m.user         
       end
-    end
-    if users.include? User.current
-      users.delete(User.current)
-      users.unshift(User.current)
+    end.uniq
+    current_user =  User.current
+    if users.include? current_user
+      users.delete(current_user)
+      users.unshift(current_user)
     end
     users
   end
