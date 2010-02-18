@@ -45,11 +45,10 @@
     <% end %>
   <% end %>
 
-  <% form_remote_tag(:update=>"niko_niko_calender",  :url=>{:action=>"show"}, :html=>{:method=>:get}) do %>
+  <% form_remote_tag(:update=>"niko_niko_calender",  :url=>{:action=>"show"}, :html=>{:method=>:get, :id=>"scope"}) do %>
   <h3><%= l(:label_niko_cale_scope) %></h3>
     <%= hidden_field_tag 'project_id', @project.id %>
-    <%= @dates.first %> -
-    <%= text_field_tag :date_scope, @dates.last, :size=>'10' %>
+     <%= text_field_tag :date_scope, @dates.last, :size=>'10' %>
     <br>
     <%= calendar_for("date_scope") %>
     <%=l(:label_niko_cale_date_scope)%>
@@ -65,6 +64,7 @@
     <p><%= submit_tag l(:label_niko_cale_apply), :class => 'button-small', :name => nil %></p>
   <% end %>
 <% end %>
+<%= observe_form("scope", {:update=>"niko_niko_calender",  :url=>{:action=>"show"}, :html=>{:method=>:get}})  %>
 
 <div id="bubble_tooltip">
 	<div class="bubble_top"><span></span></div>
