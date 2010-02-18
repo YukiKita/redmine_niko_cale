@@ -17,6 +17,7 @@ class NikoCaleController < ApplicationController
   unloadable
 
   def index
+    params[:role_ids] = find_givable_roles.map{|r| r.id}.map{|r| r.to_i}
     update_information
   end
   def show
@@ -44,7 +45,8 @@ class NikoCaleController < ApplicationController
   def update_information
     find_project
     @givable_roles = find_givable_roles
-    @selected_role_ids = get_selected_role_ids(@givable_roles)
+    @selected_role_ids = get_selected_role_ids
+    p @selected_role_ids
     @dates = get_dates
     @with_subprojects = with_subprojects?
     projects = get_projects @project, @with_subprojects
@@ -108,8 +110,8 @@ class NikoCaleController < ApplicationController
     end
     return feelings_per_user, morales
   end
-  def get_selected_role_ids givable_roles
-    (params[:role_ids] || givable_roles.map{|r| r.id}).map{|r| r.to_i}
+  def get_selected_role_ids
+    (params[:role_ids] || []).map {|r| r.to_i}
   end
   def with_subprojects?
     params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
