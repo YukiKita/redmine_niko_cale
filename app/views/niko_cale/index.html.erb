@@ -48,7 +48,7 @@
     <%= hidden_field_tag 'project_id', @project.id %>
     <% @givable_roles.each do |role| %>
       <label><%= check_box_tag "role_ids[]", role.id, (@selected_role_ids.include? role.id), :id => nil %>
-      <%=h role.name %></label><br />
+      <%= h(role.name) %></label><br />
     <% end %>
     <% if @project.descendants.active.any? %>
       <%= hidden_field_tag 'with_subprojects', 0 %>
