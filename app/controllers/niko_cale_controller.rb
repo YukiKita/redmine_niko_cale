@@ -31,7 +31,13 @@ class NikoCaleController < ApplicationController
   def submit_feeling
     feeling = Feeling.for(User.current)
     message = nil
-    case params[:level].to_i
+    level = params[:level]
+    unless level
+      flash[:error] = l(:label_niko_cale_notice_error)
+      redirect_to(:action=>:index, :project_id=>@project)      
+      return
+    end
+    case level.to_i
     when 0
       message = :bad!
     when 1
@@ -42,7 +48,7 @@ class NikoCaleController < ApplicationController
       raise "must not happen"
     end
     feeling.__send__(message, params[:comment])
-    flash[:notice] = l(:notice_successful_update)
+    flash[:notice] = l(:label_niko_cale_notice_success)
     redirect_to(:action=>:index, :project_id=>@project)
   end
   private
