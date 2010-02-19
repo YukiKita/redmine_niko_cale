@@ -30,15 +30,16 @@ class NikoCaleController < ApplicationController
   end
   def submit_feeling
     feeling = Feeling.for(User.current)
+    comment = (params[:comment] || "").strip
     case params[:level]
     when "0"
-      feeling.bad!(params[:comment])
+      feeling.bad!(comment)
       flash[:notice] = l(:label_niko_cale_notice_success)
     when "1"
-      feeling.ordinary!(params[:comment])
+      feeling.ordinary!(comment)
       flash[:notice] = l(:label_niko_cale_notice_success)
     when "2"
-      feeling.good!(params[:comment])
+      feeling.good!(comment)
       flash[:notice] = l(:label_niko_cale_notice_success)
     else
       flash[:error] = l(:label_niko_cale_notice_error)
