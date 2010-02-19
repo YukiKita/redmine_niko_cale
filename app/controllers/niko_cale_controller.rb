@@ -21,6 +21,7 @@ class NikoCaleController < ApplicationController
     @selected_role_ids = find_givable_roles.map{|r| r.id}
     @todays_feeling = Feeling.for(User.current)
     update_information
+    @feeling_submittable = feeling_submittable? @project, @givable_roles
   end
   def show
     @selected_role_ids = get_selected_role_ids
@@ -52,7 +53,6 @@ class NikoCaleController < ApplicationController
     projects = get_projects @project, @with_subprojects
     @users = find_all_users(projects, @selected_role_ids)
     @feelings_per_user, @morales = get_feelings_per_user_and_morales(@users, @dates)
-    @feeling_submittable = feeling_submittable? @project, @givable_roles
     @issues_count_per_user = issues_count_per_user @users
   end
   def issues_count_per_user users
