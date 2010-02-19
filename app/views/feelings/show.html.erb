@@ -1,1 +1,7 @@
-<h2>Feelings#show</h2>
+<h2><%= l(:label_niko_cale_feeling) %></h2>
+
+<% if @feeling %>
+  <p><%= h(@feeling.user) %></p>
+  <p><%= h(@feeling.at) %></p>
+  <p><%= h(@feeling.comment) %></p>
+<% end %>
