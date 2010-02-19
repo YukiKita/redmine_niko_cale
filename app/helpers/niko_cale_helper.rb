@@ -26,6 +26,9 @@ module NikoCaleHelper
   def null_image
     "<br><br><br>"
   end
+  def index_for feeling
+    h(feeling.at.to_s.gsub(/-/, "/")) + " (" + h(feeling.user.name) +")"
+  end
   def format_date date
     d = date.to_s.split("-")
     formatted_date = d[0] + "<br>" + d[1] + "/" + d[2]
@@ -62,9 +65,7 @@ module NikoCaleHelper
     '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
   end
   def comment_of feeling
-    user = feeling.user
-    name = user ? user.name : l(:label_niko_cale_morale)
-    [feeling.at.to_s.gsub(/-/, "/"), name, feeling.comment].map{|e| sanitize(e)}.join("<br>")
+    [index_for(feeling), feeling.comment].map{|e| sanitize(e)}.join("<br>")
   end
   def image_for feeling
     if feeling
