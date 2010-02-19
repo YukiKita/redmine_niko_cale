@@ -43,7 +43,6 @@ class NikoCaleController < ApplicationController
       flash[:notice] = l(:label_niko_cale_notice_success)
     else
       flash[:error] = l(:label_niko_cale_notice_error)
-      return
     end
     redirect_to(:action=>:index, :project_id=>@project)
   end
