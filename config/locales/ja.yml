@@ -16,3 +16,4 @@ ja:
   label_niko_cale_issues_count: "チケット数"
   label_niko_cale_notice_success: "データを更新しました"
   label_niko_cale_notice_error: "異常なデータです"
+  label_niko_cale_notice_no_data: "データがありません"
