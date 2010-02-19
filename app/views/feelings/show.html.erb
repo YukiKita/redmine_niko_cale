@@ -1,6 +1,19 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag "niko_cale.css", :plugin => "redmine_niko_cale", :media => "screen" %>
+  <%= javascript_include_tag "bubble-tooltip.js", :plugin => "redmine_niko_cale" %>
+<% end %>
+<div id="bubble_tooltip">
+<div class="bubble_top"><span></span></div>
+<div class="bubble_middle"><span id="bubble_tooltip_content">Content is comming here as you probably can see.Content is comming here as you probably can see.</span></div>
+<div class="bubble_bottom"></div>
+</div>
+
 <% if @feeling %>
-  <h2><%= l(:label_niko_cale_feeling) %></h2>
-  <p><%= h(@feeling.user) %></p>
-  <p><%= h(@feeling.at) %></p>
-  <p><%= h(@feeling.comment) %></p>
+  <h2><%= l(:label_niko_cale_feeling) + "(" + h(@feeling.at) + " " + h(@feeling.user) + ")" %></h2>
+  <li>
+    <ul><%= image_for(@feeling) %></ul>
+    <% if @feeling.has_comment? %>
+      <ul><%= h(@feeling.comment) %></ul>
+    <% end %>
+  </li>
 <% end %>

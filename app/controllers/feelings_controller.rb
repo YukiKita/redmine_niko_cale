@@ -1,5 +1,6 @@
 class FeelingsController < ApplicationController
   unloadable
+  helper :niko_cale
   def show
     @feeling = find_feeling
     unless @feeling
