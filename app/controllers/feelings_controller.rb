@@ -4,7 +4,7 @@ class FeelingsController < ApplicationController
   def show
     @feeling = find_feeling
     unless @feeling
-      flash[:error] = l(:label_niko_cale_notice_no_data)
+      render_404
     end
   end
 
