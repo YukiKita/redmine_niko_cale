@@ -15,12 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class NikoCaleController < ApplicationController
   unloadable
+  before_filter :find_project
 
   def index
-    params[:role_ids] = find_givable_roles.map{|r| r.id}
+    @selected_role_ids = find_givable_roles.map{|r| r.id}
+    @todays_feeling = Feeling.for(User.current)
     update_information
   end
   def show
+    @selected_role_ids = get_selected_role_ids
     update_information
     render :partial=>"show"
   end
@@ -39,20 +42,17 @@ class NikoCaleController < ApplicationController
     end
     feeling.__send__(message, params[:comment])
     flash[:notice] = l(:notice_successful_update)
-    redirect_to(:action=>:index, :project_id=>params[:project_id])
+    redirect_to(:action=>:index, :project_id=>@project)
   end
   private
   def update_information
-    find_project
     @givable_roles = find_givable_roles
-    @selected_role_ids = get_selected_role_ids
     @dates = get_dates
     @with_subprojects = with_subprojects?
     projects = get_projects @project, @with_subprojects
     @users = find_all_users(projects, @selected_role_ids)
     @feelings_per_user, @morales = get_feelings_per_user_and_morales(@users, @dates)
     @feeling_submittable = feeling_submittable? @project, @givable_roles
-    @todays_feeling = Feeling.for(User.current)
     @issues_count_per_user = issues_count_per_user @users
   end
   def issues_count_per_user users
