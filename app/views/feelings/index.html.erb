@@ -18,12 +18,8 @@
 
 <%= render :partial=>'header' %>
 
-<h2><%= feeling_list @project %> </h2>
-<% if @project %>
-<p align="right"><%= link_to_feeling_list %></p>
-<% else %>
-
-<% end %>
+<h2><%= feeling_list @option %> </h2>
+<p align="right"><%= link_to_feeling_list() %></p>
 
 <% @feelings.each do |feeling| %>
   <%= render :partial=>'show', :locals=>{:feeling=>feeling} %>

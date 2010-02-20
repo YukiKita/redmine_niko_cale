@@ -14,11 +14,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module FeelingsHelper
-  def feeling_list project=nil
-    "#{l(:label_niko_cale_feeling_list)} (#{(project ? h(project.name) : l(:label_niko_cale_all_users))})"
+  def feeling_list option={}
+    title = ""
+    if (project = option[:project])
+      title = project.name
+    elsif (user = option[:user])
+      title = user.name
+    else
+      title = l(:label_niko_cale_all_users)
+    end
+    "#{l(:label_niko_cale_feeling_list)} (#{h(title)})"
   end
-  def link_to_feeling_list project=nil
-    link_to feeling_list(project), {:controller=>:feelings, :action=>:index, :project_id=>(project ? project.id : nil)}
+  def link_to_feeling_list option={}
+    if (project = option[:project])
+      link_to(feeling_list(option), {:controller=>:feelings, :action=>:index, :project_id=>project})
+    elsif (user = option[:user])
+      link_to(feeling_list(option), {:controller=>:feelings, :action=>:index, :user_id=>user})
+    else
+      link_to(feeling_list(option), {:controller=>:feelings, :action=>:index})
+    end
   end
   def good_image title="", onclick=""
     image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})

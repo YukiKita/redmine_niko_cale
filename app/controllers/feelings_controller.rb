@@ -17,8 +17,15 @@ class FeelingsController < ApplicationController
   unloadable
   helper :niko_cale
   def index
-    @project = find_project
-    users = find_users
+    project = find_project
+    users = []
+    if project
+      users = find_users_for project
+      @option = {:project=>project}
+    else
+      users = find_users
+      @option = (users.size == 1) ? {:user=>users.first} : {}
+    end
     @feeling_pages, @feelings = paginate(:feeling, :per_page => 10, :conditions=>{:user_id=>users}, :order=>"at DESC")
     respond_to do |format|
       format.html { render :layout => false if request.xhr? }
@@ -40,9 +47,16 @@ class FeelingsController < ApplicationController
       render_404
     end
   end
-  def find_users
-    project_id = @project || Project.find(:all)
-    members = Member.find(:all, :conditions=>{:project_id => project_id})
+  def find_users_for project
+    members = Member.find(:all, :conditions=>{:project_id => project})
     members.map{|member| member.user}
+  end
+  def find_users
+    return User.find(:all) unless params[:user_id]
+    begin
+      User.find(:all, :conditions=>{:id=>params[:user_id]})
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
   end
 end
