@@ -19,7 +19,7 @@
 	position:relative;
 	top:-8px;
 	font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
-	font-size:16px;
+	font-size:12px;
 }
 #bubble_tooltip .bubble_bottom{
 	background-image: url('../images/bubble_bottom.gif');
