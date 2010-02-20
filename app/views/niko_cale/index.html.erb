@@ -71,7 +71,7 @@
 
 <h2><%= l(:label_niko_niko_calender) %></h2>
 
-<p align="right"><%= link_to feeling_list(@project), {:controller=>:feelings, :action=>:index, :project_id=>@project.id} %></p>
+<p align="right"><%= link_to_feeling_list(@project) %></p>
 
 <%= render :partial=>'show' %>
 

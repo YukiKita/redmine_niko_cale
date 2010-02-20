@@ -20,7 +20,7 @@
 
 <h2><%= feeling_list @project %> </h2>
 <% if @project %>
-<p align="right"><%= link_to feeling_list, {:controller=>:feelings, :action=>:index} %></p>
+<p align="right"><%= link_to_feeling_list %></p>
 <% else %>
 
 <% end %>
