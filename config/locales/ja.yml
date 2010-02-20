@@ -17,4 +17,4 @@ ja:
   label_niko_cale_notice_success: "データを更新しました"
   label_niko_cale_notice_error: "異常なデータです"
   label_niko_cale_feeling: "気分"
-  label_niko_cale_List: "気分一覧"
+  label_niko_cale_feeling_list: "気分一覧"
