@@ -15,8 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module FeelingsHelper
   def feeling_list option={}
-    title = ""
-    if (project = option[:project])
+    title = option[:title]
+    if title
+      return title
+    elsif (project = option[:project])
       title = project.name
     elsif (user = option[:user])
       title = user.name

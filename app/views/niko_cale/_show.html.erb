@@ -26,7 +26,7 @@
   </tr>
   <% @users.each do |user| %>
   <tr> 
-    <td bgcolor=<%=light_yellow%>><p align="center"><%= link_to_user user %><br><font color=black>(<%= @issues_count_per_user[user] %>)</font><br></td> 
+    <td bgcolor=<%=light_yellow%>><p align="center"><%= link_to_feeling_list(:user=>user, :title=>user.name) %><br><font color=black>(<%= @issues_count_per_user[user] %>)</font><br></td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <td bgcolor=<%= ((User.current == user) && (date == Date.today)) ? pink : "" %>>
