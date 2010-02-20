@@ -29,6 +29,7 @@ class FeelingsController < ApplicationController
     @feeling_pages, @feelings = paginate(:feeling, :per_page => 10, :conditions=>{:user_id=>users}, :order=>"at DESC")
     respond_to do |format|
       format.html { render :layout => false if request.xhr? }
+      format.atom { render_feed(@feelings, :title => l(:label_niko_cale_feeling)) }
     end
   end
   def show

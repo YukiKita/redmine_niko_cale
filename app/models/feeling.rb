@@ -17,6 +17,7 @@ class Feeling < ActiveRecord::Base
   FEELING_TYPES = ["bad", "ordinary", "good"]
   belongs_to :user
   validates_inclusion_of :level, :in=>0...FEELING_TYPES.size
+  acts_as_event :url => Proc.new {|o| {:controller => 'feelings', :action => 'show', :id => o.id}}, :datetime=>:at
 
   FEELING_TYPES.each do |f|
     class_eval "def #{f}?;self.level == #{FEELING_TYPES.index(f)};end"
@@ -34,6 +35,22 @@ end
   end
   def has_comment?
     (self.comment || false) && (!self.comment.empty?)
+  end
+  # for Atom feed
+  def project
+    self.at
+  end
+  # for Atom feed
+  def title
+    self.user.name
+  end
+  # for Atom feed
+  def author
+    self.user
+  end
+  # for Atom feed
+  def description
+    self.comment
   end
   def self.for(user)
     Feeling.find(:first, :conditions=>{:user_id=>user, :at=>Date.today}) || self.new{|f| f.at = Date.today; f.user = user}

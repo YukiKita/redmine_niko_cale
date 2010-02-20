@@ -19,6 +19,7 @@
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag "niko_cale.css", :plugin => "redmine_niko_cale", :media => "screen" %>
   <%= javascript_include_tag "bubble-tooltip.js", :plugin => "redmine_niko_cale" %>
+  <%= auto_discovery_link_tag(:atom, params.merge({:format => 'atom', :page => nil, :key => User.current.rss_key})) %>
 <% end %>
 <div id="bubble_tooltip">
 <div class="bubble_top"><span></span></div>
