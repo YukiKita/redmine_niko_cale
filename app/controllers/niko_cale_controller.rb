@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class NikoCaleController < ApplicationController
   unloadable
+  helper :feelings
   before_filter :find_project
 
   def index
