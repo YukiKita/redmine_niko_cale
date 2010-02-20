@@ -15,16 +15,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class NikoCaleController < ApplicationController
   unloadable
+  include FeelingsHelper
   helper :feelings
   before_filter :find_project
 
   def index
+    return authorize unless current_user_allowed?
     @selected_role_ids = find_givable_roles.map{|r| r.id}
     @todays_feeling = Feeling.for(User.current)
     update_information
     @feeling_submittable = feeling_submittable? @project, @givable_roles
   end
   def show
+    redirect_to(:action=>:index, :project_id=>@project) unless request.xhr?
     @selected_role_ids = get_selected_role_ids
     update_information
     render :partial=>"show"

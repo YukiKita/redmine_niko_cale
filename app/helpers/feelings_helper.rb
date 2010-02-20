@@ -68,4 +68,13 @@ module FeelingsHelper
   def with_baloon object, message=""
     '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
   end
+  def current_user_allowed?
+    current_user = User.current
+    return true if current_user.admin?
+    projects = current_user.projects
+    projects = [Project.find(:first)] if projects.empty?
+    projects.any? do |project|
+      current_user.allowed_to? :view_niko_cale, project
+    end
+  end
 end

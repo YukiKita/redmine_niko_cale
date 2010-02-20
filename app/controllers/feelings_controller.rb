@@ -18,6 +18,7 @@ class FeelingsController < ApplicationController
   include FeelingsHelper
 
   def index
+    return authorize unless current_user_allowed?
     project = find_project
     users = []
     if project
@@ -34,6 +35,7 @@ class FeelingsController < ApplicationController
     end
   end
   def show
+    return authorize unless current_user_allowed?
     begin
       @feeling = Feeling.find(params[:id])
     rescue ActiveRecord::RecordNotFound
