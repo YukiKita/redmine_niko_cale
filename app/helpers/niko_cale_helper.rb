@@ -14,21 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module NikoCaleHelper
-  def good_image title="", onclick=""
-    image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
-  end
-  def ordinary_image title="", onclick=""
-    image_tag("ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
-  end
-  def bad_image title="", onclick=""
-    image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
-  end
-  def null_image
-    "<br><br><br>"
-  end
-  def index_for feeling
-    h(feeling.at.to_s.gsub(/-/, "/")) + " (" + h(feeling.user.name) +")"
-  end
   def format_date date
     d = date.to_s.split("-")
     formatted_date = d[0] + "<br>" + d[1] + "/" + d[2]
@@ -60,22 +45,5 @@ module NikoCaleHelper
   end
   def light_gray
     "#DCDCDC"
-  end
-  def with_baloon object, message=""
-    '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
-  end
-  def comment_of feeling
-    [index_for(feeling), feeling.comment].map{|e| sanitize(e)}.join("<br>")
-  end
-  def image_for feeling
-    if feeling
-      image = feeling.good? ? good_image : (feeling.bad? ? bad_image : (feeling.ordinary? ? ordinary_image: null_image))
-      feeling.has_comment? ? with_baloon(image, comment_of(feeling)) : image
-    else
-      null_image
-    end
-  end
-  def link_to_feeling feeling
-    link_to image_for(feeling), :controller => "feelings", :action => "show", :id => feeling
   end
 end
