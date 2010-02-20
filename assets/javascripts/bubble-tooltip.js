@@ -31,7 +31,7 @@ function showToolTip(e,text){
 	obj2.innerHTML = text;
 	obj.style.display = 'block';
 	var st = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
-	if(navigator.userAgent.toLowerCase().indexOf('safari')>=0)st=0; 
+
 	var leftPos = e.clientX - 100;
 	if(leftPos<0)leftPos = 0;
 	obj.style.left = leftPos + 'px';
