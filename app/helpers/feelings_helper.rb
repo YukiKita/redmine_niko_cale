@@ -25,15 +25,15 @@ module FeelingsHelper
     else
       title = l(:label_niko_cale_all_users)
     end
-    "#{l(:label_niko_cale_feeling_list)} (#{h(title)})"
+    "#{l(:label_niko_cale_feeling_list)} (#{title})"
   end
   def link_to_feeling_list option={}
     if (project = option[:project])
-      link_to(feeling_list(option), {:controller=>:feelings, :action=>:index, :project_id=>project})
+      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index, :project_id=>project})
     elsif (user = option[:user])
-      link_to(feeling_list(option), {:controller=>:feelings, :action=>:index, :user_id=>user})
+      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index, :user_id=>user})
     else
-      link_to(feeling_list(option), {:controller=>:feelings, :action=>:index})
+      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index})
     end
   end
   def good_image title="", onclick=""

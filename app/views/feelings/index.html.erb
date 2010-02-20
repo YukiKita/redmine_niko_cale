@@ -18,7 +18,7 @@
 
 <%= render :partial=>'header' %>
 
-<h2><%= feeling_list @option %> </h2>
+<h2><%= h(feeling_list(@option)) %> </h2>
 <p align="right"><%= link_to_feeling_list() %></p>
 
 <% @feelings.each do |feeling| %>

@@ -15,7 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class FeelingsController < ApplicationController
   unloadable
-  helper :niko_cale
+  include FeelingsHelper
+
   def index
     project = find_project
     users = []
@@ -29,7 +30,7 @@ class FeelingsController < ApplicationController
     @feeling_pages, @feelings = paginate(:feeling, :per_page => 10, :conditions=>{:user_id=>users}, :order=>"at DESC")
     respond_to do |format|
       format.html { render :layout => false if request.xhr? }
-      format.atom { render_feed(@feelings, :title => l(:label_niko_cale_feeling)) }
+      format.atom { render_feed(@feelings, :title => feeling_list(@option)) }
     end
   end
   def show
