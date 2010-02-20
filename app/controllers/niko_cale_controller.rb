@@ -27,7 +27,7 @@ class NikoCaleController < ApplicationController
     @feeling_submittable = feeling_submittable? @project, @givable_roles
   end
   def show
-    redirect_to(:action=>:index, :project_id=>@project) unless request.xhr?
+    return redirect_to(:action=>:index, :project_id=>@project) unless request.xhr?
     @selected_role_ids = get_selected_role_ids
     update_information
     render :partial=>"show"
@@ -79,7 +79,11 @@ class NikoCaleController < ApplicationController
     end
   end
   def find_project
-    @project = Project.find(params[:project_id])
+    begin
+      @project = Project.find(params[:project_id])
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
   end
   def find_givable_roles
     Role.find_all_givable.select{|role| role.has_permission?(:submit_feeling)}
