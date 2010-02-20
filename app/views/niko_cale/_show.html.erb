@@ -12,8 +12,8 @@
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <td bgcolor=<%= ((User.current == user) && (date == Date.today)) ? pink : "" %>>
-	<p align="center"><%= link_to image_for(feeling), :controller => "feelings", :action => "show", :id => feeling %></td>
-    <% end %>
+	<p align="center"><%= link_to_feeling(feeling) %></td>
+      <% end %>
   </tr> 
   <% end %>
   <% unless @morales.empty? %>

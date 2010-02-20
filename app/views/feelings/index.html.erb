@@ -12,7 +12,7 @@
 <% @feelings.each do |feeling| %>
  <h4><%= index_for(feeling) %></h4>
   <ul>
-    <%= image_for(feeling) %>
+    <%= link_to_feeling(feeling) %>
   </ul>
  <% if feeling.has_comment? %>
    <p><%= h(feeling.comment) %></p>

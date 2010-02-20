@@ -75,4 +75,7 @@ module NikoCaleHelper
       null_image
     end
   end
+  def link_to_feeling feeling
+    link_to image_for(feeling), :controller => "feelings", :action => "show", :id => feeling
+  end
 end
