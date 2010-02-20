@@ -33,10 +33,11 @@ class FeelingsController < ApplicationController
   end
   private
   def find_project
+    return nil unless params[:project_id]
     begin
       Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
-      nil
+      render_404
     end
   end
   def find_users
