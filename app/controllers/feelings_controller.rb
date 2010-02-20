@@ -18,7 +18,7 @@ class FeelingsController < ApplicationController
   helper :niko_cale
   def index
     users = find_users
-    @feelings = Feeling.find(:all, :conditions=>{:user_id=>users}, :order=>"at DESC")
+    @feeling_pages, @feelings = paginate(:feeling, :per_page => 10, :conditions=>{:user_id=>users}, :order=>"at DESC")
     respond_to do |format|
       format.html {render}
     end

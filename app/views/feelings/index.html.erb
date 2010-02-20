@@ -23,3 +23,5 @@
 <% @feelings.each do |feeling| %>
   <%= render :partial=>'show', :locals=>{:feeling=>feeling} %>
 <% end %>
+
+<p class="pagination"><%= pagination_links @feeling_pages %></p>
