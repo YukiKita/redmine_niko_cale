@@ -36,6 +36,16 @@ module FeelingsHelper
       link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index})
     end
   end
+  def atom_conditions option={}
+    conditions = {:key => User.current.rss_key}
+    if (project = option[:project])
+      conditions[:project_id] = project.id
+    elsif (user = option[:user])
+      conditions[:user_id] = user.id
+    else
+    end
+    conditions
+  end
   def good_image title="", onclick=""
     image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
   end

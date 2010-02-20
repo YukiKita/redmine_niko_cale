@@ -29,3 +29,8 @@
 <% end %>
 
 <p class="pagination"><%= pagination_links_full @feeling_pages %></p>
+
+
+<% other_formats_links do |f| %>
+	<%= f.link_to 'Atom', :url => atom_conditions(@option) %>
+<% end %>
