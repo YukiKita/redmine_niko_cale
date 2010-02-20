@@ -17,6 +17,7 @@
 %>
 
 <h4><%= index_for(feeling, true) %></h4>
+<p align="right"><%= link_to_feeling_list(:user=>feeling.user) %>
   <ul>
     <%= link_to_feeling(feeling) %>
   </ul>
