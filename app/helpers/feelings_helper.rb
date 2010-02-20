@@ -46,8 +46,8 @@ module FeelingsHelper
   def null_image
     "<br><br><br>"
   end
-  def index_for feeling
-    h(feeling.at.to_s.gsub(/-/, "/")) + " (" + h(feeling.user.name) +")"
+  def index_for feeling, with_link=false
+    h(feeling.at.to_s.gsub(/-/, "/")) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
   end
   def comment_of feeling
     [index_for(feeling), feeling.comment].map{|e| sanitize(e)}.join("<br>")
