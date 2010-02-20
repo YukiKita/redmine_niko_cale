@@ -17,6 +17,7 @@ class FeelingsController < ApplicationController
   unloadable
   helper :niko_cale
   def index
+    @project = find_project
     users = find_users
     @feeling_pages, @feelings = paginate(:feeling, :per_page => 10, :conditions=>{:user_id=>users}, :order=>"at DESC")
     respond_to do |format|
@@ -31,8 +32,15 @@ class FeelingsController < ApplicationController
     end
   end
   private
+  def find_project
+    begin
+      Project.find(params[:project_id])
+    rescue ActiveRecord::RecordNotFound
+      nil
+    end
+  end
   def find_users
-    project_id = Project.find(params[:project_id] || :all)
+    project_id = @project || Project.find(:all)
     members = Member.find(:all, :conditions=>{:project_id => project_id})
     members.map{|member| member.user}
   end

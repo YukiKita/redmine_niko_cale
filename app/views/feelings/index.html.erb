@@ -18,7 +18,7 @@
 
 <%= render :partial=>'header' %>
 
-<h2><%= l(:label_niko_cale_feeling_list) %> </h2>
+<h2><%= l(:label_niko_cale_feeling_list) %> <%= @project ? (" (" + h(@project.name) + ")") : "" %> </h2>
 
 <% @feelings.each do |feeling| %>
   <%= render :partial=>'show', :locals=>{:feeling=>feeling} %>
