@@ -20,7 +20,7 @@ class FeelingsController < ApplicationController
     users = find_users
     @feeling_pages, @feelings = paginate(:feeling, :per_page => 10, :conditions=>{:user_id=>users}, :order=>"at DESC")
     respond_to do |format|
-      format.html {render}
+      format.html { render :layout => false if request.xhr? }
     end
   end
   def show
