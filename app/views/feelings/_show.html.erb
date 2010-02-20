@@ -1,0 +1,7 @@
+<h4><%= index_for(feeling) %></h4>
+  <ul>
+    <%= link_to_feeling(feeling) %>
+  </ul>
+ <% if feeling.has_comment? %>
+   <p><%= h(feeling.comment) %></p>
+<% end %>
