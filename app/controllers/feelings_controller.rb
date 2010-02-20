@@ -17,7 +17,11 @@ class FeelingsController < ApplicationController
   unloadable
   helper :niko_cale
   def index
-    @feelings = Feeling.find([2, 4])
+    users = find_users
+    @feelings = Feeling.find(:all, :conditions=>{:user_id=>users})
+    respond_to do |format|
+      format.html {render}
+    end
   end
   def show
     begin
@@ -25,5 +29,11 @@ class FeelingsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render_404
     end
+  end
+  private
+  def find_users
+    project_id = Project.find(params[:project_id] || :all)
+    members = Member.find(:all, :conditions=>{:project_id => project_id})
+    members.map{|member| member.user}
   end
 end
