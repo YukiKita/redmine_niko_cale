@@ -132,4 +132,19 @@ class FeelingTest < ActiveSupport::TestCase
     assert feeling.good(" ").has_comment?
     assert feeling.good("1     2").has_comment?
   end
+  test "self.for(date)" do
+    assert Feeling.clean!
+    assert_equal Feeling.for(User.find(1)).at, Date.today
+    Feeling.for(User.find(1)).good!
+    assert_equal Feeling.for(User.find(1)).at, Date.today
+
+    assert_equal Feeling.for(User.find(1), (Date.today - 1)).at, (Date.today - 1)
+    Feeling.for(User.find(1), (Date.today - 1)).good!
+    assert_equal Feeling.for(User.find(1), (Date.today - 1)).at, (Date.today - 1)
+
+    assert_equal Feeling.for(User.find(1), (Date.today - 1.years)).at, (Date.today - 1.years)
+    Feeling.for(User.find(1), (Date.today - 1.years)).good!
+    assert_equal Feeling.for(User.find(1), (Date.today - 1.years)).at, (Date.today - 1.years)
+    assert Feeling.clean!
+  end
 end
