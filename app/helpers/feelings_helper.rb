@@ -59,7 +59,7 @@ module FeelingsHelper
     "<br><br><br>"
   end
   def index_for feeling, with_link=false
-    h(feeling.at.to_s.gsub(/-/, "/")) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
+    h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
   end
   def comment_of feeling
     [index_for(feeling), feeling.comment].map{|e| sanitize(e)}.join("<br>")
@@ -77,5 +77,22 @@ module FeelingsHelper
   end
   def with_baloon object, message=""
     '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
+  end
+  def format_date date
+    date.to_s.gsub(/-/, "/")
+  end
+  def format_date_with_color date
+    d = date.to_s.split("-")
+    formatted_date = d[0] + "<br>" + d[1] + "/" + d[2]
+    color = ""
+    case date.wday
+    when 6  
+      color = "blue"
+    when 0
+      color = "red"
+    else
+      color = "black"
+    end     
+    '<font color="' + color + '">' + formatted_date + "</font>"
   end
 end

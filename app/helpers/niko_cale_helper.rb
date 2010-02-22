@@ -14,20 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module NikoCaleHelper
-  def format_date date
-    d = date.to_s.split("-")
-    formatted_date = d[0] + "<br>" + d[1] + "/" + d[2]
-    color = ""
-    case date.wday
-    when 6  
-      color = "blue"
-    when 0
-      color = "red"
-    else
-      color = "black"
-    end     
-    '<font color="' + color + '">' + formatted_date + "</font>"
-  end
   def gray
     "#C4CACC"
   end
