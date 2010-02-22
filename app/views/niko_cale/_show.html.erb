@@ -30,7 +30,13 @@
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <td bgcolor=<%= ((User.current == user) && (date == Date.today)) ? pink : "" %>>
-	<p align="center"><%= link_to_feeling(feeling) %></td>
+	<p align="center">
+	  <% if feeling.nil? && (User.current == user) && editable?(date) %>
+	    <%= link_to "Add", {:controller=>:feelings, :action=>:edit, :date=>date, :project_id=>@project.id} %>
+	  <% else %>
+            <%= link_to_feeling(feeling) %>
+	  <% end %>
+      </td>
       <% end %>
   </tr> 
   <% end %>
