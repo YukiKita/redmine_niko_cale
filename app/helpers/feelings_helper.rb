@@ -58,6 +58,9 @@ module FeelingsHelper
   def null_image
     "<br><br><br>"
   end
+  def add_image
+    image_tag("add.png")
+  end
   def index_for feeling, with_link=false
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
   end
