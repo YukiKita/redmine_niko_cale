@@ -21,6 +21,9 @@
   <ul>
     <%= link_to_feeling(feeling) %>
   </ul>
- <% if feeling.has_comment? %>
+<% if feeling.has_comment? %>
    <p><%= h(feeling.comment) %></p>
+<% end %>
+<% if editable?(feeling.at) %>
+   <p><%= button_to "Edit", {:action=>:edit, :date=>feeling.at}  %></p>
 <% end %>
