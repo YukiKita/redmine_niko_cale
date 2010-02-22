@@ -75,8 +75,8 @@ module FeelingsHelper
       null_image
     end
   end
-  def link_to_feeling feeling
-    link_to image_for(feeling), :controller => "feelings", :action => "show", :id => feeling
+  def link_to_feeling feeling, project_id=nil
+    link_to image_for(feeling), :controller => "feelings", :action => "show", :id => feeling, :project_id=>project_id
   end
   def with_baloon object, message=""
     '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'

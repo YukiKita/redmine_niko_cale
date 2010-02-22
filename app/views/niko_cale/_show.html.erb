@@ -34,7 +34,7 @@
 	  <% if feeling.nil? && (User.current == user) && editable?(date) %>
 	    <%= link_to add_image, {:controller=>:feelings, :action=>:edit, :date=>date, :project_id=>@project.id} %>
 	  <% else %>
-            <%= link_to_feeling(feeling) %>
+            <%= link_to_feeling(feeling, @project.id) %>
 	  <% end %>
       </td>
       <% end %>
