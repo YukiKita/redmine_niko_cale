@@ -16,14 +16,13 @@
 class FeelingsController < ApplicationController
   unloadable
   include FeelingsHelper
-  before_filter :authorize_global
+  before_filter :find_project, :authorize_global
 
   def index
-    project = find_project
     users = []
-    if project
-      users = find_users_for project
-      @option = {:project=>project}
+    if @project
+      users = find_users_for @project
+      @option = {:project=>@project}
     else
       users = find_users
       @option = (users.size == 1) ? {:user=>users.first} : {}
@@ -44,7 +43,6 @@ class FeelingsController < ApplicationController
   def edit
     @date = find_date
     @feeling = Feeling.for(User.current, @date)
-    @project = find_project
   end
   def update
     @date = find_date
@@ -63,7 +61,6 @@ class FeelingsController < ApplicationController
     else
       flash[:error] = l(:label_niko_cale_notice_error)
     end
-    @project = find_project
     if @project
       redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project)
     else
@@ -82,9 +79,9 @@ class FeelingsController < ApplicationController
     date
   end
   def find_project
-    return nil unless params[:project_id]
+    return unless params[:project_id]
     begin
-      Project.find(params[:project_id])
+      @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render_404
     end
