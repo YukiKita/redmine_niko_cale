@@ -20,7 +20,10 @@
 
 <h3><%= l(:label_niko_cale_how_do_you_feel) %> (<%= h(format_date(@date)) %>)</h3>
 <% form_tag({:action=>:update, :controller=>:feelings}, {:id=>:update_feeling, :method=>:put}) do %>
-   <%= hidden_field_tag 'project_id', @project.id %>
+   <% if @project %>
+     <%= hidden_field_tag 'project_id', @project.id %>
+   <% end %>    
+   <%= hidden_field_tag 'date', @date %>
    <table border="0">
      <tr>
        <td><%= good_image(l(:label_niko_cale_good), "document.forms.update_feeling.level[0].click()") %></td>

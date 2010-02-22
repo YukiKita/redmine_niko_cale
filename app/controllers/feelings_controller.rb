@@ -43,12 +43,12 @@ class FeelingsController < ApplicationController
   end
   def edit
     @date = find_date
-    return render_404 unless @date
-    @feeling = Feeling.for(User.current, find_date)
+    @feeling = Feeling.for(User.current, @date)
     @project = find_project
   end
   def update
-    feeling = Feeling.for(User.current)
+    @date = find_date
+    feeling = Feeling.for(User.current, @date)
     comment = (params[:comment] || "").strip
     case params[:level]
     when "0"
@@ -67,7 +67,7 @@ class FeelingsController < ApplicationController
     if @project
       redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project)
     else
-      redirect_to(:action=>:show, :id=>feeling)
+      redirect_to(:action=>:show, :id=>feeling.id)
     end
   end
 
@@ -79,7 +79,7 @@ class FeelingsController < ApplicationController
       date = Date.today
     end
     delta = (Date.today - date)
-    return nil unless  ((0 <= delta) && (delta < 3))
+    return render_404 unless  ((0 <= delta) && (delta < 3))
     date
   end
   def find_project
