@@ -17,10 +17,9 @@ class NikoCaleController < ApplicationController
   unloadable
   include FeelingsHelper
   helper :feelings
-  before_filter :find_project
+  before_filter :find_project, :authorize_global
 
   def index
-    return authorize unless current_user_allowed?
     @selected_role_ids = find_givable_roles.map{|r| r.id}
     @todays_feeling = Feeling.for(User.current)
     update_information
