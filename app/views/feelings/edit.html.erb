@@ -19,7 +19,7 @@
 <%= render :partial=>'header' %>
 
 <h3><%= l(:label_niko_cale_how_do_you_feel) %> (<%= h(format_date(@date)) %>)</h3>
-<% form_tag({:action=>:update, :controller=>:feelings}, {:id=>:update_feeling, :method=>:put}) do %>
+<% form_tag({:action=>:edit, :controller=>:feelings}, {:id=>:update_feeling, :method=>:put}) do %>
    <% if @project %>
      <%= hidden_field_tag 'project_id', @project.id %>
    <% end %>    

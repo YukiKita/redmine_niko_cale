@@ -43,28 +43,26 @@ class FeelingsController < ApplicationController
   def edit
     @date = find_date
     @feeling = Feeling.for(User.current, @date)
-  end
-  def update
-    @date = find_date
-    feeling = Feeling.for(User.current, @date)
-    comment = (params[:comment] || "").strip
-    case params[:level]
-    when "0"
-      feeling.bad!(comment)
-      flash[:notice] = l(:label_niko_cale_notice_success)
-    when "1"
-      feeling.ordinary!(comment)
-      flash[:notice] = l(:label_niko_cale_notice_success)
-    when "2"
-      feeling.good!(comment)
-      flash[:notice] = l(:label_niko_cale_notice_success)
-    else
-      flash[:error] = l(:label_niko_cale_notice_error)
-    end
-    if @project
-      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project)
-    else
-      redirect_to(:action=>:show, :id=>feeling.id)
+    if request.put?
+      comment = (params[:comment] || "").strip
+      case params[:level]
+      when "0"
+        @feeling.bad!(comment)
+        flash[:notice] = l(:label_niko_cale_notice_success)
+      when "1"
+        @feeling.ordinary!(comment)
+        flash[:notice] = l(:label_niko_cale_notice_success)
+      when "2"
+        @feeling.good!(comment)
+        flash[:notice] = l(:label_niko_cale_notice_success)
+      else
+        flash[:error] = l(:label_niko_cale_notice_error)
+      end
+      if @project
+        redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project)
+      else
+        redirect_to(:action=>:show, :id=>@feeling.id)
+      end
     end
   end
 
