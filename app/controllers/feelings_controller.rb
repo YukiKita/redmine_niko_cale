@@ -43,7 +43,9 @@ class FeelingsController < ApplicationController
   end
   def edit
     @date = find_date
+    return render_404 unless @date
     @feeling = Feeling.for(User.current, find_date)
+    @project = find_project
   end
   def update
     feeling = Feeling.for(User.current)
@@ -72,10 +74,13 @@ class FeelingsController < ApplicationController
   private
   def find_date
     begin
-      params[:date].to_date
+      date = params[:date].to_date
     rescue ArgumentError, NoMethodError
-      Date.today
+      date = Date.today
     end
+    delta = (Date.today - date)
+    return nil unless  ((0 <= delta) && (delta < 3))
+    date
   end
   def find_project
     return nil unless params[:project_id]
