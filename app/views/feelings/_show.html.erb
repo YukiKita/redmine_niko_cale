@@ -25,5 +25,5 @@
    <p><%= h(feeling.comment) %></p>
 <% end %>
 <% if editable?(feeling.at) %>
-   <p><%= button_to l(:button_edit), {:action=>:edit, :date=>feeling.at, :project_id=>(@project ? @project.id : nil)}  %></p>
+   <p><%= link_to edit_image, {:action=>:edit, :date=>feeling.at, :project_id=>(@project ? @project.id : nil)}  %></p>
 <% end %>
