@@ -59,7 +59,7 @@ module FeelingsHelper
     "<br><br><br>"
   end
   def add_image
-    image_tag("add.png")
+    image_tag("add.png", {:plugin=>:redmine_niko_cale, :title=>l(:button_add)})
   end
   def index_for feeling, with_link=false
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
