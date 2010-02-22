@@ -39,7 +39,7 @@
 	</table>
         <p><%= l(:label_niko_cale_comment) %><br>
 	<%= text_field_tag :comment, (@todays_feeling.comment || ""), :size=>"24"  %></p>
-        <%= submit_tag l(:label_niko_cale_submit), :class => 'button-small', :name => nil %>
+        <%= submit_tag l(:button_save), :class => 'button-small', :name => nil %>
     <% end %>
   <% end %>
 

@@ -25,5 +25,5 @@
    <p><%= h(feeling.comment) %></p>
 <% end %>
 <% if editable?(feeling.at) %>
-   <p><%= button_to "Edit", {:action=>:edit, :date=>feeling.at}  %></p>
+   <p><%= button_to l(:button_edit), {:action=>:edit, :date=>feeling.at}  %></p>
 <% end %>
