@@ -32,7 +32,7 @@
       <td bgcolor=<%= ((User.current == user) && (date == Date.today)) ? pink : "" %>>
 	<p align="center">
 	  <% if feeling.nil? && (User.current == user) && editable?(date) %>
-	    <%= link_to "Add", {:controller=>:feelings, :action=>:edit, :date=>date, :project_id=>@project.id} %>
+	    <%= link_to image_tag("add.png"), {:controller=>:feelings, :action=>:edit, :date=>date, :project_id=>@project.id} %>
 	  <% else %>
             <%= link_to_feeling(feeling) %>
 	  <% end %>
