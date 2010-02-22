@@ -24,7 +24,7 @@ Redmine::Plugin.register :redmine_niko_cale do
 
   project_module :niko_cale do
     permission :view_niko_cale, {:niko_cale => [:index, :show], :feelings=>[:index, :show]}
-    permission :submit_feeling, {:niko_cale => [:submit_feeling], :feelings=>[:edit, :update]}
+    permission :submit_feeling, {:niko_cale => [:submit_feeling], :feelings=>[:edit, :update]},  :require=>:member
   end
 
   menu :project_menu, :niko_cale, {:controller => 'niko_cale', :action => 'index'}, :caption => :label_niko_cale, :param => :project_id
