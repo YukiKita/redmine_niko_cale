@@ -100,6 +100,6 @@ module FeelingsHelper
   end
   def editable?(date)
     delta = (Date.today - date)
-    ((0 <= delta) && (delta < 3))
+    ((0 <= delta) && (delta < 7))
   end
 end

@@ -21,33 +21,13 @@ class NikoCaleController < ApplicationController
 
   def index
     @selected_role_ids = find_givable_roles.map{|r| r.id}
-    @todays_feeling = Feeling.for(User.current)
     update_information
-    @feeling_submittable = feeling_submittable? @project, @givable_roles
   end
   def show
     return redirect_to(:action=>:index, :project_id=>@project) unless request.xhr?
     @selected_role_ids = get_selected_role_ids
     update_information
     render :partial=>"show"
-  end
-  def submit_feeling
-    feeling = Feeling.for(User.current)
-    comment = (params[:comment] || "").strip
-    case params[:level]
-    when "0"
-      feeling.bad!(comment)
-      flash[:notice] = l(:label_niko_cale_notice_success)
-    when "1"
-      feeling.ordinary!(comment)
-      flash[:notice] = l(:label_niko_cale_notice_success)
-    when "2"
-      feeling.good!(comment)
-      flash[:notice] = l(:label_niko_cale_notice_success)
-    else
-      flash[:error] = l(:label_niko_cale_notice_error)
-    end
-    redirect_to(:action=>:index, :project_id=>@project)
   end
   private
   def update_information
@@ -66,15 +46,6 @@ class NikoCaleController < ApplicationController
       result[user] = issues
       result[:morale] = (result[:morale] || 0) + issues
       result
-    end
-  end
-  def feeling_submittable? project, givable_roles
-    current_user = User.current
-    current_member = project.members.detect{|m| m.user == current_user}
-    if current_member
-      (!(givable_roles & current_member.roles).empty?)
-    else
-      false
     end
   end
   def find_project
