@@ -78,8 +78,7 @@ class FeelingsController < ApplicationController
     rescue ArgumentError, NoMethodError
       date = Date.today
     end
-    delta = (Date.today - date)
-    return render_404 unless  ((0 <= delta) && (delta < 3))
+    return render_404 unless editable?(date)
     date
   end
   def find_project
