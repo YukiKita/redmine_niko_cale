@@ -64,6 +64,9 @@ module FeelingsHelper
   def edit_image
     image_tag("edit.png") + l(:button_update)
   end
+  def delete_image
+    image_tag("delete.png") + l(:button_delete)
+  end
   def index_for feeling, with_link=false
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
   end
