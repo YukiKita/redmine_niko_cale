@@ -41,6 +41,7 @@ class FeelingsController < ApplicationController
     end
   end
   def preview
+    return unless request.xhr?
     @date = find_date
     @feeling = Feeling.for(User.current, @date)
     set_attributes_for @feeling
