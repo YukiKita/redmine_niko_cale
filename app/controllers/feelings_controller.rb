@@ -40,6 +40,12 @@ class FeelingsController < ApplicationController
       render_404
     end
   end
+  def preview
+    @date = find_date
+    @feeling = Feeling.for(User.current, @date)
+    set_attributes_for @feeling
+    render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
+  end
   def edit
     @date = find_date
     @feeling = Feeling.for(User.current, @date)
@@ -49,20 +55,9 @@ class FeelingsController < ApplicationController
       @feeling.destroy
       flash[:notice] = l(:notice_successful_delete)
     else
-      comment = (params[:comment] || "").strip
-      case params[:level]
-      when "0"
-        @feeling.bad!(comment)
-        flash[:notice] = l(:notice_successful_update)
-      when "1"
-        @feeling.ordinary!(comment)
-        flash[:notice] = l(:notice_successful_update)
-      when "2"
-        @feeling.good!(comment)
-        flash[:notice] = l(:notice_successful_update)
-      else
-        render_404
-      end
+      render_404 unless set_attributes_for(@feeling)
+      @feeling.save
+      flash[:notice] = l(:notice_successful_update)
     end
     if @project
       redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project)
@@ -72,6 +67,19 @@ class FeelingsController < ApplicationController
   end
 
   private
+  def set_attributes_for feeling
+    comment = (params[:comment] || "").strip
+    case params[:level]
+    when "0"
+      feeling.bad(comment)
+    when "1"
+      feeling.ordinary(comment)
+    when "2"
+      feeling.good(comment)
+    else
+      nil
+    end
+  end
   def find_date
     begin
       date = params[:date].to_date

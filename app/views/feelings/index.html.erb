@@ -25,7 +25,7 @@
 <p align="right"><%= link_to_feeling_list() %></p>
 
 <% @feelings.each do |feeling| %>
-  <%= render :partial=>'show', :locals=>{:feeling=>feeling} %>
+  <%= render :partial=>'show', :locals=>{:feeling=>feeling, :preview=>false} %>
 <% end %>
 
 <p class="pagination"><%= pagination_links_full @feeling_pages %></p>

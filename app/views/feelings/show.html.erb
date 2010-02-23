@@ -21,5 +21,5 @@
 <h2><%= l(:label_niko_cale_feeling) %> </h2>
 
 <% if @feeling %>
-  <%= render :partial=>'show', :locals=>{:feeling=>@feeling} %>
+  <%= render :partial=>'show', :locals=>{:feeling=>@feeling, :preview=>false} %>
 <% end %>
