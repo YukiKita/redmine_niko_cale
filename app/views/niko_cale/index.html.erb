@@ -22,7 +22,7 @@
 <% end %>
 <% content_for :sidebar do %>
   <% form_tag({:action=>"show"}, {:method=>:get, :id=>"scope"}) do %>
-  <h3><%= l(:label_niko_cale_scope) %></h3>
+  <h3><%= l(:label_display) %></h3>
     <%= hidden_field_tag 'project_id', @project.id %>
     <% @givable_roles.each do |role| %>
       <label><%= check_box_tag "role_ids[]", role.id, (@selected_role_ids.include? role.id), :id => nil %>
@@ -30,12 +30,12 @@
     <% end %>
     <% if @project.descendants.active.any? %>
       <%= hidden_field_tag 'with_subprojects', 0 %>
-      <label><%= check_box_tag 'with_subprojects', 1, @with_subprojects %> <%=l(:label_niko_cale_show_subprojects_members) %></label>
+      <label><%= check_box_tag 'with_subprojects', 1, @with_subprojects %> <%=l(:label_subproject_plural) %></label>
     <% end %>
     <p>
     <%= hidden_field_tag :date_scope, @dates.last, :size=>'10' %>
     <%= calendar_for("date_scope") %>
-    <%=l(:label_niko_cale_date_scope)%>
+    <%=l(:label_date)%>
     </p>
   <% end %>
   <%= observe_form("scope", {:frequency=>0.5, :update=>"niko_niko_calender",  :url=>{:action=>"show"}, :method=>:get})  %>
