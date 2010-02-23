@@ -61,7 +61,7 @@ class FeelingsController < ApplicationController
         @feeling.good!(comment)
         flash[:notice] = l(:notice_successful_update)
       else
-        flash[:error] = l(:label_niko_cale_notice_error)
+        render_404
       end
     end
     if @project
