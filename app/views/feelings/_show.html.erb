@@ -19,7 +19,7 @@
 <h4><%= index_for(feeling, true) %></h4>
 <p align="right"><%= link_to_feeling_list(:user=>feeling.user) %>
   <ul>
-    <%= link_to_feeling(feeling) %>
+    <%= link_to_feeling(feeling, @project ? @project.id : nil) %>
   </ul>
 <% if feeling.has_comment? %>
    <p><%= h(feeling.comment) %></p>
