@@ -41,7 +41,7 @@ class FeelingsController < ApplicationController
     end
   end
   def preview
-    return unless request.xhr?
+    return render_404 unless request.xhr?
     @date = find_date
     @feeling = Feeling.for(User.current, @date)
     set_attributes_for @feeling
@@ -56,7 +56,7 @@ class FeelingsController < ApplicationController
       @feeling.destroy
       flash[:notice] = l(:notice_successful_delete)
     else
-      render_404 unless set_attributes_for(@feeling)
+      return render_404 unless set_attributes_for(@feeling)
       @feeling.save
       flash[:notice] = l(:notice_successful_update)
     end
