@@ -43,5 +43,7 @@ class NikoCaleControllerTest < ActionController::TestCase
       __send__ m, :show, {:project_id=>1}
       assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
     end
+    xhr :get, :index, :project_id=>1
+    assert_response(:success)
   end
 end
