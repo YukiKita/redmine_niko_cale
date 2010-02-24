@@ -47,13 +47,14 @@ class FeelingsControllerTest < ActionController::TestCase
   end
   def test_edit
     @request.session[:user_id] = 1
-    #get
     get :edit, :date=>Date.today
     assert_response(:success)
     assert_template "edit"
     get :edit, :date=>Date.today, :project_id=>0
     assert_response(404)
-    #put
+  end
+  def test_put
+    @request.session[:user_id] = 1
     put :edit, :date=>Date.today
     assert_response(404)
     put :edit, :date=>Date.today, :level=>3, :comment=>"aaa"
@@ -65,10 +66,22 @@ class FeelingsControllerTest < ActionController::TestCase
   end
   def test_delete
     @request.session[:user_id] = 1
-    #delete
     delete :edit, :date=>Date.today
     assert_redirected_to(:controller=>:feelings, :action=>:index, :user_id=>1)
     delete :edit, :date=>Date.today, :project_id=>1
     assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
+  end
+  def test_preview
+    @request.session[:user_id] = 1
+    [:put, :get, :delete, :post].each do |m|
+      __send__ m, :preview
+      assert_response(404)
+    end
+    xhr :get, :edit, :date=>Date.today - 7
+    assert_response(404)
+    xhr :get, :edit, :date=>Date.today + 1 
+    assert_response(404)
+    xhr :get, :edit, :date=>Date.today 
+    assert_response(:success)
   end
 end
