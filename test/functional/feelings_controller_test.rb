@@ -14,10 +14,33 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 require File.dirname(__FILE__) + '/../test_helper'
+require 'feelings_controller'
+
+# Re-raise errors caught by the controller.
+class FeelingsController; def rescue_action(e) raise e end; end
 
 class FeelingsControllerTest < ActionController::TestCase
+  fixtures :projects, :users, :members, :member_roles, :roles, :enabled_modules, :feelings
+
+  def setup
+    @controller = FeelingsController.new
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+    User.current = User.find(1)
+    def @controller.authorize_global
+    end
+  end
+
   # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_show
+    @request.session[:user_id] = 1
+    get :show, :id=>1, :project_id=>1
+    assert_response(:success)
+    get :show, :id=>1
+    assert_response(:success)
+    get :show, :id=>1, :project_id=>0
+    assert_response(404)
+    get :show, :id=>0, :project_id=>1
+    assert_response(404)
   end
 end
