@@ -14,10 +14,34 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 require File.dirname(__FILE__) + '/../test_helper'
+require 'niko_cale_controller'
+
+# Re-raise errors caught by the controller.
+class NikoCaleController; def rescue_action(e) raise e end; end
 
 class NikoCaleControllerTest < ActionController::TestCase
   # Replace this with your real tests.
-  def test_truth
-    assert true
+  def setup
+    @controller = NikoCaleController.new
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+    User.current = User.find(1)
+    def @controller.authorize_global
+    end
+  end
+  def test_index
+    get :index
+    assert_response(404)
+    get :index, :project_id=>0
+    assert_response(404)
+    get :index, :project_id=>1
+    assert_response(:success)
+    assert_template "index"
+  end
+  def test_show
+    [:put, :get, :delete, :post].each do |m|
+      __send__ m, :show, {:project_id=>1}
+      assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
+    end
   end
 end

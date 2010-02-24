@@ -30,8 +30,6 @@ class FeelingsControllerTest < ActionController::TestCase
     def @controller.authorize_global
     end
   end
-
-  # Replace this with your real tests.
   def test_show
     @request.session[:user_id] = 1
     get :show, :id=>1, :project_id=>1

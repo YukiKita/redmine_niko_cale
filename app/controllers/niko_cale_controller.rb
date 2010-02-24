@@ -24,7 +24,7 @@ class NikoCaleController < ApplicationController
     update_information
   end
   def show
-    return redirect_to(:action=>:index, :project_id=>@project) unless request.xhr?
+    return redirect_to(:action=>:index, :project_id=>@project.id) unless request.xhr?
     @selected_role_ids = get_selected_role_ids
     update_information
     render :partial=>"show"
