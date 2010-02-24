@@ -90,10 +90,16 @@ class FeelingsControllerTest < ActionController::TestCase
     assert_response(404)
     get :index, :user_id=>0
     assert_response(404)
+    get :index
+    assert_response(:success)
+    assert_template "index"
     get :index, :project_id=>1 
     assert_response(:success)
     assert_template "index"
     get :index, :user_id=>1 
+    assert_response(:success)
+    assert_template "index"
+    xhr :get, :index
     assert_response(:success)
     assert_template "index"
     xhr :get, :index, :project_id=>1 
