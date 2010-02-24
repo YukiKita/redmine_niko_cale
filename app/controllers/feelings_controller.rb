@@ -25,6 +25,7 @@ class FeelingsController < ApplicationController
       @option = {:project=>@project}
     else
       users = find_users
+      return render_404 if users.empty?
       @option = (users.size == 1) ? {:user=>users.first} : {}
     end
     @feeling_pages, @feelings = paginate(:feeling, :per_page => 10, :conditions=>{:user_id=>users}, :order=>"at DESC")
@@ -104,10 +105,6 @@ class FeelingsController < ApplicationController
   end
   def find_users
     return User.find(:all) unless params[:user_id]
-    begin
-      User.find(:all, :conditions=>{:id=>params[:user_id]})
-    rescue ActiveRecord::RecordNotFound
-      render_404
-    end
+    User.find(:all, :conditions=>{:id=>params[:user_id]})
   end
 end

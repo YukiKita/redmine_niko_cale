@@ -84,4 +84,23 @@ class FeelingsControllerTest < ActionController::TestCase
     xhr :get, :edit, :date=>Date.today 
     assert_response(:success)
   end
+  def test_index
+    @request.session[:user_id] = 1
+    get :index, :project_id=>0 
+    assert_response(404)
+    get :index, :user_id=>0
+    assert_response(404)
+    get :index, :project_id=>1 
+    assert_response(:success)
+    assert_template "index"
+    get :index, :user_id=>1 
+    assert_response(:success)
+    assert_template "index"
+    xhr :get, :index, :project_id=>1 
+    assert_response(:success)
+    assert_template "index"
+    xhr :get, :index, :user_id=>1 
+    assert_response(:success)
+    assert_template "index"
+  end
 end
