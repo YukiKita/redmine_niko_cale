@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module FeelingsHelper
+  def transparent_png_patch_include_tag
+    '<!--[if lt IE 7]>' + javascript_include_tag("unitpngfix.js", :plugin => "redmine_niko_cale") +  '<![endif]--> '
+  end
   def feeling_list option={}
     title = option[:title]
     if title

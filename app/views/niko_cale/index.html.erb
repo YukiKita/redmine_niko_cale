@@ -19,6 +19,7 @@
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag "niko_cale.css", :plugin => "redmine_niko_cale", :media => "screen" %>
   <%= javascript_include_tag "bubble-tooltip.js", :plugin => "redmine_niko_cale" %>
+  <%= transparent_png_patch_include_tag %>
 <% end %>
 <% content_for :sidebar do %>
   <% form_tag({:action=>"show"}, {:method=>:get, :id=>"scope"}) do %>
