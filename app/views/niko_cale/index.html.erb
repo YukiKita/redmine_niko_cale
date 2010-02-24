@@ -22,7 +22,7 @@
   <%= transparent_png_patch_include_tag %>
 <% end %>
 <% content_for :sidebar do %>
-  <% form_tag({:action=>"show"}, {:method=>:get, :id=>"scope"}) do %>
+  <% form_tag({:action=>"index"}, {:method=>:get, :id=>"scope"}) do %>
   <h3><%= l(:label_display) %></h3>
     <%= hidden_field_tag 'project_id', @project.id %>
     <% @givable_roles.each do |role| %>
@@ -39,7 +39,7 @@
     <%=l(:label_date)%>
     </p>
   <% end %>
-  <%= observe_form("scope", {:frequency=>0.5, :update=>"niko_niko_calender",  :url=>{:action=>"show"}, :method=>:get})  %>
+  <%= observe_form("scope", {:frequency=>0.5, :update=>"niko_niko_calender",  :url=>{:action=>"index"}, :method=>:get})  %>
 <% end %>
 
 <div id="bubble_tooltip">

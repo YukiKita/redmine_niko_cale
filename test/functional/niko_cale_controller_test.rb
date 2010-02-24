@@ -37,12 +37,6 @@ class NikoCaleControllerTest < ActionController::TestCase
     get :index, :project_id=>1
     assert_response(:success)
     assert_template "index"
-  end
-  def test_show
-    [:put, :get, :delete, :post].each do |m|
-      __send__ m, :show, {:project_id=>1}
-      assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
-    end
     xhr :get, :index, :project_id=>1
     assert_response(:success)
   end

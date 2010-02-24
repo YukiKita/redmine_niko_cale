@@ -20,14 +20,14 @@ class NikoCaleController < ApplicationController
   before_filter :find_project, :authorize_global
 
   def index
-    @selected_role_ids = find_givable_roles.map{|r| r.id}
-    update_information
-  end
-  def show
-    return redirect_to(:action=>:index, :project_id=>@project.id) unless request.xhr?
-    @selected_role_ids = get_selected_role_ids
-    update_information
-    render :partial=>"show"
+    if request.xhr?
+      @selected_role_ids = get_selected_role_ids
+      update_information
+      render :partial=>"show"
+    else
+      @selected_role_ids = find_givable_roles.map{|r| r.id}
+      update_information
+    end
   end
   private
   def update_information
