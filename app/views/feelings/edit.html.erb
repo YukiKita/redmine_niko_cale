@@ -40,7 +40,7 @@
   <p><%= text_field_tag :comment, (@feeling.comment || ""), :size=>48 %></p>
   <%= submit_tag l(:button_save), :class => 'button-small', :name => nil %>
   <%= link_to_remote l(:label_preview), 
-                   { :url => {:controller => :feelings, :action => :preview},
+                   { :url => {:controller => :feelings, :action => :edit},
                      :method => :post,
                      :update => :preview,
                      :with => "Form.serialize('update_feeling')"

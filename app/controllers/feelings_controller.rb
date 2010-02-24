@@ -41,34 +41,34 @@ class FeelingsController < ApplicationController
       render_404
     end
   end
-  def preview
-    return render_404 unless request.xhr?
-    @date = find_date
-    @feeling = Feeling.for(User.current, @date)
-    set_attributes_for @feeling
-    render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
-  end
   def edit
     @date = find_date
+    return render_404 unless @date
     @feeling = Feeling.for(User.current, @date)
-    if request.get?
-      return
+    if request.xhr?
+      return render_404 unless set_attributes_for @feeling
+      render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
+    elsif request.get?
     elsif request.delete?
       @feeling.destroy
       flash[:notice] = l(:notice_successful_delete)
+      redirect_to_index(@project)
     else
       return render_404 unless set_attributes_for(@feeling)
       @feeling.save
       flash[:notice] = l(:notice_successful_update)
-    end
-    if @project
-      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project.id)
-    else
-      redirect_to(:action=>:index, :user_id=>User.current)
+      redirect_to_index(@project)
     end
   end
 
   private
+  def redirect_to_index project
+    if project
+      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.id)
+    else
+      redirect_to(:action=>:index, :user_id=>User.current)
+    end
+  end
   def set_attributes_for feeling
     comment = (params[:comment] || "").strip
     case params[:level]
@@ -88,8 +88,7 @@ class FeelingsController < ApplicationController
     rescue ArgumentError, NoMethodError
       date = Date.today
     end
-    return render_404 unless editable?(date)
-    date
+    editable?(date) ? date : nil
   end
   def find_project
     return unless params[:project_id]

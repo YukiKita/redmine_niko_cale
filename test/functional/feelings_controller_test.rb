@@ -71,15 +71,13 @@ class FeelingsControllerTest < ActionController::TestCase
   end
   def test_preview
     @request.session[:user_id] = 1
-    [:put, :get, :delete, :post].each do |m|
-      __send__ m, :preview
-      assert_response(404)
-    end
-    xhr :get, :edit, :date=>Date.today - 7
+    xhr :post, :edit, :date=>Date.today + 1
     assert_response(404)
-    xhr :get, :edit, :date=>Date.today + 1 
+    xhr :post, :edit, :date=>Date.today - 7
     assert_response(404)
-    xhr :get, :edit, :date=>Date.today 
+    xhr :post, :edit, :date=>Date.today, :level=>3, :comment=>"aa"
+    assert_response(404)
+    xhr :post, :edit, :date=>Date.today, :level=>2, :comment=>"aa"
     assert_response(:success)
   end
   def test_index
