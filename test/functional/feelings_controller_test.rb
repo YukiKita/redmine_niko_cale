@@ -36,11 +36,30 @@ class FeelingsControllerTest < ActionController::TestCase
     @request.session[:user_id] = 1
     get :show, :id=>1, :project_id=>1
     assert_response(:success)
+    assert_template "show"
     get :show, :id=>1
     assert_response(:success)
+    assert_template "show"
     get :show, :id=>1, :project_id=>0
     assert_response(404)
     get :show, :id=>0, :project_id=>1
     assert_response(404)
+  end
+  def test_edit
+    @request.session[:user_id] = 1
+    get :edit, :date=>Date.today
+    assert_response(:success)
+    assert_template "edit"
+    get :edit, :date=>Date.today, :project_id=>0
+    assert_response(404)
+
+    put :edit, :date=>Date.today
+    assert_response(404)
+    put :edit, :date=>Date.today, :level=>3, :comment=>"aaa"
+    assert_response(404)
+    put :edit, :date=>Date.today, :level=>2, :comment=>"aaa"
+    assert_redirected_to(:controller=>:feelings, :action=>:index, :user_id=>1)
+    put :edit, :date=>Date.today, :level=>2, :comment=>"aaa", :project_id=>1
+    assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
   end
 end

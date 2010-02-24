@@ -61,7 +61,7 @@ class FeelingsController < ApplicationController
       flash[:notice] = l(:notice_successful_update)
     end
     if @project
-      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project)
+      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project.id)
     else
       redirect_to(:action=>:index, :user_id=>User.current)
     end
