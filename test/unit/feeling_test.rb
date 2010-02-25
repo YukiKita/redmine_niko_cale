@@ -19,7 +19,7 @@ class FeelingTest < ActiveSupport::TestCase
   test "feelings" do
     clean = lambda do
       assert Feeling.clean!
-      assert Feeling.find(:all).empty?
+      assert Feeling.all.empty?
     end
     clean[]
     assert Feeling.new
@@ -30,7 +30,7 @@ class FeelingTest < ActiveSupport::TestCase
     assert Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=0; f.user=User.find(1)}.save
     assert Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=1; f.user=User.find(1)}.save
     assert Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=2; f.user=User.find(1)}.save
-    assert_equal Feeling.find(:all).size, 3
+    assert_equal Feeling.all.size, 3
     assert_equal Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=3; f.user=User.find(1)}.save, false
     assert_equal Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=4; f.user=User.find(1)}.save, false
     assert_equal Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.user=User.find(1)}.save, false
@@ -46,7 +46,7 @@ class FeelingTest < ActiveSupport::TestCase
     assert Feeling.for(User.find(3)).ordinary!.ordinary?
     assert_equal Feeling.for(User.find(3)).good?, false
     assert_equal Feeling.for(User.find(3)).bad?, false
-    assert_equal Feeling.find(:all).size, 3
+    assert_equal Feeling.all.size, 3
     clean[]
   end
   test "exclude!" do
@@ -56,19 +56,19 @@ class FeelingTest < ActiveSupport::TestCase
     assert Feeling.new{|f| f.at=1.years.ago.to_date; f.comment="aa"; f.level=2; f.user=User.find(1)}.save
     assert Feeling.new{|f| f.at=6.months.ago.to_date; f.comment="aa"; f.level=2; f.user=User.find(1)}.save
     assert Feeling.new{|f| f.at=2.months.ago.to_date; f.comment="aa"; f.level=2; f.user=User.find(1)}.save
-    assert_equal Feeling.find(:all).size, 5
+    assert_equal Feeling.all.size, 5
     assert Feeling.exclude_before!((1.years + 1.days).ago.to_date)
-    assert_equal Feeling.find(:all).size, 5
+    assert_equal Feeling.all.size, 5
     assert Feeling.exclude_before!(1.years.ago.to_date)
-    assert_equal Feeling.find(:all).size, 2
+    assert_equal Feeling.all.size, 2
     assert Feeling.exclude_before!((6.months + 1.days).ago.to_date)
-    assert_equal Feeling.find(:all).size, 2
+    assert_equal Feeling.all.size, 2
     assert Feeling.exclude_before!((6.months + 0.days).ago.to_date)
-    assert_equal Feeling.find(:all).size, 1
+    assert_equal Feeling.all.size, 1
     assert Feeling.exclude_before!((2.months + 1.days).ago.to_date)
-    assert_equal Feeling.find(:all).size, 1
+    assert_equal Feeling.all.size, 1
     assert Feeling.exclude_before!((2.months + 0.days).ago.to_date)
-    assert_equal Feeling.find(:all).size, 0
+    assert_equal Feeling.all.size, 0
   end
   test "find_by_user_and_date_range" do
     assert Feeling.clean!
@@ -91,9 +91,9 @@ class FeelingTest < ActiveSupport::TestCase
     assert_equal Feeling.find_by_user_and_date_range(User.find(1), (Date.today - 13)..Date.today)[2].at, (Date.today - 11)
     assert_equal Feeling.find_by_user_and_date_range(User.find(1), (Date.today - 13)..Date.today)[12].at, (Date.today - 1)
     assert_equal Feeling.find_by_user_and_date_range(User.find(1), (Date.today - 13)..Date.today)[13].at, (Date.today - 0)
-    assert_equal Feeling.find(:all).size, 14
+    assert_equal Feeling.all.size, 14
     assert Feeling.clean!
-    assert_equal Feeling.find(:all).size, 0
+    assert_equal Feeling.all.size, 0
   end
   test "morale_test" do
     morale = Morale.new(:at => Date.today)
