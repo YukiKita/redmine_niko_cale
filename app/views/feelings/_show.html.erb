@@ -24,7 +24,7 @@
 <% if feeling.has_comment? %>
    <p><%= h(feeling.comment) %></p>
 <% end %>
-<% if editable?(feeling.at) && !preview %>
+<% if editable?(feeling) && !preview %>
    <p><%= link_to edit_image, {:action=>:edit, :date=>feeling.at, :project_id=>(@project ? @project.id : nil)}  %>
    <%= link_to delete_image, 
        {:action=>:edit, :date=>feeling.at, :project_id=>(@project ? @project.id : nil)},

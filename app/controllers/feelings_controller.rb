@@ -43,26 +43,28 @@ class FeelingsController < ApplicationController
   end
   def edit
     @date = find_date
-    return render_404 unless @date
     @feeling = Feeling.for(User.current, @date)
+    return render_404 unless editable?(@feeling)
     if request.xhr?
-      return render_404 unless set_attributes_for @feeling
-      render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
+      if set_attributes_for @feeling
+        render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
+      else
+        render_404 
+      end
     elsif request.get?
     elsif request.delete?
       @feeling.destroy
-      flash[:notice] = l(:notice_successful_delete)
       redirect_to_index(@project)
     else
       return render_404 unless set_attributes_for(@feeling)
       @feeling.save
-      flash[:notice] = l(:notice_successful_update)
       redirect_to_index(@project)
     end
   end
 
   private
   def redirect_to_index project
+    flash[:notice] = l(:notice_successful_update)
     if project
       redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.id)
     else
@@ -88,7 +90,6 @@ class FeelingsController < ApplicationController
     rescue ArgumentError, NoMethodError
       date = Date.today
     end
-    editable?(date) ? date : nil
   end
   def find_project
     return unless params[:project_id]

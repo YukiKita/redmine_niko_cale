@@ -31,7 +31,7 @@
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <td bgcolor=<%= ((User.current == user) && (date == Date.today)) ? pink : "" %>>
 	<p align="center">
-	  <% if feeling.nil? && (User.current == user) && editable?(date) %>
+	  <% if feeling.nil? && editable?(Feeling.for(user, date)) %>
 	    <%= link_to add_image, {:controller=>:feelings, :action=>:edit, :date=>date, :project_id=>@project.id} %>
 	  <% else %>
             <%= link_to_feeling(feeling, @project.id) %>

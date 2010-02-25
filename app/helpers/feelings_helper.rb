@@ -107,8 +107,8 @@ module FeelingsHelper
     end     
     '<font color="' + color + '">' + formatted_date + "</font>"
   end
-  def editable?(date)
-    delta = (Date.today - date)
-    ((0 <= delta) && (delta < 7))
+  def editable?(feeling)
+    delta = (Date.today - feeling.at)
+    ((0 <= delta) && (delta < 7)) && (User.current == feeling.user)
   end
 end
