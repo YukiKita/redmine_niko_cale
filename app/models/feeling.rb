@@ -53,7 +53,7 @@ end
     self.comment
   end
   def self.for(user, date = Date.today)
-    Feeling.find(:first, :conditions=>{:user_id=>user, :at=>date}) || self.new{|f| f.at = date; f.user = user}
+    Feeling.find_by_user_id_and_at(user, date) || self.new{|f| f.at = date; f.user = user}
   end
   def self.clean!
     Feeling.destroy_all
