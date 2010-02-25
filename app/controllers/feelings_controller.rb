@@ -100,11 +100,14 @@ class FeelingsController < ApplicationController
     end
   end
   def find_users_for project
-    members = Member.find(:all, :conditions=>{:project_id => project})
+    members = Member.find_all_by_project_id(project)
     members.map{|member| member.user}
   end
   def find_users
-    return User.find(:all) unless params[:user_id]
-    User.find(:all, :conditions=>{:id=>params[:user_id]})
+    if params[:user_id]
+      User.find_all_by_id(params[:user_id])
+    else
+      User.all 
+    end
   end
 end
