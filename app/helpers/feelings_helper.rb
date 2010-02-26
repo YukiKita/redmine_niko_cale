@@ -74,7 +74,7 @@ module FeelingsHelper
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
   end
   def comment_of feeling
-    [index_for(feeling), feeling.comment].map{|e| sanitize(e)}.join("<br>")
+    [index_for(feeling), feeling.comment].map{|e| sanitize(e)}.join("<br />").gsub(/\r\n|\r|\n/, "<br />")
   end
   def image_for feeling
     if feeling

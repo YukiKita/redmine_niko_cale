@@ -37,7 +37,7 @@
      </tr>
   </table>
   <p><%= l(:label_comment) %><br>
-  <p><%= text_field_tag :comment, (@feeling.comment || ""), :size=>48 %></p>
+  <p><%= text_area_tag :comment, (@feeling.comment || ""),  :cols=>48, :rows=>3 %></p>
   <%= submit_tag l(:button_save), :class => 'button-small', :name => nil %>
   <%= link_to_remote l(:label_preview), 
                    { :url => {:controller => :feelings, :action => :edit},
