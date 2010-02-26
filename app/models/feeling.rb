@@ -38,11 +38,12 @@ end
   end
   # for Atom feed
   def project
-    self.at
+    "#{self.at}(#{self.user.name})"
   end
   # for Atom feed
   def title
-    self.user.name
+    feeling = FEELING_TYPES[self.level]
+    "#{l(("label_niko_cale_" + feeling).to_sym)}"
   end
   # for Atom feed
   def author
