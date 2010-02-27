@@ -64,7 +64,7 @@ class FeelingsControllerTest < ActionController::TestCase
   end
   def test_delete
     @request.session[:user_id] = 1
-    Setting[:plugin_redmine_niko_cale] = "3"
+    Setting[:plugin_redmine_niko_cale]["retention_period"] = "3"
     f1 = Feeling.for(User.find(1), (3.months.ago.to_date + 1)).good!
     f2 = Feeling.for(User.find(1), (3.months.ago.to_date + 1)).good!
     f3 = Feeling.for(User.find(1), (3.months.ago.to_date - 1)).good!
