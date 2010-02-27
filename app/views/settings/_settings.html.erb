@@ -1,3 +1,4 @@
+<%
 # Niko-cale plugin for Redmine
 # Copyright (C) 2010  Yuki Kita
 #
@@ -13,20 +14,5 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-require 'redmine'
+%>
 
-Redmine::Plugin.register :redmine_niko_cale do
-  name 'Niko-niko Calender plugin'
-  author 'Yuki Kita'
-  description 'This is a plugin that makes member\'s feeling visible'
-  version '0.5.8'
-  requires_redmine :version_or_higher => '0.9.0'
-
-  project_module :niko_cale do
-    permission :view_feelings, {:niko_cale => [:index], :feelings=>[:index, :show]}
-    permission :edit_feelings, {:feelings=>:edit},  :require=>:member
-  end
-
-  menu :project_menu, :niko_cale, {:controller => 'niko_cale', :action => 'index'}, :caption => :label_niko_cale, :param => :project_id
-  settings :default => {'foo'=>'bar'}, :partial => 'settings/settings'
-end
