@@ -19,7 +19,7 @@
 <div id="niko_niko_calender" style="overflow-x:auto">
 <table border="1">
   <tr>
-   <th nowrap width="80" bgcolor=<%= light_blue %>><p align="center">
+   <th width="10%" bgcolor=<%= light_blue %>><p align="center">
       <%= previous_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
    </th>
    <% @dates.each do |date| %>
@@ -29,7 +29,7 @@
   </tr>
   <% @users.each do |user| %>
   <tr> 
-    <td bgcolor=<%=light_yellow%>>
+    <td nowrap bgcolor=<%=light_yellow%>>
        <p align="center"><%= link_to_feeling_list(:user=>user, :title=>user.name) %><br><font color=black>(<%= @issues_count_per_user[user] %>)</font><br>
     </td> 
     <% @dates.each do |date| %>
