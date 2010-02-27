@@ -29,7 +29,7 @@ options_for_select([[l(:label_all_time), "0"], months[3], months[6], months[9], 
 <td><%= l(:label_niko_cale_editable_period) %></td>
 <% days = lambda {|d| [time_ago_in_words(d.days.from_now), d.to_s]} %>
 <td><%= select_tag 'settings[editable_period]', 
-options_for_select([[l(:label_all_time), "0"], days[1], days[2], days[3], days[4], days[5], days[6], days[6], days[7]],
+options_for_select([[l(:label_all_time), "0"], days[1], days[2], days[3], days[4], days[5], days[6], days[7]],
     @settings["editable_period"]) %></td>
 </tr>
 </table>
