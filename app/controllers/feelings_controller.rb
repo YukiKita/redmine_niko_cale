@@ -54,16 +54,20 @@ class FeelingsController < ApplicationController
     elsif request.get?
     elsif request.delete?
       @feeling.destroy
-      redirect_to_index(@project)
+      after_edit(@project)
     else
       return render_404 unless set_attributes_for(@feeling)
       @feeling.save
-      redirect_to_index(@project)
+      after_edit(@project)
     end
   end
 
   private
-  def redirect_to_index project
+  def after_edit project
+    retention_period = (Setting[:plugin_redmine_niko_cale] || "0").to_i
+    unless retention_period == 0
+      Feeling.exclude_before!(retention_period.months.ago.to_date)
+    end
     flash[:notice] = l(:notice_successful_update)
     if project
       redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.id)
