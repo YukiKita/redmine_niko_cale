@@ -11,4 +11,5 @@ ja:
   label_niko_cale_feeling: "気分"
   label_niko_cale_feeling_list: "気分一覧"
   label_niko_cale_all_users: "全ユーザー"
-  label_niko_cale_retention_period: "気分の保存期間"
+  label_niko_cale_retention_period: "保存期間"
+  label_niko_cale_editable_period: "編集可能期間"

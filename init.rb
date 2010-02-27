@@ -28,5 +28,5 @@ Redmine::Plugin.register :redmine_niko_cale do
   end
 
   menu :project_menu, :niko_cale, {:controller => 'niko_cale', :action => 'index'}, :caption => :label_niko_cale, :param => :project_id
-  settings :default=>{"retention_period"=>"0"}, :partial => 'settings/settings'
+  settings :default=>{"retention_period"=>"0", "editable_period"=>"7"}, :partial => 'settings/settings'
 end

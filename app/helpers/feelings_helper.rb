@@ -108,7 +108,12 @@ module FeelingsHelper
     '<font color="' + color + '">' + formatted_date + "</font>"
   end
   def editable?(feeling)
-    delta = (Date.today - feeling.at)
-    ((0 <= delta) && (delta < 7)) && (User.current == feeling.user)
+    editable_period = Setting[:plugin_redmine_niko_cale]["editable_period"].to_i
+    if editable_period == 0
+      (User.current == feeling.user)
+    else
+      delta = (Date.today - feeling.at)
+      ((0 <= delta) && (delta < editable_period)) && (User.current == feeling.user)
+    end
   end
 end
