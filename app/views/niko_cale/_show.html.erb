@@ -17,11 +17,17 @@
 %>
 
 <div id="niko_niko_calender" style="overflow-x:auto">
-<p align="right">
-<%= image_tag("bullet_end.png", {:onclick=>('document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"')}) %>
-<%= image_tag("2uparrow.png", {:onclick=>('document.forms["scope"].date_scope.value = "' + Date.today.to_s + '"')}) %>
-<%= image_tag("bullet_go.png", {:onclick=>('document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"')}) %>
-</p>
+<table border="0" align="right">
+<td>
+<%= prev_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
+</td><td></td>
+<td>
+<%= today_image(l(:label_today), 'document.forms["scope"].date_scope.value = "' + Date.today.to_s + '"') %>
+</td><td></td>
+<td>
+<%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"') %>
+</td><td></td>
+</table>
 <table border="1">
   <tr>
    <th bgcolor=<%= light_blue %> nowrap><p align="center"><font color=black><%= l(:label_member) %><br>(<%= l(:label_niko_cale_issues_count) %>)</font><br></td>
