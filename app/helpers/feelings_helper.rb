@@ -50,13 +50,13 @@ module FeelingsHelper
     conditions
   end
   def good_image title="", onclick=""
-    image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
+    image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>"cursor: pointer;"})
   end
   def ordinary_image title="", onclick=""
-    image_tag("ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
+    image_tag("ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>"cursor: pointer;"})
   end
   def bad_image title="", onclick=""
-    image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick})
+    image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>"cursor: pointer;"})
   end
   def null_image
     "<br><br><br>"
@@ -71,7 +71,7 @@ module FeelingsHelper
     image_tag("delete.png") + l(:button_delete)
   end
   def previous_image title="", onclick=""
-    image_tag("previous.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title})
+    image_tag("previous.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title, :style=>"cursor: pointer;"})
   end
   def index_for feeling, with_link=false
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
