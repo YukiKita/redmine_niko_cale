@@ -20,7 +20,7 @@
 <table border="1">
   <tr>
    <th nowrap width="80" bgcolor=<%= light_blue %>><p align="center">
-      <%= prev_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
+      <%= previous_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
    </th>
    <% @dates.each do |date| %>
      <th bgcolor=<%= light_blue %>><p align="center">
