@@ -23,8 +23,8 @@ Redmine::Plugin.register :redmine_niko_cale do
   requires_redmine :version_or_higher => '0.9.0'
 
   project_module :niko_cale do
-    permission :view_niko_cale, {:niko_cale => [:index], :feelings=>[:index, :show]}
-    permission :submit_feeling, {:feelings=>:edit},  :require=>:member
+    permission :view_feelings, {:niko_cale => [:index], :feelings=>[:index, :show]}
+    permission :edit_feelings, {:feelings=>:edit},  :require=>:member
   end
 
   menu :project_menu, :niko_cale, {:controller => 'niko_cale', :action => 'index'}, :caption => :label_niko_cale, :param => :project_id

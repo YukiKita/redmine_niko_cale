@@ -56,7 +56,7 @@ class NikoCaleController < ApplicationController
     end
   end
   def find_givable_roles
-    Role.find_all_givable.select{|role| role.has_permission?(:submit_feeling)}
+    Role.find_all_givable.select{|role| role.has_permission?(:edit_feelings)}
   end
   def find_all_users projects, selected_role_ids
     members = projects.inject([]) {|result, project| result + project.members}
