@@ -17,12 +17,11 @@
 %>
 
 <div id="niko_niko_calender" style="overflow-x:auto">
-<p>
-<%= prev_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
-</p>
 <table border="1">
   <tr>
-   <th bgcolor=<%= light_blue %> nowrap><p align="center"><font color=black><%= l(:label_member) %><br>(<%= l(:label_niko_cale_issues_count) %>)</font><br></td>
+   <th nowrap width="80" bgcolor=<%= light_blue %>><p align="center">
+      <%= prev_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
+   </th>
    <% @dates.each do |date| %>
      <th bgcolor=<%= light_blue %>><p align="center">
          <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %></td>
@@ -30,7 +29,9 @@
   </tr>
   <% @users.each do |user| %>
   <tr> 
-    <td bgcolor=<%=light_yellow%>><p align="center"><%= link_to_feeling_list(:user=>user, :title=>user.name) %><br><font color=black>(<%= @issues_count_per_user[user] %>)</font><br></td> 
+    <td bgcolor=<%=light_yellow%>>
+       <p align="center"><%= link_to_feeling_list(:user=>user, :title=>user.name) %><br><font color=black>(<%= @issues_count_per_user[user] %>)</font><br>
+    </td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <td bgcolor=<%= ((User.current == user) && (date == Date.today)) ? pink : "" %>>
