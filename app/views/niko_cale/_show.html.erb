@@ -24,7 +24,8 @@
    </th>
    <% @dates.each do |date| %>
      <th bgcolor=<%= light_blue %>><p align="center">
-         <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %></td>
+         <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
+     </th>
    <% end %>
   </tr>
   <% @users.each do |user| %>
