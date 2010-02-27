@@ -64,7 +64,7 @@ class FeelingsController < ApplicationController
 
   private
   def after_edit project
-    retention_period = Setting[:plugin_redmine_niko_cale]["retention_period"].to_i
+    retention_period = Setting.plugin_redmine_niko_cale["retention_period"].to_i
     unless retention_period == 0
       Feeling.exclude_before!(retention_period.months.ago.to_date)
     end
