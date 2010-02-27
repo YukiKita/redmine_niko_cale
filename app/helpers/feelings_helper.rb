@@ -70,9 +70,6 @@ module FeelingsHelper
   def delete_image
     image_tag("delete.png") + l(:button_delete)
   end
-  def next_image title="", onclick=""
-    image_tag("next.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title})
-  end
   def previous_image title="", onclick=""
     image_tag("previous.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title})
   end
