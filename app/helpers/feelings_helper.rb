@@ -106,7 +106,7 @@ module FeelingsHelper
     when 0
       color = '<font color="red">' + formatted_date + "</font>"
     else
-      formatted_date
+      '<font color="black">' + formatted_date + "</font>"
     end     
   end
   def editable?(feeling)
