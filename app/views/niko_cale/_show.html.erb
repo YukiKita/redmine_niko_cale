@@ -17,17 +17,10 @@
 %>
 
 <div id="niko_niko_calender" style="overflow-x:auto">
-<table border="0">
-<td>
+<p align="right">
 <%= prev_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
-</td><td></td>
-<td>
-<%= today_image(l(:label_today), 'document.forms["scope"].date_scope.value = "' + Date.today.to_s + '"') %>
-</td><td></td>
-<td>
 <%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"') %>
-</td><td></td>
-</table>
+</p>
 <table border="1">
   <tr>
    <th bgcolor=<%= light_blue %> nowrap><p align="center"><font color=black><%= l(:label_member) %><br>(<%= l(:label_niko_cale_issues_count) %>)</font><br></td>

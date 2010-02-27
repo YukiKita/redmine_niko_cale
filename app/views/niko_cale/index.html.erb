@@ -25,6 +25,8 @@
   <% form_tag({:action=>"index"}, {:method=>:get, :id=>"scope"}) do %>
   <h3><%= l(:label_display) %></h3>
     <%= hidden_field_tag 'project_id', @project.id %>
+    <p><%= calendar_for("date_scope") %>
+    <%=l(:label_date)%></p>
     <% @givable_roles.each do |role| %>
       <label><%= check_box_tag "role_ids[]", role.id, (@selected_role_ids.include? role.id), :id => nil %>
       <%= h(role.name) %></label><br />
@@ -35,8 +37,6 @@
     <% end %>
     <p>
     <%= hidden_field_tag :date_scope, @dates.last, :size=>'10' %>
-    <%= calendar_for("date_scope") %>
-    <%=l(:label_date)%>
     </p>
   <% end %>
   <%= observe_form("scope", {:frequency=>0.5, :update=>"niko_niko_calender",  :url=>{:action=>"index"}, :method=>:get})  %>

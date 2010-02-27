@@ -76,9 +76,6 @@ module FeelingsHelper
   def previous_image title="", onclick=""
     image_tag("previous.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title})
   end
-  def today_image title="", onclick=""
-    image_tag("today.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :titile=>title})
-  end
   def index_for feeling, with_link=false
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
   end
