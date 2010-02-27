@@ -102,13 +102,12 @@ module FeelingsHelper
     color = ""
     case date.wday
     when 6  
-      color = "blue"
+      '<font color="blue">' + formatted_date + "</font>"
     when 0
-      color = "red"
+      color = '<font color="red">' + formatted_date + "</font>"
     else
-      color = "black"
+      formatted_date
     end     
-    '<font color="' + color + '">' + formatted_date + "</font>"
   end
   def editable?(feeling)
     editable_period = Setting.plugin_redmine_niko_cale["editable_period"].to_i
