@@ -71,10 +71,10 @@ module FeelingsHelper
     image_tag("delete.png") + l(:button_delete)
   end
   def previous_image title="", onclick=""
-    image_tag("previous.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title, :style=>"cursor: pointer;", :align=>"left"})
+    image_tag("previous.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title, :style=>"cursor: pointer;"})
   end
   def next_image title="", onclick=""
-    image_tag("next.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title, :style=>"cursor: pointer;", :align=>"right"})
+    image_tag("next.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title, :style=>"cursor: pointer;"})
   end
   def index_for feeling, with_link=false
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"

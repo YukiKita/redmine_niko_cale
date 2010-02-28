@@ -19,7 +19,7 @@
 <div id="niko_niko_calender" style="overflow-x:auto">
 <table border="1">
   <tr>
-   <th width="10%" bgcolor=<%= light_blue %>><p align="center">
+   <th nowrap width="10%" bgcolor=<%= light_blue %>>
       <%= previous_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
       <%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"') %>
    </th>
