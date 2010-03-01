@@ -49,14 +49,14 @@ module FeelingsHelper
     end
     conditions
   end
-  def good_image title="", onclick=""
-    image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>"cursor: pointer;"})
+  def good_image title="", onclick="", style=""
+    image_tag("good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
   end
-  def ordinary_image title="", onclick=""
-    image_tag("ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>"cursor: pointer;"})
+  def ordinary_image title="", onclick="", style=""
+    image_tag("ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
   end
-  def bad_image title="", onclick=""
-    image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>"cursor: pointer;"})
+  def bad_image title="", onclick="", style=""
+    image_tag("bad.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
   end
   def null_image
     "<br><br><br>"
