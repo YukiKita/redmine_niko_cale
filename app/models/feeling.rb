@@ -18,23 +18,24 @@ class Feeling < ActiveRecord::Base
   belongs_to :user
   validates_inclusion_of :level, :in=>0...FEELING_TYPES.size
   acts_as_event :url => Proc.new {|o| {:controller => 'feelings', :action => 'show', :id => o.id}}, :datetime=>:at
+  has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
 
   FEELING_TYPES.each do |f|
     class_eval "def #{f}?;self.level == #{FEELING_TYPES.index(f)};end"
-    class_eval "def #{f}(comment='')
+    class_eval "def #{f}(description='')
 self.level = #{FEELING_TYPES.index(f)}
-self.comment = comment
+self.description = description
 self
 end
 "
-    class_eval "def #{f}!(comment='')
-self.#{f}(comment).save
+    class_eval "def #{f}!(description='')
+self.#{f}(description).save
 self
 end
 "
   end
-  def has_comment?
-    (self.comment || false) && (!self.comment.empty?)
+  def has_description?
+    (self.description || false) && (!self.description.empty?)
   end
   # for Atom feed
   def project
@@ -49,9 +50,7 @@ end
   def author
     self.user
   end
-  # for Atom feed
-  def description
-    self.comment
+  def add_comment
   end
   def self.for(user, date = Date.today)
     Feeling.find_by_user_id_and_at(user, date) || self.new{|f| f.at = date; f.user = user}

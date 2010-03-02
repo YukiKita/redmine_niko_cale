@@ -24,16 +24,16 @@ class FeelingTest < ActiveSupport::TestCase
     clean[]
     assert Feeling.new
     assert Feeling.new(:at=>Date.today)
-    assert Feeling.new(:at=>Date.today, :comment=>"aa")
-    assert Feeling.new(:at=>Date.today, :comment=>"aa", :level=>0)
-    assert Feeling.new(:at=>Date.today, :comment=>"aa", :level=>0)
-    assert Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=0; f.user=User.find(1)}.save
-    assert Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=1; f.user=User.find(1)}.save
-    assert Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=2; f.user=User.find(1)}.save
+    assert Feeling.new(:at=>Date.today, :description=>"aa")
+    assert Feeling.new(:at=>Date.today, :description=>"aa", :level=>0)
+    assert Feeling.new(:at=>Date.today, :description=>"aa", :level=>0)
+    assert Feeling.new{|f| f.at=Date.today; f.description="aa"; f.level=0; f.user=User.find(1)}.save
+    assert Feeling.new{|f| f.at=Date.today; f.description="aa"; f.level=1; f.user=User.find(1)}.save
+    assert Feeling.new{|f| f.at=Date.today; f.description="aa"; f.level=2; f.user=User.find(1)}.save
     assert_equal Feeling.count, 3
-    assert_equal Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=3; f.user=User.find(1)}.save, false
-    assert_equal Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.level=4; f.user=User.find(1)}.save, false
-    assert_equal Feeling.new{|f| f.at=Date.today; f.comment="aa"; f.user=User.find(1)}.save, false
+    assert_equal Feeling.new{|f| f.at=Date.today; f.description="aa"; f.level=3; f.user=User.find(1)}.save, false
+    assert_equal Feeling.new{|f| f.at=Date.today; f.description="aa"; f.level=4; f.user=User.find(1)}.save, false
+    assert_equal Feeling.new{|f| f.at=Date.today; f.description="aa"; f.user=User.find(1)}.save, false
     clean[]
     assert Feeling.for(User.find(1)).good!.good?
     assert_equal Feeling.for(User.find(1)).bad?, false
@@ -51,11 +51,11 @@ class FeelingTest < ActiveSupport::TestCase
   end
   test "exclude!" do
     assert Feeling.clean!
-    assert Feeling.new{|f| f.at=1.years.ago.to_date; f.comment="aa"; f.level=0; f.user=User.find(1)}.save
-    assert Feeling.new{|f| f.at=1.years.ago.to_date; f.comment="aa"; f.level=1; f.user=User.find(1)}.save
-    assert Feeling.new{|f| f.at=1.years.ago.to_date; f.comment="aa"; f.level=2; f.user=User.find(1)}.save
-    assert Feeling.new{|f| f.at=6.months.ago.to_date; f.comment="aa"; f.level=2; f.user=User.find(1)}.save
-    assert Feeling.new{|f| f.at=2.months.ago.to_date; f.comment="aa"; f.level=2; f.user=User.find(1)}.save
+    assert Feeling.new{|f| f.at=1.years.ago.to_date; f.description="aa"; f.level=0; f.user=User.find(1)}.save
+    assert Feeling.new{|f| f.at=1.years.ago.to_date; f.description="aa"; f.level=1; f.user=User.find(1)}.save
+    assert Feeling.new{|f| f.at=1.years.ago.to_date; f.description="aa"; f.level=2; f.user=User.find(1)}.save
+    assert Feeling.new{|f| f.at=6.months.ago.to_date; f.description="aa"; f.level=2; f.user=User.find(1)}.save
+    assert Feeling.new{|f| f.at=2.months.ago.to_date; f.description="aa"; f.level=2; f.user=User.find(1)}.save
     assert_equal Feeling.count, 5
     assert Feeling.exclude_before!((1.years + 1.days).ago.to_date)
     assert_equal Feeling.count, 5
@@ -73,7 +73,7 @@ class FeelingTest < ActiveSupport::TestCase
   test "find_by_user_and_date_range" do
     assert Feeling.clean!
     (0..13).each do |day|
-      assert Feeling.new{|f| f.at=(Date.today - day); f.comment="aa"; f.level=0; f.user=User.find(1)}.save
+      assert Feeling.new{|f| f.at=(Date.today - day); f.description="aa"; f.level=0; f.user=User.find(1)}.save
     end
     assert_equal Feeling.find_by_user_and_date_range(User.find(1), (Date.today - 0)..Date.today).size, 1
     assert_equal Feeling.find_by_user_and_date_range(User.find(1), (Date.today - 1)..Date.today).size, 2
@@ -98,25 +98,25 @@ class FeelingTest < ActiveSupport::TestCase
   test "morale_test" do
     morale = Morale.new(:at => Date.today)
     14.times do |i|
-      assert morale << (Feeling.new{|f| f.at=(Date.today); f.comment="aa"; f.level=2; f.user=User.find(1)})
-      assert_equal morale <<(Feeling.new{|f| f.at=(Date.today - 1); f.comment="aa"; f.level=0; f.user=User.find(1)}), false
-      assert_equal morale <<(Feeling.new{|f| f.at=(Date.today + 1); f.comment="aa"; f.level=0; f.user=User.find(1)}), false
+      assert morale << (Feeling.new{|f| f.at=(Date.today); f.description="aa"; f.level=2; f.user=User.find(1)})
+      assert_equal morale <<(Feeling.new{|f| f.at=(Date.today - 1); f.description="aa"; f.level=0; f.user=User.find(1)}), false
+      assert_equal morale <<(Feeling.new{|f| f.at=(Date.today + 1); f.description="aa"; f.level=0; f.user=User.find(1)}), false
     end
     assert morale.good?
     morale = Morale.new(:at => Date.today)
     14.times do |i|
-      assert morale << (Feeling.new{|f| f.at=(Date.today); f.comment="aa"; f.level=1; f.user=User.find(1)})
+      assert morale << (Feeling.new{|f| f.at=(Date.today); f.description="aa"; f.level=1; f.user=User.find(1)})
     end
     assert morale.ordinary?
     morale = Morale.new(:at => Date.today)
     14.times do
-      assert morale << (Feeling.new{|f| f.at=(Date.today); f.comment="aa"; f.level=0; f.user=User.find(1)})
+      assert morale << (Feeling.new{|f| f.at=(Date.today); f.description="aa"; f.level=0; f.user=User.find(1)})
     end
     assert morale.bad?
     morale = Morale.new(:at => Date.today)
-    assert morale << (Feeling.new{|f| f.at=(Date.today); f.comment="aa"; f.level=0; f.user=User.find(1)})
-    assert morale << (Feeling.new{|f| f.at=(Date.today); f.comment="aa"; f.level=1; f.user=User.find(1)})
-    assert morale << (Feeling.new{|f| f.at=(Date.today); f.comment="aa"; f.level=2; f.user=User.find(1)})
+    assert morale << (Feeling.new{|f| f.at=(Date.today); f.description="aa"; f.level=0; f.user=User.find(1)})
+    assert morale << (Feeling.new{|f| f.at=(Date.today); f.description="aa"; f.level=1; f.user=User.find(1)})
+    assert morale << (Feeling.new{|f| f.at=(Date.today); f.description="aa"; f.level=2; f.user=User.find(1)})
     assert morale.ordinary?
     morale = Morale.new(:at => Date.today)
     assert_nil morale.level
@@ -124,13 +124,13 @@ class FeelingTest < ActiveSupport::TestCase
     assert_equal morale.ordinary?, false
     assert_equal morale.bad?, false
   end
-  test "has_comment?" do
+  test "has_description?" do
     feeling = Feeling.for(User.find(1))
-    assert_equal feeling.has_comment?, false
-    assert_equal feeling.good("").has_comment?, false
-    assert_equal feeling.good(nil).has_comment?, false
-    assert feeling.good(" ").has_comment?
-    assert feeling.good("1     2").has_comment?
+    assert_equal feeling.has_description?, false
+    assert_equal feeling.good("").has_description?, false
+    assert_equal feeling.good(nil).has_description?, false
+    assert feeling.good(" ").has_description?
+    assert feeling.good("1     2").has_description?
   end
   test "self.for(date)" do
     assert Feeling.clean!
@@ -146,5 +146,10 @@ class FeelingTest < ActiveSupport::TestCase
     Feeling.for(User.find(1), (Date.today - 1.years)).good!
     assert_equal Feeling.for(User.find(1), (Date.today - 1.years)).at, (Date.today - 1.years)
     assert Feeling.clean!
+  end
+  test "description" do
+    assert Feeling.clean!
+    feeling = Feeling.for(User.find(1))
+    feeling.news
   end
 end

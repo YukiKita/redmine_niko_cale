@@ -79,13 +79,13 @@ module FeelingsHelper
   def index_for feeling, with_link=false
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
   end
-  def comment_of feeling
-    strip_tags(index_for(feeling) + "\n" +  feeling.comment).gsub(/\r\n|\r|\n/, "<br />").gsub(/["']/,'')
+  def description_of feeling
+    strip_tags(index_for(feeling) + "\n" +  feeling.description).gsub(/\r\n|\r|\n/, "<br />").gsub(/["']/,'')
   end
   def image_for feeling
     if feeling
       image = feeling.good? ? good_image : (feeling.bad? ? bad_image : (feeling.ordinary? ? ordinary_image: null_image))
-      feeling.has_comment? ? with_baloon(image, comment_of(feeling)) : image
+      feeling.has_description? ? with_baloon(image, description_of(feeling)) : image
     else
       null_image
     end

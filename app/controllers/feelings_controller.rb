@@ -76,14 +76,14 @@ class FeelingsController < ApplicationController
     end
   end
   def set_attributes_for feeling
-    comment = (params[:comment] || "").strip
+    description = (params[:description] || "").strip
     case params[:level]
     when "0"
-      feeling.bad(comment)
+      feeling.bad(description)
     when "1"
-      feeling.ordinary(comment)
+      feeling.ordinary(description)
     when "2"
-      feeling.good(comment)
+      feeling.good(description)
     else
       nil
     end

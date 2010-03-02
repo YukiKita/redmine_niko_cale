@@ -55,11 +55,11 @@ class FeelingsControllerTest < ActionController::TestCase
     @request.session[:user_id] = 1
     put :edit, :date=>Date.today
     assert_response(404)
-    put :edit, :date=>Date.today, :level=>3, :comment=>"aaa"
+    put :edit, :date=>Date.today, :level=>3, :description=>"aaa"
     assert_response(404)
-    put :edit, :date=>Date.today, :level=>2, :comment=>"aaa"
+    put :edit, :date=>Date.today, :level=>2, :description=>"aaa"
     assert_redirected_to(:controller=>:feelings, :action=>:index, :user_id=>1)
-    put :edit, :date=>Date.today, :level=>2, :comment=>"aaa", :project_id=>1
+    put :edit, :date=>Date.today, :level=>2, :description=>"aaa", :project_id=>1
     assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
   end
   def test_delete
@@ -84,9 +84,9 @@ class FeelingsControllerTest < ActionController::TestCase
     assert_response(404)
     xhr :post, :edit, :date=>Date.today - 7
     assert_response(404)
-    xhr :post, :edit, :date=>Date.today, :level=>3, :comment=>"aa"
+    xhr :post, :edit, :date=>Date.today, :level=>3, :description=>"aa"
     assert_response(404)
-    xhr :post, :edit, :date=>Date.today, :level=>2, :comment=>"aa"
+    xhr :post, :edit, :date=>Date.today, :level=>2, :description=>"aa"
     assert_response(:success)
   end
   def test_index

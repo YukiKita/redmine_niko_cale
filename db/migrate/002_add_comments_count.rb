@@ -1,4 +1,3 @@
-<%
 # Niko-cale plugin for Redmine
 # Copyright (C) 2010  Yuki Kita
 #
@@ -14,19 +13,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-%>
+class AddCommentsCount < ActiveRecord::Migration
+  def self.up
+    rename_column(:feelings, :comment, :description)
+    add_column(:feelings, "comments_count", :integer, :default => 0,  :null => false)
+  end
 
-<h4><%= index_for(feeling, true) %></h4>
-<p align="right"><%= link_to_feeling_list(:user=>feeling.user) %>
-  <ul>
-    <%= link_to_feeling(feeling, @project ? @project.id : nil) %>
-  </ul>
-<% if feeling.has_description? %>
-   <p><%= textilizable(feeling.description) %></p>
-<% end %>
-<% if editable?(feeling) && !preview %>
-   <p><%= link_to edit_image, {:action=>:edit, :date=>feeling.at, :project_id=>(@project ? @project.id : nil)}  %>
-   <%= link_to delete_image, 
-       {:action=>:edit, :date=>feeling.at, :project_id=>(@project ? @project.id : nil)},
-       {:method=>:delete, :confirm=>l(:text_are_you_sure)}  %></p>
-<% end %>
+  def self.down
+    drop_table(:feelings, "comments_count")
+    rename_column(:feelings, :description, :comment)
+  end
+end
