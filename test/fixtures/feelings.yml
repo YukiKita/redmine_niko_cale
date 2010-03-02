@@ -2,10 +2,12 @@
 one:
   id: 1
   user_id: 3
-  comment: Test1
+  description: Test1
   at: 2010-02-22
+  comments_count: 0
 two:
   id: 2
   user_id: 3
-  comment: Test2
+  description: Test2
   at: 2010-02-23
+  comments_count: 0

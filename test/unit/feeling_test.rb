@@ -150,6 +150,5 @@ class FeelingTest < ActiveSupport::TestCase
   test "description" do
     assert Feeling.clean!
     feeling = Feeling.for(User.find(1))
-    feeling.news
   end
 end
