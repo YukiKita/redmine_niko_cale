@@ -150,5 +150,19 @@ class FeelingTest < ActiveSupport::TestCase
   test "description" do
     assert Feeling.clean!
     feeling = Feeling.for(User.find(1))
+    assert_equal feeling.comments.size, 0
+    feeling.add_comment(User.find(2), "Test")
+    assert_equal feeling.comments.size, 1
+    comment = feeling.comments.first
+    assert_equal comment.class, Comment
+    assert_equal comment.comments, "Test"
+    assert_equal comment.author, User.find(2)
+
+    feeling.add_comment(User.find(2), "Test2")
+    assert_equal feeling.comments.size, 2
+    comment = feeling.comments.last
+    assert_equal comment.comments, "Test2"
+    assert_equal comment.author, User.find(2)
+    assert Feeling.clean!
   end
 end

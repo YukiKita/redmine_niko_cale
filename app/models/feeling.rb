@@ -50,7 +50,8 @@ end
   def author
     self.user
   end
-  def add_comment
+  def add_comment user, comment
+    self.comments << Comment.new(:comments=>comment, :author=>user)
   end
   def self.for(user, date = Date.today)
     Feeling.find_by_user_id_and_at(user, date) || self.new{|f| f.at = date; f.user = user}
