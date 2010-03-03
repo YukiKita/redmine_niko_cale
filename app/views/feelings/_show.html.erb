@@ -30,3 +30,12 @@
        {:action=>:edit, :date=>feeling.at, :project_id=>(@project ? @project.id : nil)},
        {:method=>:delete, :confirm=>l(:text_are_you_sure)}  %></p>
 <% end %>
+
+<div id="comments" style="margin-bottom:16px;">
+<h3 class="comments"><%= l(:label_comment_plural) %></h3>
+<% feeling.comments.each do |comment| %>
+    <% next if comment.new_record? %>
+    <%= textilizable(comment.comments) %>
+<% end %>
+</div>
+
