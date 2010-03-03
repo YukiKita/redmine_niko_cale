@@ -35,11 +35,8 @@ class FeelingsController < ApplicationController
     end
   end
   def show
-    begin
-      @feeling = Feeling.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render_404
-    end
+    @feeling = find_feeling
+    render_404 unless @feeling
   end
   def edit
     @date = find_date
@@ -61,8 +58,27 @@ class FeelingsController < ApplicationController
       after_edit(@project)
     end
   end
+  def add_comment
+    @feeling = find_feeling
+    comment = Comment.new(params[:comment])
+    comment.author = User.current
+    if @feeling.comments << comment
+      flash[:notice] = l(:label_comment_added)
+      redirect_to :action => 'show', :id => @news
+    else
+      show
+      render :action => 'show'
+    end
+  end
 
   private
+  def find_feeling
+    begin
+      Feeling.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      nil
+    end
+  end
   def after_edit project
     retention_period = Setting.plugin_redmine_niko_cale["retention_period"].to_i
     unless retention_period == 0

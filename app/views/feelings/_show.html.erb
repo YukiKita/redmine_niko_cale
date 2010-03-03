@@ -33,9 +33,11 @@
 
 <div id="comments" style="margin-bottom:16px;">
 <h3 class="comments"><%= l(:label_comment_plural) %></h3>
-<% feeling.comments.each do |comment| %>
-    <% next if comment.new_record? %>
-    <%= textilizable(comment.comments) %>
+<% if 0 < feeling.comments_count %>
+   <% feeling.comments.each do |comment| %>
+     <% next if comment.new_record? %>
+     <%= textilizable(comment.comments) %>
+   <% end %>
 <% end %>
 </div>
 
