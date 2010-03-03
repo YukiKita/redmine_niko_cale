@@ -31,10 +31,14 @@
        {:method=>:delete, :confirm=>l(:text_are_you_sure)}  %></p>
 <% end %>
 
-<div id="comments" style="margin-bottom:16px;">
-<h3 class="comments"><%= l(:label_comment_plural) %><%= "(#{l(:label_x_comments, :count => feeling.comments_count)})" %></h3>
-<% feeling.comments.each do |comment| %>
-  <% next if comment.new_record? %>
-  <%= textilizable(comment.comments) %>
+<% if feeling.comments_count > 0 %>
+  <div id="comments" style="margin-bottom:16px;">
+    <h3 class="comments"><%= l(:label_comment_plural) %><%= "(#{l(:label_x_comments, :count => feeling.comments_count)})" %></h3>
+    <% feeling.comments.each do |comment| %>
+      <p class="author"><%= authoring comment.created_on, comment.author %></p>
+       <div class="wiki">
+         <%= textilizable(comment.comments) %>
+       </div>
+    <% end %>
+  </div>
 <% end %>
-</div>
