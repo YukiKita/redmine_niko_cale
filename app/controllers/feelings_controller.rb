@@ -60,8 +60,13 @@ class FeelingsController < ApplicationController
   end
   def edit_comment
     feeling = find_feeling
-    if feeling.add_comment(User.current, params[:comment][:comments])
-      flash[:notice] = l(:label_comment_added)
+    if request.post?
+      if feeling.add_comment(User.current, params[:comment][:comments])
+        flash[:notice] = l(:label_comment_added)
+      end
+    elsif request.delete?
+      flash[:notice] = l(:label_comment_delete)
+      feeling.comments.find(params[:comment_id]).destroy
     end
     if @project
       redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project.id)
