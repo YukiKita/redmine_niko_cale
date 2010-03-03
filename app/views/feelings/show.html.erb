@@ -24,7 +24,7 @@
   <%= render :partial=>'show', :locals=>{:feeling=>@feeling, :preview=>false} %>
 <% end %>
 
-<% if User.current.allowed_to?({:controller => :feelings, :action => :comment_feelings}, nil, :global => true) %>
+<% if User.current.allowed_to?({:controller => :feelings, :action => :edit_comment}, nil, :global => true) %>
   <p><%= toggle_link l(:label_comment_add), "add_comment_form", :focus => "comment_comments" %></p>
   <% form_tag({:action => 'edit_comment', :id => @feeling.id, :project_id=>((@project && @project.id) || nil)}, :id => "add_comment_form", :style => "display:none;") do %>
     <div class="box">
