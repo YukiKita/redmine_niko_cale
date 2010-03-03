@@ -32,7 +32,7 @@
 <% end %>
 
 <div id="comments" style="margin-bottom:16px;">
-<h3 class="comments"><%= l(:label_comment_plural) %></h3>
+<h3 class="comments"><%= l(:label_comment_plural) %><%= "(#{l(:label_x_comments, :count => feeling.comments_count)})" %></h3>
 <% feeling.comments.each do |comment| %>
   <% next if comment.new_record? %>
   <%= textilizable(comment.comments) %>
