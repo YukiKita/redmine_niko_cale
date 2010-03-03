@@ -49,13 +49,19 @@ class FeelingsController < ApplicationController
         render_404 
       end
     elsif request.get?
-    elsif request.delete?
-      @feeling.destroy
-      after_edit(@project)
     else
-      return render_404 unless set_attributes_for(@feeling)
-      @feeling.save
-      after_edit(@project)
+      if request.delete?
+        @feeling.destroy
+      else
+        return render_404 unless set_attributes_for(@feeling)
+        @feeling.save
+      end
+      retention_period = Setting.plugin_redmine_niko_cale["retention_period"].to_i
+      unless retention_period == 0
+        Feeling.exclude_before!(retention_period.months.ago.to_date)
+      end
+      flash[:notice] = l(:notice_successful_update)
+      redirect_to_index(@feeling, @project)
     end
   end
   def edit_comment
@@ -68,31 +74,22 @@ class FeelingsController < ApplicationController
       flash[:notice] = l(:label_comment_delete)
       feeling.comments.find(params[:comment_id]).destroy
     end
-    if @project
-      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project.id)
-    else
-      redirect_to(:action=>:show, :id=>feeling.id)
-    end
+    redirect_to_index feeling, @project    
   end
 
   private
+  def redirect_to_index(feeling, project)
+    if project
+      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.id)
+    else
+      redirect_to(:action=>:index, :user_id=>feeling.user.id)
+    end
+  end
   def find_feeling
     begin
       Feeling.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       nil
-    end
-  end
-  def after_edit project
-    retention_period = Setting.plugin_redmine_niko_cale["retention_period"].to_i
-    unless retention_period == 0
-      Feeling.exclude_before!(retention_period.months.ago.to_date)
-    end
-    flash[:notice] = l(:notice_successful_update)
-    if project
-      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.id)
-    else
-      redirect_to(:action=>:index, :user_id=>User.current)
     end
   end
   def set_attributes_for feeling
