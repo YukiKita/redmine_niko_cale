@@ -38,6 +38,9 @@ end
   def has_description?
     (self.description || false) && (!self.description.empty?)
   end
+  def has_comments?
+    self.comments_count > 0
+  end
   # for Atom feed
   def project
     "#{self.at}(#{self.user.name})"
