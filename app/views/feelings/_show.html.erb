@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %>
 
-<h4><%= index_for(feeling, true) %></h4>
+<h3><%= index_for(feeling, true) %></h3>
 <p align="right"><%= link_to_feeling_list(:user=>feeling.user) %>
   <ul>
     <%= link_to_feeling(feeling, @project ? @project.id : nil) %>

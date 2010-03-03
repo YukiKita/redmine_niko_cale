@@ -58,16 +58,15 @@ class FeelingsController < ApplicationController
       after_edit(@project)
     end
   end
-  def add_comment
+  def edit_comment
     @feeling = find_feeling
-    comment = Comment.new(params[:comment])
-    comment.author = User.current
-    if @feeling.comments << comment
+    if @feeling.add_comment(User.current, params[:comment])
       flash[:notice] = l(:label_comment_added)
-      redirect_to :action => 'show', :id => @news
+    end
+    if @project
+      redirect_to(:action=>:index, :project_id=>@project.id)
     else
-      show
-      render :action => 'show'
+      redirect_to(:action=>:index, :user_id=>find_user)
     end
   end
 
@@ -117,6 +116,13 @@ class FeelingsController < ApplicationController
       @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render_404
+    end
+  end
+  def find_user
+    begin
+      User.find(params[:user_id])
+    rescue ActiveRecord::RecordNotFound
+      nil
     end
   end
   def find_users_for project
