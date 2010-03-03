@@ -86,7 +86,7 @@ module FeelingsHelper
   def image_for feeling
     if feeling
       image = feeling.good? ? good_image : (feeling.bad? ? bad_image : (feeling.ordinary? ? ordinary_image: null_image))
-      feeling.has_description? ? with_baloon(image, description_of(feeling)) : image
+      (feeling.has_description? || feeling.has_comments?) ? with_baloon(image, description_of(feeling)) : image
     else
       null_image
     end

@@ -37,8 +37,10 @@
     <% allowed = User.current.allowed_to?({:controller => :feelings, :action => :edit_comment}, nil, :global => true) %>
     <% feeling.comments.each do |comment| %>
       <div class="contextual">
-      <%= link_to delete_image, {:action => 'edit_comment', :id => feeling.id, :comment_id => comment.id, :project_id=>(@project && @project.id)},
-                    {:confirm => l(:text_are_you_sure), :method => :delete, :title => l(:button_delete)} if allowed && (User.current == comment.author) %>
+      <% if allowed && ((User.current == comment.author) || (User.current == feeling.user)) %>
+        <%= link_to delete_image, {:action => 'edit_comment', :id => feeling.id, :comment_id => comment.id, :project_id=>(@project && @project.id)},
+                    {:confirm => l(:text_are_you_sure), :method => :delete, :title => l(:button_delete)} %>
+      <% end %>
       </div>
       <p class="author"><%= authoring comment.created_on, comment.author %></p>
        <div class="wiki">
