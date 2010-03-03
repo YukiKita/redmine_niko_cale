@@ -59,15 +59,11 @@ class FeelingsController < ApplicationController
     end
   end
   def edit_comment
-    @feeling = find_feeling
-    if @feeling.add_comment(User.current, params[:comment])
+    feeling = find_feeling
+    if feeling.add_comment(User.current, params[:comment][:comments])
       flash[:notice] = l(:label_comment_added)
     end
-    if @project
-      redirect_to(:action=>:index, :project_id=>@project.id)
-    else
-      redirect_to(:action=>:index, :user_id=>find_user)
-    end
+    redirect_to(:action=>:show, :id=>feeling.id)
   end
 
   private
