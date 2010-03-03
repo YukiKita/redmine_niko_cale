@@ -63,7 +63,11 @@ class FeelingsController < ApplicationController
     if feeling.add_comment(User.current, params[:comment][:comments])
       flash[:notice] = l(:label_comment_added)
     end
-    redirect_to(:action=>:show, :id=>feeling.id)
+    if @project
+      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>@project.id)
+    else
+      redirect_to(:action=>:show, :id=>feeling.id)
+    end
   end
 
   private
