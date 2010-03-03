@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class Feeling < ActiveRecord::Base
+  unloadable
   FEELING_TYPES = ["bad", "ordinary", "good"]
   belongs_to :user
   validates_inclusion_of :level, :in=>0...FEELING_TYPES.size
