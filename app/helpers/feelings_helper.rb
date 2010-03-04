@@ -122,4 +122,7 @@ module FeelingsHelper
       ((0 <= delta) && (delta < editable_period)) && (User.current == feeling.user)
     end
   end
+  def current_user_allowed_to? controller, action
+    User.current.allowed_to?({:controller =>controller, :action =>action}, nil, :global => true)
+  end
 end

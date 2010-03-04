@@ -34,18 +34,17 @@
 <% if feeling.has_comments? %>
   <div id="comments" style="margin-bottom:16px;">
     <h3 class="comments"><%= l(:label_comment_plural) %><%= "(#{l(:label_x_comments, :count => feeling.comments_count)})" %></h3>
-    <% allowed = User.current.allowed_to?({:controller => :feelings, :action => :edit_comment}, nil, :global => true) %>
     <% feeling.comments.each do |comment| %>
-      <div class="contextual">
-      <% if allowed && ((User.current == comment.author) || (User.current == feeling.user)) %>
+    <div class="contextual">
+      <% if current_user_allowed_to?(:feelings, :edit_comment) && ((User.current == comment.author) || (User.current == feeling.user)) %>
         <%= link_to delete_image, {:action => 'edit_comment', :id => feeling.id, :comment_id => comment.id, :project_id=>(@project && @project.id)},
-                    {:confirm => l(:text_are_you_sure), :method => :delete, :title => l(:button_delete)} %>
-      <% end %>
-      </div>
-      <p class="author"><%= authoring comment.created_on, comment.author %></p>
-       <div class="wiki">
-         <%= textilizable(comment.comments) %>
-       </div>
+                   {:confirm => l(:text_are_you_sure), :method => :delete, :title => l(:button_delete)} %>
+     <% end %>
+     </div>
+     <p class="author"><%= authoring comment.created_on, comment.author %></p>
+     <div class="wiki">
+       <%= render :partial=>"comment", :locals=>{:comments=>comment.comments} %>
+     </div>
     <% end %>
   </div>
 <% end %>
