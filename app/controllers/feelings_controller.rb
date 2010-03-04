@@ -66,8 +66,11 @@ class FeelingsController < ApplicationController
   end
   def edit_comment
     feeling = find_feeling
+    return render_404 unless feeling
     if request.post?
-      if feeling.add_comment(User.current, params[:comment][:comments])
+      comment = find_comment
+      return render_404 unless comment
+      if feeling.add_comment(User.current, comment)
         flash[:notice] = l(:label_comment_added)
       end
     elsif request.delete?
@@ -78,6 +81,9 @@ class FeelingsController < ApplicationController
   end
 
   private
+  def find_comment
+    params[:comment] && params[:comment][:comments]
+  end
   def redirect_to_index(feeling, project)
     if project
       redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.id)
