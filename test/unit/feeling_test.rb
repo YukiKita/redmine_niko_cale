@@ -149,18 +149,28 @@ class FeelingTest < ActiveSupport::TestCase
   end
   test "description" do
     assert Feeling.clean!
-    feeling = Feeling.for(User.find(1))
+    feeling = Feeling.for(User.find(1)).good!
     assert_equal feeling.comments.size, 0
+    assert_equal feeling.comments_count, 0
+    assert_equal feeling.has_comments?, false
     feeling.add_comment(User.find(2), "Test")
-    assert_equal feeling.comments.size, 1
+    feeling = Feeling.for(User.find(1))
+    assert_equal feeling.comments_count, 1
+    assert_equal feeling.has_comments?, true
     comment = feeling.comments.first
     assert_equal comment.class, Comment
     assert_equal comment.comments, "Test"
     assert_equal comment.author, User.find(2)
 
     feeling.add_comment(User.find(2), "Test2")
+    feeling = Feeling.for(User.find(1))
     assert_equal feeling.comments.size, 2
-    comment = feeling.comments.last
+    assert_equal feeling.comments_count, 2
+    assert_equal feeling.has_comments?, true
+    comment = feeling.comments[0]
+    assert_equal comment.comments, "Test"
+    assert_equal comment.author, User.find(2)
+    comment = feeling.comments[1]
     assert_equal comment.comments, "Test2"
     assert_equal comment.author, User.find(2)
     assert Feeling.clean!
