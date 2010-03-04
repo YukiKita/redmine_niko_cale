@@ -32,7 +32,8 @@
   <% @users.each do |user| %>
   <tr> 
     <td nowrap bgcolor=<%=light_yellow%>>
-       <p align="center"><%= link_to_feeling_list(:user=>user, :title=>user.name) %><br><font color=black>(<%= @issues_count_per_user[user] %>)</font><br>
+       <p align="center"><%= link_to_feeling_list(:user=>user, :title=>user.name) %></p>
+       <p align="center"><%= link_to_issues_list "(#{@issues_count_per_user[user]})", user.id %></p>
     </td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
