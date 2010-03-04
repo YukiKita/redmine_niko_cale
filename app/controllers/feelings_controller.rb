@@ -68,20 +68,24 @@ class FeelingsController < ApplicationController
     feeling = find_feeling
     return render_404 unless feeling
     if request.post?
-      comment = find_comment
+      comment = find_comments
       return render_404 unless comment
       if feeling.add_comment(User.current, comment)
         flash[:notice] = l(:label_comment_added)
       end
     elsif request.delete?
       flash[:notice] = l(:label_comment_delete)
-      feeling.comments.find(params[:comment_id]).destroy
+      begin
+        feeling.comments.find(params[:comment_id]).destroy
+      rescue ActiveRecord::RecordNotFound
+        return render_404
+      end
     end
     redirect_to_index feeling, @project    
   end
 
   private
-  def find_comment
+  def find_comments
     params[:comment] && params[:comment][:comments]
   end
   def redirect_to_index(feeling, project)
