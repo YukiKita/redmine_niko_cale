@@ -147,4 +147,13 @@ class FeelingsControllerTest < ActionController::TestCase
     delete :edit_comment, :id=>1, :comment_id=>comment2.id, :project_id=>1
     assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
   end
+  def test_preview_comment
+    @request.session[:user_id] = 1
+    xhr :post, :edit_comment, :id=>0
+    assert_response(404)
+    xhr :post, :edit_comment, :id=>1
+    assert_response(404)
+    xhr :post, :edit_comment, :id=>1, "comment"=>{"comments"=>"aa"}
+    assert_response(:success)
+  end
 end
