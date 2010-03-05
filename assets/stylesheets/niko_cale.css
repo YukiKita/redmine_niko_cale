@@ -44,4 +44,7 @@ td	{
 	padding: 5px 10px;
 	color: #1D5C79;
 }
+td.today {
+        background-color: #FFD4D1;
+}
 
