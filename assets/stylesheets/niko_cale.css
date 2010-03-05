@@ -47,4 +47,7 @@ td	{
 td.today {
         background-color: #FFD4D1;
 }
+td.user {
+        background-color: #F4FAA0;
+}
 
