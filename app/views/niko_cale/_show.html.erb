@@ -19,12 +19,12 @@
 <div id="niko_niko_calender" style="overflow-x:auto">
 <table border="1">
   <tr>
-    <th rowspan="2" nowrap width="10%" bgcolor=<%= light_blue %>>
+    <th rowspan="2" nowrap width="10%">
       <%= previous_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
       <%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"') %>
     </th>
     <% @dates.each do |date| %>
-      <th bgcolor=<%= light_blue %>><p align="center">
+      <th><p align="center">
       <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
       </th>
     <% end %>
