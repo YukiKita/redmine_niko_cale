@@ -25,19 +25,20 @@
     </th>
     <% @dates.each do |date| %>
       <th><p align="center">
-      <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
-      </th>
+        <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
+      </p></th>
     <% end %>
   </tr>
   <tr>
-    <% date = @dates.first %>
-    <% @versions.each do |version| %>
-      <th class=version colspan=<%= "\"#{version.effective_date - date + 1}\""  %>>
-      <p align="right"><%= link_to version_image(version.name), {:controller=>:versions, :action=>:show, :id=>version.id} %></p></th>
-      <% date = version.effective_date + 1%>
-    <% end %>
-    <% if date <= @dates.last %>
-      <th class=version colspan=<%= "\"#{@dates.last - date + 1}\"" %>><p align="right">></p></th>
+    <% @dates.each do |date| %>
+      <% version = @versions.find {|version| version.effective_date == date} %>
+      <td class=version><p align="center">
+        <% if version %>
+          <%= link_to with_baloon(version_image, version.name), {:controller=>:versions, :action=>:show, :id=>version.id} %>
+        <% else %>
+          <br>
+        <% end %>
+      </p></td>
     <% end %>
   </tr>
   <% @users.each do |user| %>
