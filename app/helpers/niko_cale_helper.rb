@@ -14,16 +14,4 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module NikoCaleHelper
-  def gray
-    "#C4CACC"
-  end
-  def blue
-    '"#87CEFA"'
-  end
-  def light_yellow
-    "#F4FAA0"
-  end
-  def light_gray
-    "#DCDCDC"
-  end
 end
