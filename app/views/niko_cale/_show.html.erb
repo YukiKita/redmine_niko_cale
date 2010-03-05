@@ -30,7 +30,15 @@
     <% end %>
   </tr>
   <tr>
-    <th colspan="14">a</th>
+    <% date = @dates.first %>
+    <% @versions.each do |version| %>
+      <th colspan=<%= "\"#{version.effective_date - date + 1}\""  %>>
+      <p align="right"><%= link_to version.name, {:controller=>:versions, :action=>:show, :id=>version.id} %></p></th>
+      <% date = version.effective_date + 1%>
+    <% end %>
+    <% if date <= @dates.last %>
+      <th colspan=<%= "\"#{@dates.last - date + 1}\"" %>><p align="right">-></p></th>
+    <% end %>
   </tr>
   <% @users.each do |user| %>
   <tr> 
