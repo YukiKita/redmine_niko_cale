@@ -65,7 +65,7 @@ module FeelingsHelper
     image_tag("add.png", {:plugin=>:redmine_niko_cale, :title=>l(:button_add)})
   end
   def version_image
-    image_tag("version.png", {:plugin=>:redmine_niko_cale})
+    image_tag("package.png")
   end
   def edit_image
     image_tag("edit.png") + l(:button_update)
