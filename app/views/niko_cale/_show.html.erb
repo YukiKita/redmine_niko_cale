@@ -50,8 +50,8 @@
   <% end %>
   <% unless @morales.empty? %>
   <tr>
-    <td bgcolor=<%=gray%>><p align="center"><font color=black><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %>
-    <br>(<%= @issues_count_per_user[:morale] %>)</font><br></td> 
+    <td bgcolor=<%=gray%>><p align="center"><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %>
+    <br><%= link_to_issues_list "(#{@issues_count_per_user[:morale]})", nil %><br></td> 
     <% @dates.each do |date| %>
       <% morale = @morales.find {|m| m.at == date} %>
       <td bgcolor=<%=gray%>><p align="center"><%= image_for(morale) %></td>
