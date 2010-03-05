@@ -40,6 +40,9 @@ th	{
 	color: #1D5C79;
         background-color: #CAE5F1;
 }
+th.version {
+        background-color: #C4CACC;
+}
 td	{
 	padding: 5px 10px;
 	color: #1D5C79;
