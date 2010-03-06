@@ -31,9 +31,9 @@
        <td><%= bad_image(l(:label_niko_cale_bad), "document.forms.update_feeling.level[2].click()", "cursor: pointer;") %></td>
      </tr>
      <tr>
-       <td><p align="center"><%= radio_button_tag("level", 2, @feeling.level ? @feeling.good? : true, {:onclick=>"document.forms.update_feeling.description.focus()"}) %></td>
-       <td><p align="center"><%= radio_button_tag("level", 1, @feeling.ordinary?, {:onclick=>"document.forms.update_feeling.description.focus()"})  %></td>
-       <td><p align="center"><%= radio_button_tag("level", 0, @feeling.bad?, {:onclick=>"document.forms.update_feeling.description.focus()"}) %></td>
+       <td><%= radio_button_tag("level", 2, @feeling.level ? @feeling.good? : true, {:onclick=>"document.forms.update_feeling.description.focus()"}) %></td>
+       <td><%= radio_button_tag("level", 1, @feeling.ordinary?, {:onclick=>"document.forms.update_feeling.description.focus()"})  %></td>
+       <td><%= radio_button_tag("level", 0, @feeling.bad?, {:onclick=>"document.forms.update_feeling.description.focus()"}) %></td>
      </tr>
   </table>
   <p><%= l(:label_optional_description) %><br>
