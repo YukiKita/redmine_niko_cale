@@ -39,10 +39,11 @@ th	{
         background-color: #CAE5F1;
 }
 th.date	{
-	width: 64px;
+	width: 56px;
         background-color: #CAE5F1;
 }
 td	{
+	padding: 5px 10px;
 	color: #1D5C79;
 }
 td.today {
