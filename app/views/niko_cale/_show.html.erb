@@ -24,58 +24,56 @@
       <%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"') %>
     </th>
     <% if @dates.first.year == @dates.last.year %>
-      <th colspan=<%= "\"#{@dates.size}\"" %>><p align="center"><%= @dates.first.year %></p></th>
+      <th colspan=<%= "\"#{@dates.size}\"" %>><%= @dates.first.year %></th>
     <% else %>
-      <th colspan=<%= "\"#{@dates.first.end_of_year - @dates.first + 1}\"" %>><p align="center"><%= @dates.first.year %></p></th>
+      <th colspan=<%= "\"#{@dates.first.end_of_year - @dates.first + 1}\"" %>><%= @dates.first.year %></th>
       <% unless @dates.first.month == @dates.last.month %>
-        <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_year + 1}\"" %>><p align="center"><%= @dates.last.year %></p></th>
+        <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_year + 1}\"" %>><%= @dates.last.year %></th>
       <% end %>
     <% end %>
   </tr>
   <tr>
-    <th colspan=<%= "\"#{@dates.first.end_of_month - @dates.first + 1}\"" %>><p align="center"><%= @dates.first.month %></p></th>
+    <th colspan=<%= "\"#{@dates.first.end_of_month - @dates.first + 1}\"" %>><%= @dates.first.month %></th>
     <% unless @dates.first.month == @dates.last.month %>
-      <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_month + 1}\"" %>><p align="center"><%= @dates.last.month %></p></th>
+      <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_month + 1}\"" %>><%= @dates.last.month %></th>
     <% end %>
   </tr>
   <tr>
     <% @dates.each do |date| %>
       <th class=date>
-        <p align="center"><%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
-          <% version = @versions.find {|version| version.effective_date == date} %>
-          <% if version %>
-            <%= link_to with_baloon(version_image, version.name), {:controller=>:versions, :action=>:show, :id=>version.id} %>       
-          <% end %>
-       </p>
-       </th>
+        <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
+        <% version = @versions.find {|version| version.effective_date == date} %>
+        <% if version %>
+          <%= link_to with_baloon(version_image, version.name), {:controller=>:versions, :action=>:show, :id=>version.id} %>       
+        <% end %>
+      </th>
     <% end %>
   </tr>
   <% @users.each do |user| %>
   <tr> 
     <td nowrap class=user>
-       <p align="center"><%= link_to_feeling_list(:user=>user, :title=>user.name) %></p>
-       <p align="center"><%= link_to_issues_list "(#{@issues_count_per_user[user]})", user.id %></p>
+       <p><%= link_to_feeling_list(:user=>user, :title=>user.name) %></p>
+       <p><%= link_to_issues_list "(#{@issues_count_per_user[user]})", user.id %></p>
     </td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <td <%= (date == Date.today) ? 'class=today' : "" %>>
-	<p align="center">
-	  <% if feeling.nil? && editable?(Feeling.for(user, date)) && @project.users.include?(user) %>
-	    <%= link_to add_image, {:controller=>:feelings, :action=>:edit, :date=>date, :project_id=>@project.id} %>
-	  <% else %>
-            <%= link_to_feeling(feeling, @project.id) %>
-	  <% end %>
+        <% if feeling.nil? && editable?(Feeling.for(user, date)) && @project.users.include?(user) %>
+	  <%= link_to add_image, {:controller=>:feelings, :action=>:edit, :date=>date, :project_id=>@project.id} %>
+	<% else %>
+          <%= link_to_feeling(feeling, @project.id) %>
+	<% end %>
       </td>
-      <% end %>
+    <% end %>
   </tr> 
   <% end %>
   <% unless @morales.empty? %>
   <tr>
-    <td class=morale><p align="center"><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %>
+    <td class=morale><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %>
     <br><%= link_to_issues_list "(#{@issues_count_per_user[:morale]})", nil %><br></td> 
     <% @dates.each do |date| %>
       <% morale = @morales.find {|m| m.at == date} %>
-      <td class=morale><p align="center"><%= image_for(morale) %></td>
+      <td class=morale><%= image_for(morale) %></td>
     <% end %>
   </tr>
   <% end %>

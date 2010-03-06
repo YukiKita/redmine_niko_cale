@@ -37,6 +37,7 @@ table	{
 
 th	{
         background-color: #DCDCDC;
+        text-align: center;
 }
 th.date	{
 	height: 24px;
@@ -47,6 +48,7 @@ td	{
 	height: 56px;
 	padding: 5px 10px;
 	color: #1D5C79;
+        text-align: center;
 }
 td.today {
         background-color: #FFD4D1;
