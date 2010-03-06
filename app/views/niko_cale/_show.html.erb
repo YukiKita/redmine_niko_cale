@@ -40,7 +40,7 @@
   </tr>
   <tr>
     <% @dates.each do |date| %>
-      <th>
+      <th class=date>
         <p align="center"><%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
           <% version = @versions.find {|version| version.effective_date == date} %>
           <% if version %>

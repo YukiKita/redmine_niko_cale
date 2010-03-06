@@ -36,11 +36,13 @@ table	{
 }
 
 th	{
-	padding: 1px 24px 1px;
+        background-color: #CAE5F1;
+}
+th.date	{
+	width: 64px;
         background-color: #CAE5F1;
 }
 td	{
-	padding: 5px 10px;
 	color: #1D5C79;
 }
 td.today {
