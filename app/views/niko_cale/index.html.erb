@@ -24,7 +24,7 @@
 <% content_for :sidebar do %>
   <% form_tag({:action=>"index"}, {:method=>:get, :id=>"scope"}) do %>
   <h3><%= l(:label_display) %></h3>
-    <%= hidden_field_tag 'project_id', @project.id %>
+    <%= hidden_field_tag 'project_id', @project.identifier %>
     <%= hidden_field_tag :date_scope, @dates.last, :size=>'10' %>
     <p><%= calendar_for("date_scope") %>
     <%=l(:label_date)%></p>

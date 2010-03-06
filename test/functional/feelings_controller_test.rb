@@ -60,7 +60,7 @@ class FeelingsControllerTest < ActionController::TestCase
     put :edit, :date=>Date.today, :level=>2, :description=>"aaa"
     assert_redirected_to(:controller=>:feelings, :action=>:index, :user_id=>1)
     put :edit, :date=>Date.today, :level=>2, :description=>"aaa", :project_id=>1
-    assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
+    assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>"ecookbook")
   end
   def test_delete
     @request.session[:user_id] = 1
@@ -76,7 +76,7 @@ class FeelingsControllerTest < ActionController::TestCase
     assert f1.destroy
     assert f2.destroy
     delete :edit, :date=>Date.today, :project_id=>1
-    assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
+    assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>"ecookbook")
   end
   def test_preview
     @request.session[:user_id] = 1
@@ -127,7 +127,7 @@ class FeelingsControllerTest < ActionController::TestCase
     assert_redirected_to(:controller=>:feelings, :action=>:index, :user_id=>3)
     assert_equal Feeling.find(1).comments.size, 1
     post :edit_comment, :id=>1, "comment"=>{"comments"=>"aaa"}, :project_id=>1
-    assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
+    assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>"ecookbook")
     assert_equal Feeling.find(1).comments.size, 2
   end
   def test_delete_comment
@@ -145,7 +145,7 @@ class FeelingsControllerTest < ActionController::TestCase
     delete :edit_comment, :id=>1, :comment_id=>comment.id
     assert_redirected_to(:controller=>:feelings, :action=>:index, :user_id=>3)
     delete :edit_comment, :id=>1, :comment_id=>comment2.id, :project_id=>1
-    assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>1)
+    assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>"ecookbook")
   end
   def test_preview_comment
     @request.session[:user_id] = 1

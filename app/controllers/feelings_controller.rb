@@ -95,7 +95,7 @@ class FeelingsController < ApplicationController
   end
   def redirect_to_index(feeling, project)
     if project
-      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.id)
+      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.identifier)
     else
       redirect_to(:action=>:index, :user_id=>feeling.user.id)
     end
