@@ -36,13 +36,15 @@ table	{
 }
 
 th	{
-        background-color: #CAE5F1;
+        background-color: #DCDCDC;
 }
 th.date	{
+	height: 24px;
 	width: 56px;
         background-color: #CAE5F1;
 }
 td	{
+	height: 56px;
 	padding: 5px 10px;
 	color: #1D5C79;
 }
@@ -53,9 +55,8 @@ td.version {
         background-color: #C4CACC;
 }
 td.user {
-        background-color: #F4FAA0;
 }
 td.morale {
-        background-color: #C4CACC;
+        background-color: #DCDCDC;
 }
 

@@ -21,7 +21,7 @@ class FeelingsController < ApplicationController
   def index
     users = []
     if @project
-      users = find_users_for @project
+      users = @project.users
       @option = {:project=>@project}
     else
       users = find_users
@@ -141,10 +141,6 @@ class FeelingsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       nil
     end
-  end
-  def find_users_for project
-    members = Member.find_all_by_project_id(project)
-    members.map{|member| member.user}
   end
   def find_users
     if params[:user_id]
