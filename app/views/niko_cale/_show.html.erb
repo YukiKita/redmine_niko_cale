@@ -19,19 +19,34 @@
 <div id="niko_niko_calender" style="overflow-x:auto">
 <table border="1">
   <tr>
-    <th nowrap width="10%">
+    <th rowspan="3" nowrap width="10%">
       <%= previous_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
       <%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"') %>
     </th>
+    <% if @dates.first.year == @dates.last.year %>
+      <th colspan=<%= "\"#{@dates.size}\"" %>><p align="center"><%= @dates.first.year %></p></th>
+    <% else %>
+      <th colspan=<%= "\"#{@dates.first.end_of_year - @dates.first + 1}\"" %>><p align="center"><%= @dates.first.year %></p></th>
+      <% unless @dates.first.month == @dates.last.month %>
+        <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_year + 1}\"" %>><p align="center"><%= @dates.last.year %></p></th>
+      <% end %>
+    <% end %>
+  </tr>
+  <tr>
+    <th colspan=<%= "\"#{@dates.first.end_of_month - @dates.first + 1}\"" %>><p align="center"><%= @dates.first.month %></p></th>
+    <% unless @dates.first.month == @dates.last.month %>
+      <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_month + 1}\"" %>><p align="center"><%= @dates.last.month %></p></th>
+    <% end %>
+  </tr>
+  <tr>
     <% @dates.each do |date| %>
       <th>
-        <p align="center"><%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %></p>
-        <% version = @versions.find {|version| version.effective_date == date} %>
+        <p align="center"><%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
+          <% version = @versions.find {|version| version.effective_date == date} %>
           <% if version %>
-            <p align="center"><%= link_to with_baloon(version_image, version.name), {:controller=>:versions, :action=>:show, :id=>version.id} %></p>
-          <% else %>
-            <p align="center"><br /></p>
+            <%= link_to with_baloon(version_image, version.name), {:controller=>:versions, :action=>:show, :id=>version.id} %>       
           <% end %>
+       </p>
        </th>
     <% end %>
   </tr>

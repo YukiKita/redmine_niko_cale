@@ -104,8 +104,7 @@ module FeelingsHelper
     date.to_s.gsub(/-/, "/")
   end
   def format_date_with_color date
-    d = date.to_s.split("-")
-    formatted_date = d[0] + "<br>" + d[1] + "/" + d[2]
+    formatted_date = date.day.to_s
     color = ""
     case date.wday
     when 6  
@@ -113,7 +112,8 @@ module FeelingsHelper
     when 0
       color = '<font color="red">' + formatted_date + "</font>"
     else
-      '<font color="black">' + formatted_date + "</font>"
+      formatted_date
+#      '<font color="black">' + formatted_date + "</font>"
     end     
   end
   def editable?(feeling)
