@@ -35,22 +35,23 @@ class FeelingsController < ApplicationController
     end
   end
   def show
-    @feeling = find_feeling
-    render_404 unless @feeling
+    find_feeling
   end
   def new
-    date = find_date
-    @feeling = Feeling.for(User.current, date)
-    return render_404 unless editable?(@feeling)
+    @feeling = Feeling.for(User.current, find_date)
+    render_404 unless editable?(@feeling)
   end
   def edit
-    @feeling = find_feeling
-    return render_404 unless @feeling && editable?(@feeling)
-    render :template=>"feelings/new"
+    if find_feeling
+      if editable?(@feeling)
+        render :template=>"feelings/new"
+      else
+        render_404
+      end
+    end
   end
   def create
-    date = find_date
-    @feeling = Feeling.for(User.current, date)
+    @feeling = Feeling.for(User.current, find_date)
     return render_404 unless editable?(@feeling) && set_attributes_for(@feeling)
     if request.xhr?
       if set_attributes_for @feeling
@@ -61,38 +62,37 @@ class FeelingsController < ApplicationController
     else
       @feeling.save
       clean_old_feelings
-      flash[:notice] = l(:notice_successful_update)
+      flash[:notice] = l(:notice_successful_create)
       redirect_to_index(@feeling, @project)
     end
   end
   def destroy
-    @feeling = find_feeling
-    return render_404 unless @feeling
-    @feeling.destroy
-    clean_old_feelings
-    flash[:notice] = l(:notice_successful_update)
-    redirect_to_index(@feeling, @project)
+    if find_feeling
+      @feeling.destroy
+      clean_old_feelings
+      flash[:notice] = l(:notice_successful_delete)
+      redirect_to_index(@feeling, @project)
+    end
   end
 
   def edit_comment
-    feeling = find_feeling
-    return render_404 unless feeling
+    return unless find_feeling
     if request.post?
       comments = find_comments
       return render_404 unless comments
       if request.xhr?
         render :partial=>"comment", :locals=>{:comments=>comments}
       else
-        if feeling.add_comment(User.current, comments)
+        if @feeling.add_comment(User.current, comments)
           flash[:notice] = l(:label_comment_added)
         end
-        redirect_to_index feeling, @project
+        redirect_to_index @feeling, @project
       end
     elsif request.delete?
       flash[:notice] = l(:label_comment_delete)
       begin
-        feeling.comments.find(params[:comment_id]).destroy
-        redirect_to_index feeling, @project    
+        @feeling.comments.find(params[:comment_id]).destroy
+        redirect_to_index @feeling, @project    
       rescue ActiveRecord::RecordNotFound
         render_404
       end
@@ -118,9 +118,11 @@ class FeelingsController < ApplicationController
   end
   def find_feeling
     begin
-      Feeling.find(params[:id])
+      @feeling = Feeling.find(params[:id])
+      true
     rescue ActiveRecord::RecordNotFound
-      nil
+      render_404
+      false
     end
   end
   def set_attributes_for feeling
