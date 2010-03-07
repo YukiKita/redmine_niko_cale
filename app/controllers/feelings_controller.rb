@@ -123,10 +123,15 @@ class FeelingsController < ApplicationController
   end
   def redirect_to_index(feeling, project)
     clean_old_feelings
-    if project
-      redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.identifier)
-    else
-      redirect_to(:action=>:index, :user_id=>feeling.user.id)
+    respond_to do |format|
+      format.html do
+        if project
+          redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.identifier)
+        else
+          redirect_to(:action=>:index, :user_id=>feeling.user.id)
+        end
+      end
+      format.xml {head :ok}
     end
   end
   def find_feeling
