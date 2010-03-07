@@ -17,6 +17,7 @@ class FeelingsController < ApplicationController
   unloadable
   include FeelingsHelper
   before_filter :find_project, :authorize_global
+  before_filter :find_feeling, :only=>[:show, :edit, :update, :destroy, :edit_comment]
 
   def index
     users = []
@@ -35,17 +36,15 @@ class FeelingsController < ApplicationController
     end
   end
   def show
-    return render_404 unless find_feeling
   end
   def new
     @feeling = Feeling.for(User.current, find_date)
   end
   def edit
-    return render_404 unless find_feeling
     render :template=>"feelings/new"
   end
   def update
-    return render_404 unless find_feeling && set_attributes_for(@feeling)
+    return render_404 unless set_attributes_for(@feeling)
     @feeling.save
     flash[:notice] = l(:notice_successful_update)
     redirect_to_index(@feeling, @project)
@@ -66,14 +65,12 @@ class FeelingsController < ApplicationController
     end
   end
   def destroy
-    return render_404 unless find_feeling
     @feeling.destroy
     flash[:notice] = l(:notice_successful_delete)
     redirect_to_index(@feeling, @project)
   end
 
   def edit_comment
-    return render_404 unless find_feeling
     if request.post?
       comments = find_comments
       return render_404 unless comments
@@ -117,9 +114,8 @@ class FeelingsController < ApplicationController
   def find_feeling
     begin
       @feeling = Feeling.find(params[:id])
-      true
     rescue ActiveRecord::RecordNotFound
-      false
+      render_404
     end
   end
   def set_attributes_for feeling
