@@ -47,7 +47,6 @@ class FeelingsController < ApplicationController
   def update
     return render_404 unless find_feeling && set_attributes_for(@feeling)
     @feeling.save
-    clean_old_feelings
     flash[:notice] = l(:notice_successful_update)
     redirect_to_index(@feeling, @project)
   end
@@ -62,7 +61,6 @@ class FeelingsController < ApplicationController
       end
     else
       @feeling.save
-      clean_old_feelings
       flash[:notice] = l(:notice_successful_create)
       redirect_to_index(@feeling, @project)
     end
@@ -70,7 +68,6 @@ class FeelingsController < ApplicationController
   def destroy
     return render_404 unless find_feeling
     @feeling.destroy
-    clean_old_feelings
     flash[:notice] = l(:notice_successful_delete)
     redirect_to_index(@feeling, @project)
   end
@@ -110,6 +107,7 @@ class FeelingsController < ApplicationController
     params[:comment] && params[:comment][:comments]
   end
   def redirect_to_index(feeling, project)
+    clean_old_feelings
     if project
       redirect_to(:controller=>:niko_cale, :action=>:index, :project_id=>project.identifier)
     else
