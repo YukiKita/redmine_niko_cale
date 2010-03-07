@@ -39,8 +39,8 @@ class FeelingsController < ApplicationController
     render_404 unless @feeling
   end
   def new
-    @date = find_date
-    @feeling = Feeling.for(User.current, @date)
+    date = find_date
+    @feeling = Feeling.for(User.current, date)
     return render_404 unless editable?(@feeling)
   end
   def update
