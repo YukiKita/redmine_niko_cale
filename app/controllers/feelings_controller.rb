@@ -32,11 +32,16 @@ class FeelingsController < ApplicationController
     end
     @feeling_pages, @feelings = paginate(:feeling, :per_page => 10, :conditions=>{:user_id=>users}, :order=>"at DESC")
     respond_to do |format|
-      format.html { render :layout => false if request.xhr? }
-      format.atom { render_feed(@feelings, :title => feeling_list(@option)) }
+      format.html {render :layout => false if request.xhr?}
+      format.atom {render_feed(@feelings, :title => feeling_list(@option))}
+      format.xml  {render :text=>@feelings.to_xml}
     end
   end
   def show
+    respond_to do |format|
+      format.html
+      format.xml {render :text=>@feeling.to_xml}
+    end
   end
   def new
   end
