@@ -27,7 +27,7 @@
 <% if editable?(feeling) && !preview %>
    <p><%= link_to edit_image, {:action=>:edit, :id=>feeling.id, :project_id=>(@project && @project.identifier)}  %>
    <%= link_to delete_image, 
-       {:action=>:destroy, :project_id=>(@project ? @project.identifier : nil)},
+       {:action=>:destroy, :id=>feeling.id, :project_id=>(@project ? @project.identifier : nil)},
        {:method=>:delete, :confirm=>l(:text_are_you_sure)}  %></p>
 <% end %>
 
