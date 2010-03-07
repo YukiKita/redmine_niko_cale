@@ -49,9 +49,6 @@ class FeelingsController < ApplicationController
     render :template=>"feelings/new"
   end
 
-  def update
-    create
-  end
   def create
     new
     return render_404 unless set_attributes_for(@feeling)
