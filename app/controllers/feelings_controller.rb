@@ -18,6 +18,7 @@ class FeelingsController < ApplicationController
   include FeelingsHelper
   before_filter :find_project, :authorize_global
   before_filter :find_feeling, :only=>[:show, :edit, :update, :destroy, :edit_comment]
+  before_filter :create_feeling, :only=>[:new, :create]
 
   def index
     users = []
@@ -38,7 +39,6 @@ class FeelingsController < ApplicationController
   def show
   end
   def new
-    @feeling = Feeling.for(User.current, find_date)
   end
   def edit
     render :template=>"feelings/new"
@@ -52,7 +52,6 @@ class FeelingsController < ApplicationController
     end
   end
   def create
-    @feeling = Feeling.for(User.current, find_date)
     return render_404 unless set_attributes_for(@feeling)
     with_preview do
       @feeling.save
@@ -90,6 +89,9 @@ class FeelingsController < ApplicationController
   end
 
   private
+  def create_feeling
+    @feeling = Feeling.for(User.current, find_date)
+  end
   def with_preview
     if request.xhr?
       if set_attributes_for @feeling
