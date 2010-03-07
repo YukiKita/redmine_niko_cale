@@ -39,14 +39,13 @@ class FeelingsController < ApplicationController
   end
   def new
     @feeling = Feeling.for(User.current, find_date)
-    render_404 unless editable?(@feeling)
   end
   def edit
-    return render_404 unless find_feeling && editable?(@feeling)
+    return render_404 unless find_feeling
     render :template=>"feelings/new"
   end
   def update
-    return render_404 unless find_feeling && editable?(@feeling) && set_attributes_for(@feeling)
+    return render_404 unless find_feeling && set_attributes_for(@feeling)
     @feeling.save
     clean_old_feelings
     flash[:notice] = l(:notice_successful_update)
@@ -54,7 +53,7 @@ class FeelingsController < ApplicationController
   end
   def create
     @feeling = Feeling.for(User.current, find_date)
-    return render_404 unless editable?(@feeling) && set_attributes_for(@feeling)
+    return render_404 unless set_attributes_for(@feeling)
     if request.xhr?
       if set_attributes_for @feeling
         render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
@@ -69,7 +68,7 @@ class FeelingsController < ApplicationController
     end
   end
   def destroy
-    return render_404 unless find_feeling && editable?(@feeling)
+    return render_404 unless find_feeling
     @feeling.destroy
     clean_old_feelings
     flash[:notice] = l(:notice_successful_delete)
