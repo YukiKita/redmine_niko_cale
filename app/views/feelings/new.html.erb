@@ -42,7 +42,7 @@
   <p><%= text_area_tag :description, (@feeling.description || ""),  :cols=>48, :rows=>3 %></p>
   <%= submit_tag l(:button_save), :class => 'button-small', :name => nil %>
   <%= link_to_remote l(:label_preview), 
-                   { :url => feeling_path(@feeling),
+                   { :url => {:controller => :feelings, :action => :update, :id=>@feeling.id},
                      :update => :preview,
                      :with => "Form.serialize('update_feeling')"
                    } %>

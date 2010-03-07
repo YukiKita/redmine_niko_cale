@@ -82,13 +82,11 @@ class FeelingsControllerTest < ActionController::TestCase
   end
   def test_preview
     @request.session[:user_id] = 1
-    xhr :post, :create, :date=>Date.today + 1
+    xhr :put, :update, :id=>0
     assert_response(404)
-    xhr :post, :create, :date=>Date.today - 7
+    xhr :put, :update, :id=>1, :level=>3, :description=>"aa"
     assert_response(404)
-    xhr :post, :create, :date=>Date.today, :level=>3, :description=>"aa"
-    assert_response(404)
-    xhr :post, :create, :date=>Date.today, :level=>2, :description=>"aa"
+    xhr :put, :update, :id=>1, :level=>2, :description=>"aa"
     assert_response(:success)
   end
   def test_index
