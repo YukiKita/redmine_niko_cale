@@ -43,23 +43,23 @@ class FeelingsControllerTest < ActionController::TestCase
     get :show, :id=>0, :project_id=>1
     assert_response(404)
   end
-  def test_edit
+  def test_new
     @request.session[:user_id] = 1
-    get :edit, :date=>Date.today
+    get :new, :date=>Date.today
     assert_response(:success)
-    assert_template "edit"
-    get :edit, :date=>Date.today, :project_id=>0
+    assert_template "new"
+    get :new, :date=>Date.today, :project_id=>0
     assert_response(404)
   end
-  def test_put
+  def test_create
     @request.session[:user_id] = 1
-    put :edit, :date=>Date.today
+    post :create, :date=>Date.today
     assert_response(404)
-    put :edit, :date=>Date.today, :level=>3, :description=>"aaa"
+    post :create, :date=>Date.today, :level=>3, :description=>"aaa"
     assert_response(404)
-    put :edit, :date=>Date.today, :level=>2, :description=>"aaa"
+    post :create, :date=>Date.today, :level=>2, :description=>"aaa"
     assert_redirected_to(:controller=>:feelings, :action=>:index, :user_id=>1)
-    put :edit, :date=>Date.today, :level=>2, :description=>"aaa", :project_id=>1
+    post :create, :date=>Date.today, :level=>2, :description=>"aaa", :project_id=>1
     assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>"ecookbook")
   end
   def test_delete
@@ -68,14 +68,16 @@ class FeelingsControllerTest < ActionController::TestCase
     f1 = Feeling.for(User.find(1), (3.months.ago.to_date + 1)).good!
     f2 = Feeling.for(User.find(1), (3.months.ago.to_date + 1)).good!
     f3 = Feeling.for(User.find(1), (3.months.ago.to_date - 1)).good!
-    delete :edit, :date=>Date.today
+    f4 = Feeling.for(User.find(1)).good!
+    f5 = Feeling.for(User.find(1), (Date.today - 1)).good!
+    delete :destroy, :id=>f4.id
     assert_redirected_to(:controller=>:feelings, :action=>:index, :user_id=>1)
     assert_equal Feeling.find(f1.id), f1
     assert_equal Feeling.find(f2.id), f2
     assert_raise(ActiveRecord::RecordNotFound) { Feeling.find(f3.id)}
     assert f1.destroy
     assert f2.destroy
-    delete :edit, :date=>Date.today, :project_id=>1
+    delete :destory, :id=>f5.id, :project_id=>1
     assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>"ecookbook")
   end
   def test_preview

@@ -45,10 +45,9 @@ class FeelingsController < ApplicationController
   end
   def edit
     @feeling = find_feeling
-    return render_404 unless @feeling
+    return render_404 unless @feeling && editable?(@feeling)
     render :template=>"feelings/new"
   end
-
   def create
     new
     return render_404 unless set_attributes_for(@feeling)
