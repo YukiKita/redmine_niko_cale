@@ -49,8 +49,9 @@ class FeelingsController < ApplicationController
     render :template=>"feelings/new"
   end
   def create
-    new
-    return render_404 unless set_attributes_for(@feeling)
+    date = find_date
+    @feeling = Feeling.for(User.current, date)
+    return render_404 unless editable?(@feeling) && set_attributes_for(@feeling)
     if request.xhr?
       if set_attributes_for @feeling
         render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}

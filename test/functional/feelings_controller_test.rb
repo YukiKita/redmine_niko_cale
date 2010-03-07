@@ -77,18 +77,18 @@ class FeelingsControllerTest < ActionController::TestCase
     assert_raise(ActiveRecord::RecordNotFound) { Feeling.find(f3.id)}
     assert f1.destroy
     assert f2.destroy
-    delete :destory, :id=>f5.id, :project_id=>1
+    delete :destroy, :id=>f5.id, :project_id=>1
     assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>"ecookbook")
   end
   def test_preview
     @request.session[:user_id] = 1
-    xhr :post, :edit, :date=>Date.today + 1
+    xhr :post, :create, :date=>Date.today + 1
     assert_response(404)
-    xhr :post, :edit, :date=>Date.today - 7
+    xhr :post, :create, :date=>Date.today - 7
     assert_response(404)
-    xhr :post, :edit, :date=>Date.today, :level=>3, :description=>"aa"
+    xhr :post, :create, :date=>Date.today, :level=>3, :description=>"aa"
     assert_response(404)
-    xhr :post, :edit, :date=>Date.today, :level=>2, :description=>"aa"
+    xhr :post, :create, :date=>Date.today, :level=>2, :description=>"aa"
     assert_response(:success)
   end
   def test_index
