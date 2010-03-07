@@ -63,7 +63,8 @@ class FeelingsController < ApplicationController
     end
   end
   def destroy
-    new
+    @feeling = find_feeling
+    return render_404 unless @feeling
     @feeling.destroy
     clean_old_feelings
     flash[:notice] = l(:notice_successful_update)
