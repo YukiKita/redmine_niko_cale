@@ -50,6 +50,13 @@ class FeelingsController < ApplicationController
       end
     end
   end
+  def update
+    return render_404 unless find_feeling && editable?(@feeling) && set_attributes_for(@feeling)
+    @feeling.save
+    clean_old_feelings
+    flash[:notice] = l(:notice_successful_update)
+    redirect_to_index(@feeling, @project)
+  end
   def create
     @feeling = Feeling.for(User.current, find_date)
     return render_404 unless editable?(@feeling) && set_attributes_for(@feeling)
