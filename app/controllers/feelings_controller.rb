@@ -43,6 +43,12 @@ class FeelingsController < ApplicationController
     @feeling = Feeling.for(User.current, date)
     return render_404 unless editable?(@feeling)
   end
+  def edit
+    @feeling = find_feeling
+    return render_404 unless @feeling
+    render :template=>"feelings/new"
+  end
+
   def update
     create
   end
@@ -71,17 +77,6 @@ class FeelingsController < ApplicationController
     redirect_to_index(@feeling, @project)
   end
 
-  def edit
-    if request.get?
-      new
-    else
-      if request.delete?
-        destroy
-      else
-        create
-      end
-    end
-  end
   def edit_comment
     feeling = find_feeling
     return render_404 unless feeling
