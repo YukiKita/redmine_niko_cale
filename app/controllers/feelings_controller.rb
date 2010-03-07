@@ -34,16 +34,20 @@ class FeelingsController < ApplicationController
     respond_to do |format|
       format.html {render :layout => false if request.xhr?}
       format.atom {render_feed(@feelings, :title => feeling_list(@option))}
-      format.xml  {render :text=>@feelings.to_xml}
+      format.xml  {render :xml=>@feelings}
     end
   end
   def show
     respond_to do |format|
       format.html
-      format.xml {render :text=>@feeling.to_xml}
+      format.xml {render :xml=>@feeling}
     end
   end
   def new
+    respond_to do |format|
+      format.html
+      format.xml {render :xml=>@feeling}
+    end
   end
   def edit
     render :template=>"feelings/new"
