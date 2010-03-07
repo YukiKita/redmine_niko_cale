@@ -45,13 +45,7 @@ class FeelingsController < ApplicationController
   end
   def update
     return render_404 unless set_attributes_for(@feeling)
-    if request.xhr?
-      if set_attributes_for @feeling
-        render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
-      else
-        render_404 
-      end
-    else
+    with_preview do
       @feeling.save
       flash[:notice] = l(:notice_successful_update)
       redirect_to_index(@feeling, @project)
@@ -60,13 +54,7 @@ class FeelingsController < ApplicationController
   def create
     @feeling = Feeling.for(User.current, find_date)
     return render_404 unless set_attributes_for(@feeling)
-    if request.xhr?
-      if set_attributes_for @feeling
-        render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
-      else
-        render_404 
-      end
-    else
+    with_preview do
       @feeling.save
       flash[:notice] = l(:notice_successful_create)
       redirect_to_index(@feeling, @project)
@@ -102,6 +90,17 @@ class FeelingsController < ApplicationController
   end
 
   private
+  def with_preview
+    if request.xhr?
+      if set_attributes_for @feeling
+        render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
+      else
+        render_404 
+      end
+    else
+      yield
+    end
+  end
   def clean_old_feelings
     retention_period = Setting.plugin_redmine_niko_cale["retention_period"].to_i
     unless retention_period == 0
