@@ -27,7 +27,7 @@ class FeelingsController < ApplicationController
       @option = {:project=>@project}
     else
       users = find_users
-      return render_404 if users.empty?
+      return render_not_found if users.empty?
       @option = (users.size == 1) ? {:user=>users.first} : {}
     end
     @feeling_pages, @feelings = paginate(:feeling, :per_page => 10, :conditions=>{:user_id=>users}, :order=>"at DESC")
@@ -53,7 +53,7 @@ class FeelingsController < ApplicationController
     render :template=>"feelings/new"
   end
   def update
-    return render_404 unless set_attributes_for(@feeling)
+    return render_not_found unless set_attributes_for(@feeling)
     with_preview do
       @feeling.save
       flash[:notice] = l(:notice_successful_update)
@@ -61,7 +61,7 @@ class FeelingsController < ApplicationController
     end
   end
   def create
-    return render_404 unless set_attributes_for(@feeling)
+    return render_not_found unless set_attributes_for(@feeling)
     with_preview do
       @feeling.save
       flash[:notice] = l(:notice_successful_create)
@@ -98,6 +98,12 @@ class FeelingsController < ApplicationController
   end
 
   private
+  def render_not_found
+    respond_to do |format|
+      format.html {render_404}
+      format.xml {head :status => :unprocessable_entity}
+    end
+  end
   def create_feeling
     @feeling = Feeling.for(User.current, find_date)
   end
@@ -106,7 +112,7 @@ class FeelingsController < ApplicationController
       if set_attributes_for @feeling
         render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
       else
-        render_404 
+        render_404
       end
     else
       yield
@@ -138,7 +144,7 @@ class FeelingsController < ApplicationController
     begin
       @feeling = Feeling.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      render_404
+      render_not_found
     end
   end
   def set_attributes_for feeling
