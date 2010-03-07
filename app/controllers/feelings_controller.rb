@@ -60,9 +60,17 @@ class FeelingsController < ApplicationController
   def create
     @feeling = Feeling.for(User.current, find_date)
     return render_404 unless set_attributes_for(@feeling)
-    @feeling.save
-    flash[:notice] = l(:notice_successful_create)
-    redirect_to_index(@feeling, @project)
+    if request.xhr?
+      if set_attributes_for @feeling
+        render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
+      else
+        render_404 
+      end
+    else
+      @feeling.save
+      flash[:notice] = l(:notice_successful_create)
+      redirect_to_index(@feeling, @project)
+    end
   end
   def destroy
     @feeling.destroy

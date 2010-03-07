@@ -41,11 +41,8 @@
   <p><%= l(:label_optional_description) %><br>
   <p><%= text_area_tag :description, (@feeling.description || ""),  :cols=>48, :rows=>3 %></p>
   <%= submit_tag l(:button_save), :class => 'button-small', :name => nil %>
-  <%= link_to_remote l(:label_preview), 
-                   { :url => {:controller => :feelings, :action => :update, :id=>@feeling.id},
-                     :update => :preview,
-                     :with => "Form.serialize('update_feeling')"
-                   } %>
-
+  <% option = @feeling.new_record? ? {:url => {:action=>:create}, :method=>:post} : {:url => feeling_path(@feeling)} %>
+  <% option.merge! :update => :preview, :with => "Form.serialize('update_feeling')" %>
+  <%= link_to_remote l(:label_preview), option %>
 <% end %>
 <div id="preview"></div>
