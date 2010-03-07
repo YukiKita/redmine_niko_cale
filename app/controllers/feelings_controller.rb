@@ -35,20 +35,15 @@ class FeelingsController < ApplicationController
     end
   end
   def show
-    find_feeling
+    return render_404 unless find_feeling
   end
   def new
     @feeling = Feeling.for(User.current, find_date)
     render_404 unless editable?(@feeling)
   end
   def edit
-    if find_feeling
-      if editable?(@feeling)
-        render :template=>"feelings/new"
-      else
-        render_404
-      end
-    end
+    return render_404 unless find_feeling && editable?(@feeling)
+    render :template=>"feelings/new"
   end
   def update
     return render_404 unless find_feeling && editable?(@feeling) && set_attributes_for(@feeling)
@@ -74,16 +69,15 @@ class FeelingsController < ApplicationController
     end
   end
   def destroy
-    if find_feeling
-      @feeling.destroy
-      clean_old_feelings
-      flash[:notice] = l(:notice_successful_delete)
-      redirect_to_index(@feeling, @project)
-    end
+    return render_404 unless find_feeling && editable?(@feeling)
+    @feeling.destroy
+    clean_old_feelings
+    flash[:notice] = l(:notice_successful_delete)
+    redirect_to_index(@feeling, @project)
   end
 
   def edit_comment
-    return unless find_feeling
+    return render_404 unless find_feeling
     if request.post?
       comments = find_comments
       return render_404 unless comments
@@ -128,7 +122,6 @@ class FeelingsController < ApplicationController
       @feeling = Feeling.find(params[:id])
       true
     rescue ActiveRecord::RecordNotFound
-      render_404
       false
     end
   end
