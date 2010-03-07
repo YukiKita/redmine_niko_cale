@@ -38,30 +38,47 @@ class FeelingsController < ApplicationController
     @feeling = find_feeling
     render_404 unless @feeling
   end
-  def edit
+  def new
     @date = find_date
     @feeling = Feeling.for(User.current, @date)
     return render_404 unless editable?(@feeling)
+  end
+  def update
+    create
+  end
+  def create
+    new
+    return render_404 unless set_attributes_for(@feeling)
     if request.xhr?
       if set_attributes_for @feeling
         render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
       else
         render_404 
       end
-    elsif request.get?
     else
-      if request.delete?
-        @feeling.destroy
-      else
-        return render_404 unless set_attributes_for(@feeling)
-        @feeling.save
-      end
-      retention_period = Setting.plugin_redmine_niko_cale["retention_period"].to_i
-      unless retention_period == 0
-        Feeling.exclude_before!(retention_period.months.ago.to_date)
-      end
+      @feeling.save
+      clean_old_feelings
       flash[:notice] = l(:notice_successful_update)
       redirect_to_index(@feeling, @project)
+    end
+  end
+  def destroy
+    new
+    @feeling.destroy
+    clean_old_feelings
+    flash[:notice] = l(:notice_successful_update)
+    redirect_to_index(@feeling, @project)
+  end
+
+  def edit
+    if request.get?
+      new
+    else
+      if request.delete?
+        destroy
+      else
+        create
+      end
     end
   end
   def edit_comment
@@ -90,6 +107,12 @@ class FeelingsController < ApplicationController
   end
 
   private
+  def clean_old_feelings
+    retention_period = Setting.plugin_redmine_niko_cale["retention_period"].to_i
+    unless retention_period == 0
+      Feeling.exclude_before!(retention_period.months.ago.to_date)
+    end
+  end
   def find_comments
     params[:comment] && params[:comment][:comments]
   end
