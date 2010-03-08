@@ -45,21 +45,21 @@ class FeelingsControllerTest < ActionController::TestCase
   end
   def test_new
     @request.session[:user_id] = 1
-    get :new, :date=>Date.today
+    get :new, "feeling"=>{"at"=>Date.today}
     assert_response(:success)
     assert_template "new"
-    get :new, :date=>Date.today, :project_id=>0
+    get :new, "feeling"=>{"at"=>Date.today}, :project_id=>0
     assert_response(404)
   end
   def test_create
     @request.session[:user_id] = 1
-    post :create, :date=>Date.today
+    post :create, "feeling"=>{"at"=>Date.today}
     assert_response(404)
-    post :create, :date=>Date.today, :level=>3, :description=>"aaa"
+    post :create, "feeling"=>{"at"=>Date.today, "level"=>"3", "description"=>"aaa"}
     assert_response(404)
-    post :create, :date=>Date.today, :level=>2, :description=>"aaa"
+    post :create, "feeling"=>{"at"=>Date.today, "level"=>"2", "description"=>"aaa"}
     assert_redirected_to(:controller=>:feelings, :action=>:index, :user_id=>1)
-    post :create, :date=>Date.today, :level=>2, :description=>"aaa", :project_id=>1
+    post :create, "feeling"=>{"at"=>Date.today, "level"=>"2", "description"=>"aaa"}, :project_id=>1
     assert_redirected_to(:controller=>:niko_cale, :action=>:index, :project_id=>"ecookbook")
   end
   def test_delete
@@ -84,9 +84,9 @@ class FeelingsControllerTest < ActionController::TestCase
     @request.session[:user_id] = 1
     xhr :put, :update, :id=>0
     assert_response(404)
-    xhr :put, :update, :id=>1, :level=>3, :description=>"aa"
+    xhr :put, :update, :id=>1, "feeling"=>{"level"=>"3", "description"=>"aaa"}
     assert_response(404)
-    xhr :put, :update, :id=>1, :level=>2, :description=>"aa"
+    xhr :put, :update, :id=>1, "feeling"=>{"level"=>"2", "description"=>"aaa"}
     assert_response(:success)
   end
   def test_index
