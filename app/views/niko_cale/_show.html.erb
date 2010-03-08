@@ -42,8 +42,8 @@
     <% @dates.each do |date| %>
       <th class=date>
         <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
-        <% version = @versions.find {|version| version.effective_date == date} %>
-        <% if version %>
+        <% versions = @versions.select {|version| version.effective_date == date} %>
+        <% versions.each do |version| %>
           <%= link_to with_baloon(version_image, version.name), {:controller=>:versions, :action=>:show, :id=>version.id} %>       
         <% end %>
       </th>
