@@ -41,27 +41,27 @@ th	{
 }
 th.date	{
 	height: 24px;
-	width: 50px;
+	width: 54px;
         background-color: #CAE5F1;
 }
 td.feeling {
-	height: 50px;
-	width: 50px;
+	height: 54px;
+	width: 54px;
         text-align: center;
 }
 td.todaysfeeling {
-	height: 50px;
-	width: 50px;
+	height: 54px;
+	width: 54px;
         text-align: center;
         background-color: #FFD4D1;
 }
 td.morale {
-	height: 50px;
+	height: 54px;
         text-align: center;
         background-color: #DCDCDC;
 }
 td.user {
-	height: 50px;
+	height: 54px;
 	padding: 5px 10px;
         text-align: center;
 }
