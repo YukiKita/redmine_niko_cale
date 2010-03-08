@@ -57,7 +57,7 @@
     </td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
-      <td <%= (date == Date.today) ? 'class=today' : "" %>>
+      <td <%= (date == Date.today) ? 'class=todaysfeeling' : 'class=feeling' %>>
         <% if feeling.nil? && editable?(Feeling.for(user, date)) && @project.users.include?(user) %>
 	  <%= link_to add_image, {:controller=>:feelings, :action=>:new, "feeling"=>{"at"=>date}, :project_id=>@project.identifier} %>
 	<% else %>
