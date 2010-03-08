@@ -148,13 +148,15 @@ class FeelingsController < ApplicationController
     end
   end
   def set_attributes_for feeling
-    description = (params[:description] || "").strip
-    case params[:level]
-    when "0"
+    f = params["feeling"]
+    return nil unless f && f["level"]
+    description = (f["description"] || "").strip
+    case f["level"].to_i
+    when 0
       feeling.bad(description)
-    when "1"
+    when 1
       feeling.ordinary(description)
-    when "2"
+    when 2
       feeling.good(description)
     else
       nil
@@ -162,7 +164,7 @@ class FeelingsController < ApplicationController
   end
   def find_date
     begin
-      date = params[:date].to_date
+      date = params["feeling"]["at"].to_date
     rescue ArgumentError, NoMethodError
       date = Date.today
     end
