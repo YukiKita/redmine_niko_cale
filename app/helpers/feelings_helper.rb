@@ -116,7 +116,6 @@ module FeelingsHelper
       color = '<font color="red">' + formatted_date + "</font>"
     else
       formatted_date
-#      '<font color="black">' + formatted_date + "</font>"
     end     
   end
   def editable?(feeling)
@@ -131,7 +130,8 @@ module FeelingsHelper
   def current_user_allowed_to? controller, action
     User.current.allowed_to?({:controller =>controller, :action =>action}, nil, :global => true)
   end
-  def link_to_issues_list title, user_id
-    link_to title, :controller => 'issues', :action => 'index', :set_filter => 1, :assigned_to_id => user_id, :sort => 'priority:desc,updated_on:desc'
+  def link_to_issues_list title, project_id=nil, user_id=nil
+    link_to title, :controller => 'issues', :action => 'index', :set_filter => 1,
+    :assigned_to_id => user_id, :sort => 'priority:desc,updated_on:desc', :project_id=>project_id
   end
 end

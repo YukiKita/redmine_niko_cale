@@ -19,7 +19,7 @@ Redmine::Plugin.register :redmine_niko_cale do
   name 'Niko-niko Calender plugin'
   author 'Yuki Kita'
   description 'This is a plugin that makes member\'s feeling visible'
-  version '0.8.5'
+  version '0.8.6'
   requires_redmine :version_or_higher => '0.9.0'
 
   project_module :niko_cale do

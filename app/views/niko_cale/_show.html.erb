@@ -53,7 +53,7 @@
   <tr> 
     <td nowrap class=user>
        <p><%= link_to_feeling_list(:user=>user, :title=>user.name) %></p>
-       <p><%= link_to_issues_list "(#{@issues_count_per_user[user]})", user.id %></p>
+       <p><%= link_to_issues_list "(#{@issues_count_per_user[user]})", @project.identifier, user.id %></p>
     </td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
@@ -70,7 +70,7 @@
   <% unless @morales.empty? %>
   <tr>
     <td class=morale><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %>
-    <br><%= link_to_issues_list "(#{@issues_count_per_user[:morale]})", nil %><br></td> 
+    <br><%= link_to_issues_list "(#{@issues_count_per_user[:morale]})", @project.identifier  %><br></td> 
     <% @dates.each do |date| %>
       <% morale = @morales.find {|m| m.at == date} %>
       <td class=morale><%= image_for(morale) %></td>
