@@ -82,7 +82,7 @@ class FeelingsController < ApplicationController
         render :partial=>"comment", :locals=>{:comments=>comments}
       else
         if comment = @feeling.add_comment(User.current, comments)
-          Mailer.feeling_commented(comment)
+          Mailer.deliver_feeling_commented(comment)
           flash[:notice] = l(:label_comment_added)
         end
         redirect_to_index @feeling, @project

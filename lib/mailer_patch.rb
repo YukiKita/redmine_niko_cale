@@ -13,14 +13,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 require_dependency 'mailer'
  
 module MailerPatch
   def self.included(base)
     base.send(:include, InstanceMethods)
+    base.class_eval do
+      unloadable # Send unloadable so it will not be unloaded in development
+    end
   end
-
   module InstanceMethods
     # Builds a tmail object used to email recipients of the added issue.
     #
@@ -33,12 +34,11 @@ module MailerPatch
       message_id comment
       recipients [feeling.user]
       cc [comment.author]
-      subject "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] (#{issue.status.name}) #{issue.subject}"
-      body :issue => issue,
-      :issue_url => url_for(:controller => 'issues', :action => 'show', :id => issue)
+      subject "Re: [#{feeling.title}]"
+      body :feeling => feeling, :comment=>comment
       render_multipart('feeling_commented', body)
     end
   end
 end
- 
-Mailer.send(:include, MailerPatch)
+
+
