@@ -34,7 +34,7 @@ module MailerPatch
       message_id comment
       recipients [feeling.user.mail]
       cc [comment.author.mail]
-      subject "Re: [#{l(:label_niko_cale_feeling)} (#{feeling.user}@#{feeling.at})]"
+      subject "[#{l(:label_niko_cale_feeling)} (#{feeling.user}@#{feeling.at})] #{l(:label_comment_added)}"
       body :feeling => feeling, :comment=>comment
       render_multipart('feeling_commented', body)
     end
