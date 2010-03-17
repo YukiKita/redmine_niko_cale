@@ -15,9 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %>
+<p>> <%= @feeling_url %></p>
 
-<em><%= h(   l(:text_user_wrote, :value=>@comment.author)  ) %></em>
+<em><%= h(   ll(@feeling.user.language, :text_user_wrote, @comment.author)  ) %></em>
 
 <%= textilizable(@comment, :comments, :only_path => false) %>
-
-<p><%= @feeling_url %></p>
