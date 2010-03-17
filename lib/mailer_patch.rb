@@ -32,9 +32,9 @@ module MailerPatch
       feeling = Feeling.find(comment.commented)
       redmine_headers 'author' => comment.author, 'feeling_owner'=> feeling.user
       message_id comment
-      recipients [feeling.user]
-      cc [comment.author]
-      subject "Re: [#{feeling.title}]"
+      recipients [feeling.user.mail]
+      cc [comment.author.mail]
+      subject "Re: [#{l(:label_niko_cale_feeling)} (#{feeling.user}@#{feeling.at})]"
       body :feeling => feeling, :comment=>comment
       render_multipart('feeling_commented', body)
     end
