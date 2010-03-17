@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %>
 
-<h1><%=h @message.board.project.name %> - <%=h @message.board.name %>: <%= link_to(h(@message.subject), @message_url) %></h1>
-<em><%=h @message.author %></em>
 
-<%= textilizable(@message, :content, :only_path => false) %>
+<em><%=h @comment.author %></em>
+
+<%= textilizable(@comment, :comments, :only_path => false) %>
