@@ -17,6 +17,6 @@
 %>
 
 
-<em><%=h @comment.author %></em>
+<em><%= h(   l(:text_user_wrote, :value=>@comment.author)  ) %></em>
 
 <%= textilizable(@comment, :comments, :only_path => false) %>
