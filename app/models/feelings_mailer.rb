@@ -27,7 +27,7 @@ class FeelingsMailer < Mailer
     message_id comment
     recipients [feeling.user.mail]
     cc [comment.author.mail]
-    subject "Re: #{ll(feeling.user.language, :label_niko_cale_feeling)} (#{feeling.user}@#{feeling.at})"
+    subject "Re: [#{Setting.app_title}]#{ll(feeling.user.language, :label_niko_cale_feeling)} (#{feeling.user}@#{feeling.at})"
     body :feeling => feeling, :comment=>comment, :feeling_url=>url_for(:controller => 'feelings', :action => 'show', :id => feeling)
     render_multipart('feeling_commented', body)
   end
