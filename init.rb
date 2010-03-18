@@ -14,11 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 require 'redmine'
-require 'dispatcher'
-require 'mailer_patch'
-Dispatcher.to_prepare do
-  Mailer.send(:include, MailerPatch) unless Mailer.included_modules.include? MailerPatch
-end
 
 Redmine::Plugin.register :redmine_niko_cale do
   name 'Niko-niko Calender plugin'
