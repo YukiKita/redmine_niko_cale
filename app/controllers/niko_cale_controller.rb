@@ -37,15 +37,15 @@ class NikoCaleController < ApplicationController
     projects = get_projects @project, @with_subprojects
     @users = find_all_users(projects, @selected_role_ids)
     @feelings_per_user, @morales = get_feelings_per_user_and_morales(@users, @dates)
-    @issues_count_per_user = issues_count_per_user @users
+    @issues_count_per_user = issues_count_per_user @users, @project
     @versions = Version.find(:all, :conditions=>["project_id =? and effective_date >= ? and effective_date <= ?", @project, @dates.first, @dates.last], :order=>"effective_date ASC")
   end
-  def issues_count_per_user users
+  def issues_count_per_user users, project
     open_issue_statuses = IssueStatus.find_all_by_is_closed(false)
-    users.inject({}) do |result, user|
-      issues = Issue.find_all_by_assigned_to_id_and_status_id(User.find(user), open_issue_statuses).size
+    users.inject({:morale=>0}) do |result, user|
+      issues = Issue.find_all_by_assigned_to_id_and_status_id_and_project_id(User.find(user), open_issue_statuses, project).size
       result[user] = issues
-      result[:morale] = (result[:morale] || 0) + issues
+      result[:morale] += issues
       result
     end
   end
