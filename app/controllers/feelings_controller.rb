@@ -58,30 +58,37 @@ class FeelingsController < ApplicationController
   end
   def edit_comment
     if request.post?
-      comments = find_comments
-      return render_404 unless comments
-      if request.xhr?
-        render :partial=>"comment", :locals=>{:comments=>comments}
-      else
-        comment = @feeling.add_comment(User.current, comments)
-        if comment
-          FeelingsMailer.deliver_feeling_commented(comment)
-          flash[:notice] = l(:label_comment_added)
-        end
-        redirect_to_index @feeling, @project
-      end
+      post_comment
     elsif request.delete?
-      flash[:notice] = l(:label_comment_delete)
-      begin
-        @feeling.comments.find(params[:comment_id]).destroy
-        redirect_to_index @feeling, @project    
-      rescue ActiveRecord::RecordNotFound
-        render_404
-      end
+      delete_comment
     end
   end
 
   private
+  def post_comment
+    comments = find_comments
+    return render_404 unless comments
+    if request.xhr?
+      render :partial=>"comment", :locals=>{:comments=>comments}
+    else
+      comment = @feeling.add_comment(User.current, comments)
+      if comment
+        FeelingsMailer.deliver_feeling_commented(comment)
+        flash[:notice] = l(:label_comment_added)
+      end
+      redirect_to_index @feeling, @project
+    end
+  end
+  def delete_comment
+    flash[:notice] = l(:label_comment_delete)
+    begin
+      @feeling.comments.find(params[:comment_id]).destroy
+      redirect_to_index @feeling, @project    
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
+  end
+
   def render_feeling
     respond_to do |format|
       format.html
