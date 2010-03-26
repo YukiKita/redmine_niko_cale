@@ -74,7 +74,8 @@ class FeelingsController < ApplicationController
       if request.xhr?
         render :partial=>"comment", :locals=>{:comments=>comments}
       else
-        if comment = @feeling.add_comment(User.current, comments)
+        comment = @feeling.add_comment(User.current, comments)
+        if comment
           FeelingsMailer.deliver_feeling_commented(comment)
           flash[:notice] = l(:label_comment_added)
         end
