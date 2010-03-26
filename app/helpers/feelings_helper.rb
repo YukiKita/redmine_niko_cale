@@ -18,33 +18,33 @@ module FeelingsHelper
     '<!--[if lt IE 7]>' + javascript_include_tag("unitpngfix.js", :plugin => "redmine_niko_cale") +  '<![endif]--> '
   end
   def feeling_list option={}
-    title = option[:title]
-    if title
-      return title
-    elsif (project = option[:project])
-      title = project.name
-    elsif (user = option[:user])
-      title = user.name
+    title = ''
+    if option[:title]
+      return option[:title] 
+    elsif option[:project]
+      title = option[:project].name
+    elsif option[:user]
+      title = option[:user].name
     else
       title = l(:label_niko_cale_all_users)
     end
     "#{l(:label_niko_cale_feeling_list)} (#{title})"
   end
   def link_to_feeling_list option={}
-    if (project = option[:project])
-      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index, :project_id=>project})
-    elsif (user = option[:user])
-      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index, :user_id=>user})
+    if option[:project]
+      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index, :project_id=>option[:project]})
+    elsif option[:user]
+      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index, :user_id=>option[:user]})
     else
       link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index})
     end
   end
   def atom_conditions option={}
     conditions = {:key => User.current.rss_key}
-    if (project = option[:project])
-      conditions[:project_id] = project.identifier
-    elsif (user = option[:user])
-      conditions[:user_id] = user.id
+    if option[:project]
+      conditions[:project_id] = option[:project].identifier
+    elsif option[:user]
+      conditions[:user_id] = option[:user].id
     else
     end
     conditions
