@@ -31,13 +31,15 @@ module FeelingsHelper
     "#{l(:label_niko_cale_feeling_list)} (#{title})"
   end
   def link_to_feeling_list option={}
-    if option[:project]
-      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index, :project_id=>option[:project]})
-    elsif option[:user]
-      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index, :user_id=>option[:user]})
-    else
-      link_to(h(feeling_list(option)), {:controller=>:feelings, :action=>:index})
+    url = {:controller=>:feelings, :action=>:index}
+    project = option[:project]
+    user = option[:user] 
+    if project
+      url[:project_id] = project
+    elsif user
+      url[:user_id] = user
     end
+    link_to(h(feeling_list(option)), url)
   end
   def atom_conditions option={}
     conditions = {:key => User.current.rss_key}
