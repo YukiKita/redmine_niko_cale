@@ -25,7 +25,7 @@ class NikoCaleController < ApplicationController
       update_information
       render :partial=>"show"
     else
-      @selected_role_ids = find_givable_roles.map{|r| r.id}
+      @selected_role_ids = find_givable_roles.map{|role| role.id}
       update_information
     end
   end

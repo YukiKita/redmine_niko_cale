@@ -107,11 +107,7 @@ class FeelingsController < ApplicationController
   def save_feeling message
     return render_not_found unless set_attributes_for(@feeling)
     if request.xhr?
-      if set_attributes_for @feeling
-        render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
-      else
-        render_404
-      end
+      render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
     else
       @feeling.save
       flash[:notice] = message
