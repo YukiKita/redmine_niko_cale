@@ -167,9 +167,10 @@ class FeelingsController < ApplicationController
     end
   end
   def find_project
-    return unless params[:project_id]
+    project_id = params[:project_id]
+    return unless project_id
     begin
-      @project = Project.find(params[:project_id])
+      @project = Project.find(project_id)
     rescue ActiveRecord::RecordNotFound
       render_404
     end
