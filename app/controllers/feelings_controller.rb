@@ -185,10 +185,7 @@ class FeelingsController < ApplicationController
     end
   end
   def find_users
-    if params[:user_id]
-      User.find_all_by_id(params[:user_id])
-    else
-      User.all 
-    end
+    user_id = params[:user_id]
+    user_id ? User.find_all_by_id(user_id) : User.all
   end
 end
