@@ -49,23 +49,23 @@ module FeelingsHelper
     end
     conditions
   end
-  def face_images_path
-    "faces/" + (Setting.plugin_redmine_niko_cale["face_images"] || "original")
+  def face_images_path image
+    "faces/" + (Setting.plugin_redmine_niko_cale['face_images'] || 'original') + '/' + image
   end
   def my_image path, title="", onclick="", style=""
     image_tag(path, {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
   end
   def good_image title="", onclick="", style=""
-    my_image "#{face_images_path}/good.png"
+    my_image face_images_path('good.png')
   end
   def ordinary_image title="", onclick="", style=""
-    my_image "#{face_images_path}/ordinary.png"
+    my_image face_images_path('ordinary.png')
   end
   def bad_image title="", onclick="", style=""
-    my_image "#{face_images_path}/bad.png"
+    my_image face_images_path('bad.png')
   end
   def null_image
-    ""
+    ''
   end
   def add_image
     my_image 'add.png', l(:button_add)
