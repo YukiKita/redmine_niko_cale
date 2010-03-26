@@ -21,16 +21,16 @@ class Feeling < ActiveRecord::Base
   acts_as_event :url => Proc.new {|o| {:controller => 'feelings', :action => 'show', :id => o.id}}, :datetime=>:at
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
 
-  FEELING_TYPES.each do |f|
-    class_eval "def #{f}?;self.level == #{FEELING_TYPES.index(f)};end"
-    class_eval "def #{f}(description='')
-self.level = #{FEELING_TYPES.index(f)}
+  FEELING_TYPES.each do |feeling|
+    class_eval "def #{feeling}?;self.level == #{FEELING_TYPES.index(feeling)};end"
+    class_eval "def #{feeling}(description='')
+self.level = #{FEELING_TYPES.index(feeling)}
 self.description = description
 self
 end
 "
-    class_eval "def #{f}!(description='')
-self.#{f}(description).save
+    class_eval "def #{feeling}!(description='')
+self.#{feeling}(description).save
 self
 end
 "
