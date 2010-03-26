@@ -55,9 +55,6 @@ module FeelingsHelper
   def my_image path, title="", onclick="", style=""
     image_tag(path, {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
   end
-  def null_image
-    ''
-  end
   def add_image
     my_image 'add.png', l(:button_add)
   end
@@ -79,10 +76,10 @@ module FeelingsHelper
   end
   def image_for feeling
     if feeling
-      image = feeling.good? ? face_image('good') : (feeling.bad? ? face_image('bad') : (feeling.ordinary? ? face_image('ordinary'): null_image))
+      image = feeling.good? ? face_image('good') : (feeling.bad? ? face_image('bad') : (feeling.ordinary? ? face_image('ordinary'): ''))
       (feeling.has_description? || feeling.has_comments?) ? with_baloon(image, description_of(feeling)) : image
     else
-      null_image
+      ''
     end
   end
   def link_to_feeling feeling, project_id=nil
