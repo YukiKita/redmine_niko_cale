@@ -19,6 +19,7 @@ class FeelingsController < ApplicationController
   before_filter :find_project, :authorize_global
   before_filter :find_feeling, :only=>[:show, :edit, :update, :destroy, :edit_comment]
   before_filter :create_feeling, :only=>[:new, :create]
+  before_filter :render_feeling, :only=>[:new, :show]
 
   def index
     users = []
@@ -38,16 +39,8 @@ class FeelingsController < ApplicationController
     end
   end
   def show
-    respond_to do |format|
-      format.html
-      format.xml {render :xml=>@feeling}
-    end
   end
   def new
-    respond_to do |format|
-      format.html
-      format.xml {render :xml=>@feeling}
-    end
   end
   def edit
     render :template=>"feelings/new"
@@ -99,6 +92,12 @@ class FeelingsController < ApplicationController
   end
 
   private
+  def render_feeling
+    respond_to do |format|
+      format.html
+      format.xml {render :xml=>@feeling}
+    end
+  end
   def render_not_found
     respond_to do |format|
       format.html {render_404}
