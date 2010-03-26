@@ -71,7 +71,8 @@ module FeelingsHelper
     my_image 'next.png', title, onclick, 'cursor: pointer;'
   end
   def index_for feeling, with_link=false
-    h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
+    user = feeling.user
+    h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(user) : h(user.name)) +")"
   end
   def description_of feeling
     strip_tags(index_for(feeling) + "\n" +  feeling.description).gsub(/\r\n|\r|\n/, "<br />").gsub(/["']/,'') +
