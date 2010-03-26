@@ -22,10 +22,12 @@ class FeelingsMailer < Mailer
   #   Mailer.deliver_feeling_commented(comment) => sends an email to user of the feeling and the authors of commenters
   def feeling_commented(comment)
     feeling = Feeling.find(comment.commented)
-    redmine_headers 'author' => comment.author, 'feeling_owner'=> feeling.user
+    author = comment.author
+    owner = feeling.user
+    redmine_headers 'author' => author, 'feeling_owner'=> owner
     message_id comment
-    recipients [feeling.user.mail]
-    cc [comment.author.mail]
+    recipients [owner.mail]
+    cc [author.mail]
     subject "Re: [#{Setting.app_title}]#{ll(feeling.user.language, :label_niko_cale_feeling)} (#{feeling.user}@#{feeling.at})"
     body :feeling => feeling, :comment=>comment, :feeling_url=>url_for(:controller => 'feelings', :action => 'show', :id => feeling)
     render_multipart('feeling_commented', body)
