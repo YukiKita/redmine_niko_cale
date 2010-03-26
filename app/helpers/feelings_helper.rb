@@ -50,19 +50,10 @@ module FeelingsHelper
     conditions
   end
   def face_image image, title="", onclick="", style=""
-    my_image 'faces/' + (Setting.plugin_redmine_niko_cale['face_images'] || 'original') + '/' + image, title, onclick, style
+    my_image 'faces/' + (Setting.plugin_redmine_niko_cale['face_images'] || 'original') + '/' + image + '.png', title, onclick, style
   end
   def my_image path, title="", onclick="", style=""
     image_tag(path, {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
-  end
-  def good_image title="", onclick="", style=""
-    face_image 'good.png', title, onclick, style
-  end
-  def ordinary_image title="", onclick="", style=""
-    face_image 'ordinary.png', title, onclick, style
-  end
-  def bad_image title="", onclick="", style=""
-    face_image 'bad.png', title, onclick, style
   end
   def null_image
     ''
@@ -88,7 +79,7 @@ module FeelingsHelper
   end
   def image_for feeling
     if feeling
-      image = feeling.good? ? good_image : (feeling.bad? ? bad_image : (feeling.ordinary? ? ordinary_image: null_image))
+      image = feeling.good? ? face_image('good') : (feeling.bad? ? face_image('bad') : (feeling.ordinary? ? face_image('ordinary'): null_image))
       (feeling.has_description? || feeling.has_comments?) ? with_baloon(image, description_of(feeling)) : image
     else
       null_image
