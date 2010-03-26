@@ -70,12 +70,6 @@ module FeelingsHelper
   def version_image
     image_tag("package.png")
   end
-  def edit_image
-    image_tag("edit.png") + l(:button_update)
-  end
-  def delete_image
-    image_tag("delete.png") + l(:button_delete)
-  end
   def previous_image title="", onclick=""
     image_tag("previous.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title, :style=>"cursor: pointer;"})
   end
