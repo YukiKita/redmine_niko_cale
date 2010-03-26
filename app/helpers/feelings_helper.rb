@@ -43,11 +43,12 @@ module FeelingsHelper
   end
   def atom_conditions option={}
     conditions = {:key => User.current.rss_key}
-    if option[:project]
-      conditions[:project_id] = option[:project].identifier
-    elsif option[:user]
-      conditions[:user_id] = option[:user].id
-    else
+    project = option[:project]
+    user = option[:user] 
+    if project
+      conditions[:project_id] = project.identifier
+    elsif user
+      conditions[:user_id] = user.id
     end
     conditions
   end
