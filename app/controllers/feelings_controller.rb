@@ -46,27 +46,16 @@ class FeelingsController < ApplicationController
     render :template=>"feelings/new"
   end
   def update
-    return render_not_found unless set_attributes_for(@feeling)
-    with_preview do
-      @feeling.save
-      flash[:notice] = l(:notice_successful_update)
-      redirect_to_index(@feeling, @project)
-    end
+    save_feeling l(:notice_successful_update)
   end
   def create
-    return render_not_found unless set_attributes_for(@feeling)
-    with_preview do
-      @feeling.save
-      flash[:notice] = l(:notice_successful_create)
-      redirect_to_index(@feeling, @project)
-    end
+    save_feeling l(:notice_successful_create)
   end
   def destroy
     @feeling.destroy
     flash[:notice] = l(:notice_successful_delete)
     redirect_to_index(@feeling, @project)
   end
-
   def edit_comment
     if request.post?
       comments = find_comments
@@ -108,7 +97,8 @@ class FeelingsController < ApplicationController
   def create_feeling
     @feeling = Feeling.for(User.current, find_date)
   end
-  def with_preview
+  def save_feeling message
+    return render_not_found unless set_attributes_for(@feeling)
     if request.xhr?
       if set_attributes_for @feeling
         render :partial=>"show", :locals=>{:feeling=>@feeling, :preview=>true}
@@ -116,7 +106,9 @@ class FeelingsController < ApplicationController
         render_404
       end
     else
-      yield
+      @feeling.save
+      flash[:notice] = message
+      redirect_to_index(@feeling, @project)
     end
   end
   def clean_old_feelings
