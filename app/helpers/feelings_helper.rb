@@ -52,29 +52,32 @@ module FeelingsHelper
   def face_images_path
     "faces/" + (Setting.plugin_redmine_niko_cale["face_images"] || "original")
   end
+  def my_image path, title="", onclick="", style=""
+    image_tag(path, {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
+  end
   def good_image title="", onclick="", style=""
-    image_tag("#{face_images_path}/good.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
+    my_image "#{face_images_path}/good.png"
   end
   def ordinary_image title="", onclick="", style=""
-    image_tag("#{face_images_path}/ordinary.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
+    my_image "#{face_images_path}/ordinary.png"
   end
   def bad_image title="", onclick="", style=""
-    image_tag("#{face_images_path}/bad.png", {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
+    my_image "#{face_images_path}/bad.png"
   end
   def null_image
     ""
   end
   def add_image
-    image_tag("add.png", {:plugin=>:redmine_niko_cale, :title=>l(:button_add)})
+    my_image 'add.png', l(:button_add)
   end
   def version_image
     image_tag("package.png")
   end
   def previous_image title="", onclick=""
-    image_tag("previous.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title, :style=>"cursor: pointer;"})
+    my_image 'previous.png', title, onclick, 'cursor: pointer;'
   end
   def next_image title="", onclick=""
-    image_tag("next.png", {:plugin=>:redmine_niko_cale, :onclick=>onclick, :title=>title, :style=>"cursor: pointer;"})
+    my_image 'next.png', title, onclick, 'cursor: pointer;'
   end
   def index_for feeling, with_link=false
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(feeling.user) : h(feeling.user.name)) +")"
