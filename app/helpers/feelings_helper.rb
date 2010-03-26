@@ -108,11 +108,12 @@ module FeelingsHelper
   end
   def editable?(feeling)
     editable_period = Setting.plugin_redmine_niko_cale["editable_period"].to_i
-    if editable_period == 0
-      (User.current == feeling.user)
+    feeling_owner_is_current_user = (User.current == feeling.user)
+    if (editable_period == 0)
+      feeling_owner_is_current_user
     else
       delta = (Date.today - feeling.at)
-      ((0 <= delta) && (delta < editable_period)) && (User.current == feeling.user)
+      (0 <= delta) && (delta < editable_period) && feeling_owner_is_current_user
     end
   end
   def current_user_allowed_to? controller, action
