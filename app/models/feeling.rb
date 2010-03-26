@@ -59,7 +59,7 @@ end
     (self.comments << new_comment) && new_comment
   end
   def self.for(user, date = Date.today)
-    Feeling.find_by_user_id_and_at(user, date) || self.new{|f| f.at = date; f.user = user}
+    Feeling.find_by_user_id_and_at(user, date) || self.new{|feeling| feeling.at = date; feeling.user = user}
   end
   def self.clean!
     Feeling.destroy_all

@@ -61,11 +61,11 @@ class NikoCaleController < ApplicationController
   end
   def find_all_users projects, selected_role_ids
     members = projects.inject([]) {|result, project| result + project.members}
-    users = members.inject([]) do |result, m|
-      if (m.roles.map{|r| r.id} & selected_role_ids).empty?
+    users = members.inject([]) do |result, member|
+      if (member.roles.map{|role| role.id} & selected_role_ids).empty?
         result
       else
-        result << m.user         
+        result << member.user
       end
     end.uniq
     current_user =  User.current
