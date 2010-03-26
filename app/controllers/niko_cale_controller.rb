@@ -91,7 +91,7 @@ class NikoCaleController < ApplicationController
     return feelings_per_user, morales
   end
   def get_selected_role_ids
-    (params[:role_ids] || []).map {|r| r.to_i}
+    (params[:role_ids] || []).map {|role_id| role_id.to_i}
   end
   def with_subprojects?
     params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')

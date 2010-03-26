@@ -149,9 +149,10 @@ class FeelingsController < ApplicationController
   end
   def set_attributes_for feeling
     new_feeling = params['feeling']
-    return nil unless new_feeling && new_feeling['level']
+    level = new_feeling['level']
+    return nil unless new_feeling && level
     description = (new_feeling['description'] || '').strip
-    case new_feeling['level'].to_i
+    case level.to_i
     when 0
       feeling.bad(description)
     when 1
