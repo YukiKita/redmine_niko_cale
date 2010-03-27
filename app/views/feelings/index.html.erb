@@ -21,8 +21,8 @@
   <%= auto_discovery_link_tag(:atom, params.merge({:format => 'atom', :page => nil, :key => User.current.rss_key})) %>
 <% end %>
 
+<div class="contextual"><%= link_to_feeling_list() %></div>
 <h2><%= h(feeling_list(@option)) %> </h2>
-<p align="right"><%= link_to_feeling_list() %></p>
 
 <% @feelings.each do |feeling| %>
   <%= render :partial=>'show', :locals=>{:feeling=>feeling, :preview=>false} %>
