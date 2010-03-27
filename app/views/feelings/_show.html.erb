@@ -22,7 +22,9 @@
     <%= link_to_feeling(feeling, @project && @project.identifier) %>
   </ul>
 <% if feeling.has_description? %>
-   <p><%= textilizable(feeling.description) %></p>
+  <div class="wiki">
+  <%= textilizable(feeling.description) %>
+  </div>
 <% end %>
 <% if editable?(feeling) && !preview %>
    <p><%= link_to l(:button_update), edit_feeling_path(:id=>feeling, :project_id=>(@project && @project.identifier)), {:class=>'icon icon-edit'}  %>

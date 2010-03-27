@@ -19,4 +19,6 @@
 
 <em><%= h(   ll(@feeling.user.language, :text_user_wrote, @comment.author)  ) %></em>
 
+<div class="wiki">
 <%= textilizable(@comment, :comments, :only_path => false) %>
+</div>
