@@ -43,7 +43,10 @@ end
   end
   # for Atom feed
   def project
-    "#{self.at}(#{self.user.name})"
+    result = "#{self.user.name}@#{self.at}"
+    # added dummy method because feeling is not related to any project
+    def result.wiki; nil ;end
+    result
   end
   # for Atom feed
   def title
