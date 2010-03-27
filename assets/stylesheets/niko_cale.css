@@ -30,10 +30,11 @@
 	top:-6px;
 }
 
-table	{
+table.nikocale	{
 	border-collapse: collapse;	border-spacing: 0;
 	margin-bottom: 10px;
 }
+table.nikocale tbody tr:hover { background-color:#ffffdd; }
 
 th	{
         background-color: #DCDCDC;
