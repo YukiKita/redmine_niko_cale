@@ -20,7 +20,7 @@ Redmine::Plugin.register :redmine_niko_cale do
   author 'Yuki Kita'
   description 'This is a plugin that makes member\'s feeling visible'
   url         'http://github.com/YukiKita/redmine_niko_cale'
-  version '0.9.2'
+  version '0.9.3'
   requires_redmine :version_or_higher => '0.9.0'
 
   project_module :niko_cale do
