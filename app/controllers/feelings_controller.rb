@@ -121,7 +121,8 @@ class FeelingsController < ApplicationController
     end
   end
   def find_comments
-    params[:comment] && params[:comment][:comments]
+    comment = params[:comment]
+    comment && comment[:comments]
   end
   def redirect_to_index(feeling, project)
     clean_old_feelings

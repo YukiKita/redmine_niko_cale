@@ -94,7 +94,8 @@ class NikoCaleController < ApplicationController
     (params[:role_ids] || []).map {|role_id| role_id.to_i}
   end
   def with_subprojects?
-    params[:with_subprojects].nil? ? false : (params[:with_subprojects] == '1')
+    with_subproject = params[:with_subprojects]
+    with_subproject && (with_subproject == '1')
   end
   def get_projects project, with_subprojects
     with_subprojects ? project.self_and_descendants : [project]

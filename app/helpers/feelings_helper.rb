@@ -18,17 +18,21 @@ module FeelingsHelper
     '<!--[if lt IE 7]>' + javascript_include_tag("unitpngfix.js", :plugin => "redmine_niko_cale") +  '<![endif]--> '
   end
   def feeling_list option={}
-    title = ''
-    if option[:title]
-      return option[:title] 
-    elsif option[:project]
-      title = option[:project].name
-    elsif option[:user]
-      title = option[:user].name
+    title = option[:title]
+    if title
+      title
     else
-      title = l(:label_niko_cale_all_users)
+      project = option[:project]
+      user = option[:user]
+      if project
+        title = project.name
+      elsif user
+        title = user.name
+      else
+        title = l(:label_niko_cale_all_users)
+      end
+      "#{l(:label_niko_cale_feeling_list)} (#{title})"
     end
-    "#{l(:label_niko_cale_feeling_list)} (#{title})"
   end
   def link_to_feeling_list option={}
     url = {:controller=>:feelings, :action=>:index}
