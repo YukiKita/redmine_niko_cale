@@ -44,8 +44,11 @@
         <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
         <% versions = @versions.select {|version| version.effective_date == date} %>
         <% versions.each do |version| %>
-          <%= link_to with_baloon(version_image, version.name), {:controller=>:versions, :action=>:show, :id=>version.id} %>       
-        <% end %>
+          <span class="tooltip" style="position: absolute;top:">
+            <%= link_to version_image, {:controller=>:versions, :action=>:show, :id=>version.id} %>       
+	    <span class="tip"><%= version.name %><span>
+          </span>
+      <% end %>
       </th>
     <% end %>
   </tr>
