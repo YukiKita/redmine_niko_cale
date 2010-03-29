@@ -18,7 +18,7 @@ class Feeling < ActiveRecord::Base
   FEELING_TYPES = ["bad", "ordinary", "good"]
   belongs_to :user
   validates_inclusion_of :level, :in=>0...FEELING_TYPES.size
-  acts_as_event :url => Proc.new {|o| {:controller => 'feelings', :action => 'show', :id => o.id}}, :datetime=>:at
+  acts_as_event :url => Proc.new {|feeling| {:controller => 'feelings', :action => 'show', :id => feeling.id}}, :datetime=>:at
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
 
   FEELING_TYPES.each do |feeling|
@@ -36,7 +36,7 @@ end
 "
   end
   def has_description?
-    (self.description || false) && (!self.description.empty?)
+    description && (!description.empty?)
   end
   def has_comments?
     self.comments_count > 0
