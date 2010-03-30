@@ -126,9 +126,9 @@ class FeelingTest < ActiveSupport::TestCase
   end
   test "has_description?" do
     feeling = Feeling.for(User.find(1))
-    assert_equal feeling.has_description?, false
-    assert_equal feeling.good("").has_description?, false
-    assert_equal feeling.good(nil).has_description?, false
+    assert !feeling.has_description?
+    assert !feeling.good("").has_description?
+    assert !feeling.good(nil).has_description?
     assert feeling.good(" ").has_description?
     assert feeling.good("1     2").has_description?
   end
