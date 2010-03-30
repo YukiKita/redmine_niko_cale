@@ -41,7 +41,9 @@
      </tr>
   </table>
   <p><%= l(:label_optional_description) %><br>
-  <p><%= f.text_area :description, :cols=>48, :rows=>3 %></p>
+  <%= wikitoolbar_for 'news_description' %>
+  <p><%= f.text_area :description, :cols=>56, :rows=>3 %></p>
+  <%= wikitoolbar_for 'feeling_description' %>
   <%= submit_tag l(:button_save), :class => 'button-small', :name => nil %>
   <% option = @feeling.new_record? ? {:url => {:action=>:create}, :method=>:post} : {:url => feeling_path(@feeling)} %>
   <% option.merge! :update => :preview, :with => "Form.serialize('update_feeling')" %>
