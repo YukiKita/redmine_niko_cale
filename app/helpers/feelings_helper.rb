@@ -99,17 +99,18 @@ module FeelingsHelper
   def format_date date
     date.to_s.gsub(/-/, "/")
   end
-  def format_date_with_color date
+  def link_to_date date, project
     formatted_date = date.day.to_s
-    color = ""
+    style = nil
     case date.wday
     when 6  
-      '<font color="blue">' + formatted_date + "</font>"
+      style = 'color:blue'
     when 0
-      color = '<font color="red">' + formatted_date + "</font>"
+      style = 'color:red'
     else
-      formatted_date
+      style = nil
     end     
+    link_to(formatted_date, {:controller=>:projects, :action=>:activity, :id=>project, :from=>date}, {:style=>style})
   end
   def editable?(feeling)
     editable_period = Setting.plugin_redmine_niko_cale["editable_period"].to_i

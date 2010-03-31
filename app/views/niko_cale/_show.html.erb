@@ -41,7 +41,7 @@
   <tr>
     <% @dates.each do |date| %>
       <th class=date>
-        <%= link_to(format_date_with_color(date), :controller=>:projects, :action=>:activity, :id=>@project, :from=>date) %>
+        <%= link_to_date date, @project %>
         <% versions = @versions.select {|version| version.effective_date == date} %>
         <% versions.each do |version| %>
           <span class="tooltip" style="position: absolute;top:">
