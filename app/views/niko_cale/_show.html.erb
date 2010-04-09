@@ -33,9 +33,9 @@
     <% end %>
   </tr>
   <tr>
-    <th colspan=<%= "\"#{@dates.first.end_of_month - @dates.first + 1}\"" %>><%= @dates.first.month %></th>
+    <th colspan=<%= "\"#{@dates.first.end_of_month - @dates.first + 1}\"" %>><%= l(:date)[:abbr_month_names][@dates.first.month] %></th>
     <% unless @dates.first.month == @dates.last.month %>
-      <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_month + 1}\"" %>><%= @dates.last.month %></th>
+      <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_month + 1}\"" %>><%= l(:date)[:abbr_month_names][@dates.last.month] %></th>
     <% end %>
   </tr>
   <tr>
