@@ -16,7 +16,7 @@
 require 'redmine'
 
 Redmine::Plugin.register :redmine_niko_cale do
-  name 'Niko-niko Calender plugin'
+  name 'Niko-niko Calendar plugin'
   author 'Yuki Kita'
   description 'This is a plugin that makes member\'s feeling visible'
   url         'http://github.com/YukiKita/redmine_niko_cale'

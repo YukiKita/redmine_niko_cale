@@ -1,7 +1,7 @@
-= Niko-niko Calender plugin for Redmine
+= Niko-niko Calendar plugin for Redmine
 
-Niko-niko Calender(Niko-cale) plugin is a Redmine plugin that makes member's feeling visible.
-If you want to know more about Niko-niko Calender, see the following page.
+Niko-niko Calendar(Niko-cale) plugin is a Redmine plugin that makes member's feeling visible.
+If you want to know more about Niko-niko Calendar, see the following page.
 http://www.geocities.jp/nikonikocalendar/index_en.html
 
 === Plugin installation

@@ -37,7 +37,7 @@
       <label><%= check_box_tag 'with_subprojects', 1, @with_subprojects %> <%=l(:label_subproject_plural) %></label>
     <% end %>
   <% end %>
-  <%= observe_form("scope", {:frequency=>0.5, :update=>"niko_niko_calender",  :url=>{:action=>"index"}, :method=>:get})  %>
+  <%= observe_form("scope", {:frequency=>0.5, :update=>"niko_niko_calendar",  :url=>{:action=>"index"}, :method=>:get})  %>
 <% end %>
 
 <div id="bubble_tooltip">
@@ -46,7 +46,7 @@
 	<div class="bubble_bottom"></div>
 </div>
 
-<h2><%= l(:label_niko_niko_calender) %></h2>
+<h2><%= l(:label_niko_niko_calendar) %></h2>
 <%= render :partial=>'show' %>
 
 
