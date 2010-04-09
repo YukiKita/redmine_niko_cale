@@ -1,10 +1,10 @@
 = Niko-niko Calendar plugin for Redmine
 
-Niko-niko Calendar(Niko-cale) plugin is a Redmine plugin that makes member's feeling visible.
+Niko-niko Calendar (Niko-cale) plugin is a Redmine plugin that shows the mood of project members and the overall project on a daily basis.
 If you want to know more about Niko-niko Calendar, see the following page.
 http://www.geocities.jp/nikonikocalendar/index_en.html
 
-=== Plugin installation
+== Plugin installation
 
 1. Copy the plugin directory into the vendor/plugins directory
 2. Rename the plugin directory to redmine_niko_cale
@@ -12,12 +12,12 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
    rake db:migrate_plugins RAILS_ENV=production
 4. Start Redmine
 5. Add the Niko-cale module into your project.
-6. Setup the permissions for the Niko-cale module for your roles.
+6. Setup the permissions for the Niko-cale module for each of your roles.
 
-=== Note
+== Note
 
-This plugin works only Redmine 0.9.0 or higher.
+This plugin works only with Redmine 0.9.0 or higher.
 
-=== License
+== License
 
 This plugin is licensed under GNU General Public License version 3.
