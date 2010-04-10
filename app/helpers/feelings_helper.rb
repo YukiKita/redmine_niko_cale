@@ -57,7 +57,9 @@ module FeelingsHelper
     conditions
   end
   def face_image image, title="", onclick="", style=""
-    my_image 'faces/' + (Setting.plugin_redmine_niko_cale['face_images'] || 'original') + '/' + image + '.png', title, onclick, style
+    path = 'faces/' + (Setting.plugin_redmine_niko_cale['face_images'] || 'original') + '/' + image + '.png'
+    path = path.gsub(/\.png/, '.gif') unless File.exist?(Rails.root.to_s + '/public/plugin_assets/redmine_niko_cale/images/' + path)
+    my_image path, title, onclick, style
   end
   def my_image path, title="", onclick="", style=""
     image_tag(path, {:plugin=>:redmine_niko_cale, :title=>title, :onclick=>onclick, :style=>style})
