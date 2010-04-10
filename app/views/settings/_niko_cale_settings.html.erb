@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %>
+<% extend FeelingsHelper %>
 <table border="0">
 <tr>
 <td><%= l(:label_niko_cale_retention_period) %></td>
@@ -37,6 +38,9 @@ options_for_select([[l(:label_all_time), "0"], days[1], days[2], days[3], days[4
 <tr>
 <td><%= l(:label_niko_cale_face_images) %></td>
 <td><%= select_tag 'settings[face_images]', options_for_select(face_images_list,  @settings["face_images"]) %></td>
+<td><%= face_image 'good', "", "", "", @settings['face_images'] %>
+<td><%= face_image 'ordinary', "", "", "", @settings['face_images'] %>
+<td><%= face_image 'bad', "", "", "", @settings['face_images'] %>
 </tr>
 
 </table>
