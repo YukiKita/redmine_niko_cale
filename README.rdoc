@@ -20,21 +20,19 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
 
 == How to use
 
-=== View feeling
+=== Edit feeling
 
-==== Scope setting
+You can edit your feeling by clickiing [+] button.
+
+=== Scope setting
 
 * Date
 * Role
 * Sub projects
 
-==== RSS feed
+=== RSS feed
 
 You can get the RSS feed of anyone's feeling.
-
-=== Edit feeling
-
-You can edit your feeling by clickiing [+] button.
 
 === Add comment
 
@@ -43,13 +41,19 @@ If a comment to a feeling is created, e-mail notification is sent to the user of
 
 === Settings
 
-==== retention period
+You can change the plugin's settings by [Administration]->[Plugins]->[Niko-niko Calendar plugin Configure]
 
-==== editable period
+==== Retention period
+
+You can select the retention period of feelings.
+
+==== Editable period
+
+You can select the editable period of feelings.
 
 ==== face images
 
-face images are selectable
+You can select face images.
 You can add face images by copying the formatted folder into /redmine_niko_cale/assets/images/faces/.
 The folder should include these files.
 * good.png or good.gif
