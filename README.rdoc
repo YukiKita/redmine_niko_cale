@@ -4,6 +4,10 @@ Niko-niko Calendar (Niko-cale) plugin is a Redmine plugin that shows the mood of
 If you want to know more about Niko-niko Calendar, see the following page.
 http://www.geocities.jp/nikonikocalendar/index_en.html
 
+== Requirements
+
+* This plugin works only with Redmine 0.9.0 or higher.
+
 == Plugin installation
 
 1. Copy the plugin directory into the vendor/plugins directory
@@ -14,9 +18,36 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
 5. Add the Niko-cale module into your project.
 6. Setup the permissions for the Niko-cale module for each of your roles.
 
-== Note
+== How to use
 
-This plugin works only with Redmine 0.9.0 or higher.
+=== View feeling
+
+* Scope setting
+** Date
+** Role
+** Sub projects
+* RSS feed
+
+=== Edit feeling
+
+* You can edit your feeling by clickiing [+] button.
+
+=== Add comment
+
+* You can comment to other user's feelings.
+* If a comment to a feeling is created, e-mail notification is sent to the user of the feeling.
+
+=== Settings
+
+* retention period
+* editable period
+* face images
+** face images are selectable
+** You can add face images by copying the formatted folder into /redmine_niko_cale/assets/images/faces/.
+*** The folder should include these files.
+**** good.png or good.gif
+**** ordinary.png or ordinary.gif
+**** bad.png or bad.gif
 
 == License
 
