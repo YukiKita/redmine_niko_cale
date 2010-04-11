@@ -22,32 +22,39 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
 
 === View feeling
 
-* Scope setting
-** Date
-** Role
-** Sub projects
-* RSS feed
+==== Scope setting
+
+* Date
+* Role
+* Sub projects
+
+==== RSS feed
+
+You can get the RSS feed of anyone's feeling.
 
 === Edit feeling
 
-* You can edit your feeling by clickiing [+] button.
+You can edit your feeling by clickiing [+] button.
 
 === Add comment
 
-* You can comment to other user's feelings.
-* If a comment to a feeling is created, e-mail notification is sent to the user of the feeling.
+You can comment to other user's feelings.
+If a comment to a feeling is created, e-mail notification is sent to the user of the feeling.
 
 === Settings
 
-* retention period
-* editable period
-* face images
-** face images are selectable
-** You can add face images by copying the formatted folder into /redmine_niko_cale/assets/images/faces/.
-*** The folder should include these files.
-**** good.png or good.gif
-**** ordinary.png or ordinary.gif
-**** bad.png or bad.gif
+==== retention period
+
+==== editable period
+
+==== face images
+
+face images are selectable
+You can add face images by copying the formatted folder into /redmine_niko_cale/assets/images/faces/.
+The folder should include these files.
+* good.png or good.gif
+* ordinary.png or ordinary.gif
+* bad.png or bad.gif
 
 == License
 
