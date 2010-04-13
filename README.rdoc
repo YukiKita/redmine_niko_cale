@@ -22,7 +22,7 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
 
 === Edit feeling
 
-You can edit your feeling by clickiing [+] button.
+You can edit your feeling by clicking [+] button.
 
 === Scope setting
 
@@ -51,7 +51,7 @@ You can select the retention period of feelings.
 
 You can select the editable period of feelings.
 
-==== face images
+==== Make and select face images
 
 You can select face images.
 You can add face images by copying the formatted folder into /redmine_niko_cale/assets/images/faces/.
