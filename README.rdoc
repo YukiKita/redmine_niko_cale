@@ -26,6 +26,7 @@ You can edit your feeling by clicking [+] button.
 
 === Scope setting
 
+You can change the scope setting of the niko-niko calendar.
 * Date
 * Role
 * Sub projects
@@ -41,7 +42,7 @@ If a comment to a feeling is created, e-mail notification is sent to the user of
 
 === Settings
 
-You can change the plugin's settings by [Administration]->[Plugins]->[Niko-niko Calendar plugin Configure]
+You can change the plugin's settings by [Administration]->[Plugins]->[Niko-niko Calendar plugin [Configure]]
 
 ==== Retention period
 
