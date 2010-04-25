@@ -60,6 +60,7 @@ The folder should include these files.
 * good.png or good.gif
 * ordinary.png or ordinary.gif
 * bad.png or bad.gif
+It is preferable that the size of face images is 48 ×	48.
 
 == License
 
