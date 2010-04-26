@@ -7,6 +7,7 @@ en:
   label_niko_cale_ordinary: "Ordinary"
   label_niko_cale_bad: "Bad"
   label_niko_cale_feeling: "Feeling"
+  label_niko_cale_todays_feeling: "Today's feeling"
   label_niko_cale_feeling_list: "Feeling list"
   label_niko_cale_all_users: "All users"
   label_niko_cale_retention_period: "Retention period"

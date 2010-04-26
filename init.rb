@@ -30,5 +30,8 @@ Redmine::Plugin.register :redmine_niko_cale do
   end
 
   menu :project_menu, :niko_cale, {:controller => 'niko_cale', :action => 'index'}, :caption => :label_niko_cale, :param => :project_id
+  menu :account_menu, :feelings, {:controller => 'feelings', :action => 'new', 'feelings[at]'=>Date.today},
+  :caption => :label_niko_cale_todays_feeling, :before=>:my_account,
+  :if=>Proc.new{User.current.allowed_to?({:controller =>'feelings', :action =>'new'}, nil, :global => true) && !Feeling.find_by_user_id_and_at(User.current, Date.today)}
   settings :default=>{"retention_period"=>"0", "editable_period"=>"7", "face_images"=>"original"}, :partial => 'settings/niko_cale_settings'
 end

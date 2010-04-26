@@ -6,6 +6,7 @@ zh-TW:
   label_niko_cale_ordinary: "普通"
   label_niko_cale_bad: "壞"
   label_niko_cale_feeling: "心情"
+  label_niko_cale_todays_feeling: "今天的心情"
   label_niko_cale_feeling_list: "心情名單"
   label_niko_cale_all_users: "全用戶"
   label_niko_cale_retention_period: "Retention period"
