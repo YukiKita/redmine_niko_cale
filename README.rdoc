@@ -22,7 +22,7 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
 
 === Edit feeling
 
-You can edit your feeling by clicking [+] button.
+You can edit your feeling by clicking [+] button or [Today's feeling] link.
 
 === Scope setting
 
