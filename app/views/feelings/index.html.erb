@@ -22,7 +22,7 @@
 <% end %>
 
 <div class="contextual"><%= link_to_feeling_list() %></div>
-<h2><%= h(feeling_list(@option)) %> </h2>
+<h2><%= @option[:user] ? avatar(@option[:user]) : '' %><%= h(feeling_list(@option)) %> </h2>
 
 <% @feelings.each do |feeling| %>
   <%= render :partial=>'show', :locals=>{:feeling=>feeling, :preview=>false} %>

@@ -66,6 +66,9 @@ td.user {
 	padding: 5px 10px;
         text-align: center;
 }
+td.user img.gravatar {
+        vertical-align: middle;
+}
 
 /***** Tooltips ******/
 span.tooltip:hover span.tip{
