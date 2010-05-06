@@ -54,8 +54,8 @@
   </tr>
   <% @users.each do |user| %>
   <tr class=<%= cycle 'odd', 'even' %>> 
-    <td nowrap class=user>
-       <p><%= avatar(user, :size => "14") %><%= link_to_feeling_list(:user=>user, :title=>user.name) %></p>
+    <td class=user>
+       <p><%= avatar(user, :size => "32") %><%= link_to_feeling_list(:user=>user, :title=>user.name) %></p>
        <p><%= link_to_issues_list "(#{@issues_count_per_user[user]})", @project.identifier, user.id %></p>
     </td> 
     <% @dates.each do |date| %>

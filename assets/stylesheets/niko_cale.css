@@ -62,11 +62,12 @@ td.morale {
 }
 td.user {
 	height: 54px;
+        width: 16%;
 	padding: 5px 10px;
         text-align: center;
 }
 td.user img.gravatar {
-        vertical-align: middle;
+        float: left;
 }
 
 /***** Tooltips ******/
