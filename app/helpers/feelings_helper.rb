@@ -71,7 +71,7 @@ module FeelingsHelper
     image_tag("package.png")
   end
   def previous_image title="", onclick=""
-    my_image 'previous.png', title, onclick, 'cursor: pointer;'
+    my_image 'previous.png', title, onclick, 'cursor: pointer;margin-right: 48px'
   end
   def next_image title="", onclick=""
     my_image 'next.png', title, onclick, 'cursor: pointer;'
