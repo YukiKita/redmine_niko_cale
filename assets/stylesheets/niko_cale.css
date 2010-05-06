@@ -45,16 +45,15 @@ th.date	{
 	width: 54px;
         background-color: #CAE5F1;
 }
+th.today {
+	height: 24px;
+	width: 54px;
+        background-color: #FFD4D1;
+}
 td.feeling {
 	height: 54px;
 	width: 54px;
         text-align: center;
-}
-td.todaysfeeling {
-	height: 54px;
-	width: 54px;
-        text-align: center;
-        background-color: #FFD4D1;
 }
 td.morale {
 	height: 54px;

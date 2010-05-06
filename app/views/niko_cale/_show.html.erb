@@ -40,7 +40,7 @@
   </tr>
   <tr>
     <% @dates.each do |date| %>
-      <th class=date>
+      <th class=<%= (date == Date.today) ? 'today' : 'date' %>>
         <%= link_to_date date, @project %>
         <% versions = @versions.select {|version| version.effective_date == date} %>
         <% versions.each do |version| %>
@@ -53,14 +53,14 @@
     <% end %>
   </tr>
   <% @users.each do |user| %>
-  <tr> 
+  <tr class=<%= cycle 'odd', 'even' %>> 
     <td nowrap class=user>
        <p><%= avatar(user, :size => "14") %><%= link_to_feeling_list(:user=>user, :title=>user.name) %></p>
        <p><%= link_to_issues_list "(#{@issues_count_per_user[user]})", @project.identifier, user.id %></p>
     </td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
-      <td <%= (date == Date.today) ? 'class=todaysfeeling' : 'class=feeling' %>>
+      <td class=feeling>
         <% if feeling.nil? && editable?(Feeling.for(user, date)) && @project.users.include?(user) %>
 	  <%= link_to add_image, {:controller=>:feelings, :action=>:new, "feeling"=>{"at"=>date}, :project_id=>@project.identifier} %>
 	<% else %>
@@ -69,7 +69,7 @@
       </td>
     <% end %>
   </tr> 
-  <% end %>
+  <% end; reset_cycle %>
   <% unless @morales.empty? %>
   <tr>
     <td class=morale><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %>
