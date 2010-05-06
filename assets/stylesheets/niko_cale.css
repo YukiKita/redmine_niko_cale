@@ -54,9 +54,7 @@ td.feeling {
 	width: 54px;
         text-align: center;
 }
-td.morale {
-	height: 54px;
-        text-align: center;
+.morale {
         background-color: #DCDCDC;
 }
 td.user {
