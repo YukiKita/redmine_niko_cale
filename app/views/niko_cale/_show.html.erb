@@ -18,6 +18,7 @@
 
 <div id="niko_niko_calendar" style="overflow-x:auto">
 <table border="1" class="nikocale">
+  <thead>
   <tr>
     <th rowspan="3" nowrap width="10%">
       <%= previous_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
@@ -52,6 +53,8 @@
       </th>
     <% end %>
   </tr>
+  </thead>
+  <tbody>
   <% @users.each do |user| %>
   <tr class=<%= cycle 'odd', 'even' %>> 
     <td class=user>
@@ -80,5 +83,6 @@
     <% end %>
   </tr>
   <% end %>
+  </tbody>
 </table>
 </div>
