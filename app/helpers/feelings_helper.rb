@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module FeelingsHelper
+  NULL_IMAGE = '&nbsp;' * 12
+
   def transparent_png_patch_include_tag
     '<!--[if lt IE 7]>' + javascript_include_tag("unitpngfix.js", :plugin => "redmine_niko_cale") +  '<![endif]--> '
   end
@@ -86,14 +88,15 @@ module FeelingsHelper
   end
   def image_for feeling
     if feeling
-      image = feeling.good? ? face_image('good') : (feeling.bad? ? face_image('bad') : (feeling.ordinary? ? face_image('ordinary'): ''))
+      image = feeling.good? ? face_image('good') : (feeling.bad? ? face_image('bad') : (feeling.ordinary? ? face_image('ordinary'): nil))
       (feeling.has_description? || feeling.has_comments?) ? with_baloon(image, description_of(feeling)) : image
     else
-      ''
+      nil
     end
   end
   def link_to_feeling feeling, project_id=nil
-    link_to image_for(feeling), :controller => "feelings", :action => "show", :id => feeling, :project_id=>project_id
+    image = image_for(feeling)
+    image ? link_to(image, :controller => "feelings", :action => "show", :id => feeling, :project_id=>project_id) : NULL_IMAGE
   end
   def with_baloon object, message=""
     '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
