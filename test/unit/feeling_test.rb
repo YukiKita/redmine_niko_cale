@@ -147,6 +147,20 @@ class FeelingTest < ActiveSupport::TestCase
     assert_equal Feeling.for(User.find(1), (Date.today - 1.years)).at, (Date.today - 1.years)
     assert Feeling.clean!
   end
+  test "self.latest" do
+    Feeling.clean!
+    user = User.find(1)
+    assert_nil Feeling.latest(user)
+    f2 = Feeling.for(user, Date.today-2)
+    f2.good!
+    assert_equal Feeling.latest(user), f2
+    f1 = Feeling.for(user, Date.today-1)
+    f1.good!
+    assert_equal Feeling.latest(user), f1
+    f0 = Feeling.for(user, Date.today)
+    f0.good!
+    assert_equal Feeling.latest(user), f0   
+  end
   test "description" do
     assert Feeling.clean!
     feeling = Feeling.for(User.find(1)).good!

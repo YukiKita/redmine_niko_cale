@@ -14,13 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 require 'redmine'
+require_dependency 'user_hooks'
 
 Redmine::Plugin.register :redmine_niko_cale do
   name 'Niko-niko Calendar plugin'
   author 'Yuki Kita'
   description 'This is a plugin that shows the mood of project members and the overall project on a daily basis'
   url         'http://github.com/YukiKita/redmine_niko_cale'
-  version '1.0.1'
+  version '1.0.2'
   requires_redmine :version_or_higher => '0.9.0'
 
   project_module :niko_cale do

@@ -73,4 +73,7 @@ end
   def self.find_by_user_and_date_range user, date_range
     Feeling.find(:all, :conditions=>["user_id =? and at >= ? and at <= ?", user, date_range.first, date_range.last], :order=>"at ASC")
   end
+  def self.latest user
+    Feeling.find(:first, :conditions=>["user_id=?", user], :order=>'at DESC')
+  end
 end
