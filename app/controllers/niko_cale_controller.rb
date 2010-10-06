@@ -104,7 +104,8 @@ class NikoCaleController < ApplicationController
     begin
       date_scope = params[:date_scope].to_date
     rescue ArgumentError, NoMethodError
-      date_scope = Date.today
+      default_date_scope = (Setting.plugin_redmine_niko_cale[:default_date_scope] || '0').to_i
+      date_scope = Date.today + default_date_scope
     end
     ((date_scope - 13)..(date_scope)).map
   end
