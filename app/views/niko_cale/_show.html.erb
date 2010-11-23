@@ -58,7 +58,7 @@
   <% unless @morales.empty? %>
   <tr class=morale feeling>
     <td class=user><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %>
-    <br><%= link_to_issues_list "(#{@issues_count_per_user[:morale]})", @project.identifier  %><br></td> 
+    <br><%= link_to_issues_list @issues_count_per_user[:morale], @project.identifier  %><br></td> 
     <% @dates.each do |date| %>
       <% morale = @morales.find {|m| m.at == date} %>
       <td class=feeling><%= image_for(morale) %></td>
@@ -71,7 +71,7 @@
   <tr class=<%= cycle 'odd', 'even' %>> 
     <td class=user>
        <p><%= avatar(user, :size => "32") %><%= link_to_user(user) %></p>
-       <p><%= link_to_issues_list "(#{@issues_count_per_user[user]})", @project.identifier, user.id %></p>
+       <p><%= link_to_issues_list @issues_count_per_user[user], @project.identifier, user.id %></p>
     </td> 
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
