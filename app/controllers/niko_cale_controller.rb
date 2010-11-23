@@ -42,10 +42,9 @@ class NikoCaleController < ApplicationController
   end
   def issues_count_per_user users, project
     open_issue_statuses = IssueStatus.find_all_by_is_closed(false)
-    users.inject({:morale=>0}) do |result, user|
+    users.inject({}) do |result, user|
       issues = Issue.find_all_by_assigned_to_id_and_status_id_and_project_id(User.find(user), open_issue_statuses, project).size
       result[user] = issues
-      result[:morale] += issues
       result
     end
   end

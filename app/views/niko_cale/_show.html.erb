@@ -57,8 +57,7 @@
   <tfoot>
   <% unless @morales.empty? %>
   <tr class=morale feeling>
-    <td class=user><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %>
-    <br><%= link_to_issues_list @issues_count_per_user[:morale], @project.identifier  %><br></td> 
+    <td class=user><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %></td> 
     <% @dates.each do |date| %>
       <% morale = @morales.find {|m| m.at == date} %>
       <td class=feeling><%= image_for(morale) %></td>
