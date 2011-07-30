@@ -20,7 +20,7 @@ class AddCommentsCount < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table(:feelings, "comments_count")
+    remove_column(:feelings, "comments_count")
     rename_column(:feelings, :description, :comment)
   end
 end
