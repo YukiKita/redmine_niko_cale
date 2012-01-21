@@ -6,7 +6,7 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
 
 == Requirements
 
-* This plugin works only with Redmine 0.9.0 or higher.
+* This plugin works only with Redmine(>=1.1.0) and ChiliProject(>=2.6.0)).
 
 == Plugin installation
 
@@ -16,7 +16,7 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
    rake db:migrate_plugins RAILS_ENV=production
 4. Start Redmine
 5. Add the Niko-cale module into your project.
-6. Setup the permissions for the Niko-cale module for each of your roles.
+6. Go to Administration page and setup the permissions for the Niko-cale module for each of your roles.
 
 == How to use
 
