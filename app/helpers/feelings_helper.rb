@@ -14,8 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module FeelingsHelper
-  NULL_IMAGE = '&nbsp;' * 12
-
   def transparent_png_patch_include_tag
     '<!--[if lt IE 7]>' + javascript_include_tag("unitpngfix.js", :plugin => "redmine_niko_cale") +  '<![endif]--> '
   end
@@ -95,8 +93,9 @@ module FeelingsHelper
     end
   end
   def link_to_feeling feeling, project_id=nil
+    null_image = ('&nbsp;' * 12)
     image = image_for(feeling)
-    image ? link_to(image, :controller => "feelings", :action => "show", :id => feeling, :project_id=>project_id) : NULL_IMAGE
+    image ? link_to(image, :controller => "feelings", :action => "show", :id => feeling, :project_id=>project_id) : null_image
   end
   def with_baloon object, message=""
     '<span onmouseover="showToolTip(event,\'' + message + '\');return false" onmouseout="hideToolTip()">' + object + '</span>'
@@ -115,7 +114,7 @@ module FeelingsHelper
     else
       style = nil
     end     
-    link_to(formatted_date, {:controller=>:projects, :action=>:activity, :id=>project, :from=>date}, {:style=>style})
+    link_to(formatted_date, {:controller=>:activities, :action=>:index, :id=>project, :from=>date}, {:style=>style})
   end
   def editable?(feeling)
     editable_period = Setting.plugin_redmine_niko_cale["editable_period"].to_i
