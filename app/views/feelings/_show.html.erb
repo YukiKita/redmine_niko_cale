@@ -19,7 +19,11 @@
 <div class="contextual"><%= link_to_feeling_list(:user=>feeling.user) %></div>
 <h3><%= index_for(feeling, true) %></h3>
   <ul>
-    <%= link_to_feeling(feeling, @project && @project.identifier) %>
+    <% if preview %>
+      <%= image_for(feeling) %>
+    <% else %>  
+      <%= link_to_feeling(feeling, @project && @project.identifier) %>
+    <% end %>
   </ul>
 <% if feeling.has_description? %>
   <div class="wiki">
