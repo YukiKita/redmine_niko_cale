@@ -26,7 +26,7 @@
 <% else %>
   <% option = {:url=>{:action=>:update, :project_id=>project_id}, :html=>{:method=>:put, :id=>:update_feeling}} %>
 <% end %>
-<% form_for(:feeling, option) do |f| %>
+<%= form_for(:feeling, option) do |f| %>
    <%= f.hidden_field :at %>
    <table border="0">
      <tr>

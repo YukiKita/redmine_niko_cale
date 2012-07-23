@@ -26,7 +26,7 @@
 
 <% if current_user_allowed_to? :feelings, :edit_comment %>
   <p><%= toggle_link l(:label_comment_add), "add_comment_form", :focus => "comment_comments" %></p>
-  <% form_tag(url_for({:action => 'edit_comment', :id => @feeling.id, :project_id=>((@project && @project.identifier) || nil)}),
+  <%= form_tag(url_for({:action => 'edit_comment', :id => @feeling.id, :project_id=>((@project && @project.identifier) || nil)}),
                {:id => "add_comment_form", :style => "display:none;"}) do %>
     <div class="box">
        <%= text_area 'comment', 'comments', :cols => 48, :rows => 3 %>
