@@ -25,18 +25,18 @@
       <%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"') %>
     </th>
     <% if @dates.first.year == @dates.last.year %>
-      <th colspan=<%= "\"#{@dates.size}\"" %>><%= @dates.first.year %></th>
+      <th colspan=<%= "#{@dates.size}" %>><%= @dates.first.year %></th>
     <% else %>
-      <th colspan=<%= "\"#{@dates.first.end_of_year - @dates.first + 1}\"" %>><%= @dates.first.year %></th>
+      <th colspan=<%= "#{@dates.first.end_of_year - @dates.first + 1}" %>><%= @dates.first.year %></th>
       <% unless @dates.first.month == @dates.last.month %>
-        <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_year + 1}\"" %>><%= @dates.last.year %></th>
+        <th colspan=<%= "#{@dates.last - @dates.first.end_of_year + 1}" %>><%= @dates.last.year %></th>
       <% end %>
     <% end %>
   </tr>
   <tr>
-    <th colspan=<%= "\"#{@dates.first.end_of_month - @dates.first + 1}\"" %>><%= l(:date)[:abbr_month_names][@dates.first.month] %></th>
+    <th colspan=<%= "#{@dates.first.end_of_month - @dates.first + 1}" %>><%= l(:date)[:abbr_month_names][@dates.first.month] %></th>
     <% unless @dates.first.month == @dates.last.month %>
-      <th colspan=<%= "\"#{@dates.last - @dates.first.end_of_month + 1}\"" %>><%= l(:date)[:abbr_month_names][@dates.last.month] %></th>
+      <th colspan=<%= "#{@dates.last - @dates.first.end_of_month + 1}" %>><%= l(:date)[:abbr_month_names][@dates.last.month] %></th>
     <% end %>
   </tr>
   <tr>
@@ -47,7 +47,7 @@
         <% versions.each do |version| %>
           <span class="tooltip" style="position: absolute;top:">
             <%= link_to version_image, {:controller=>:versions, :action=>:show, :id=>version.id} %>       
-	    <span class="tip"><%= version.name %><span>
+            <span class="tip"><%= version.name %><span>
           </span>
       <% end %>
       </th>
@@ -76,10 +76,10 @@
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <td class=feeling>
         <% if feeling.nil? && editable?(Feeling.for(user, date)) && @project.users.include?(user) %>
-	  <%= link_to add_image, {:controller=>:feelings, :action=>:new, "feeling"=>{"at"=>date}, :project_id=>@project.identifier} %>
-	<% else %>
+          <%= link_to add_image, {:controller=>:feelings, :action=>:new, "feeling"=>{"at"=>date}, :project_id=>@project.identifier} %>
+        <% else %>
           <%= link_to_feeling(feeling, @project.identifier) %>
-	<% end %>
+        <% end %>
       </td>
     <% end %>
   </tr> 
