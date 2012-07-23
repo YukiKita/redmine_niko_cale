@@ -15,22 +15,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class FeelingsMailer < Mailer
-  # Builds a tmail object used to email recipients of the added issue.
+  self.prepend_view_path File.join(File.dirname(__FILE__), '..', 'views')
+
+  # Builds a Mail::Message object used to email to author of feeling
   #
   # Example:
-  #   feeling_commented(comment) => tmail object
-  #   Mailer.deliver_feeling_commented(comment) => sends an email to user of the feeling and the authors of commenters
+  #   feeling_commented(comment) => Mail::Message object
   def feeling_commented(comment)
-    feeling = Feeling.find(comment.commented)
+    @feeling = Feeling.find(comment.commented)
     author = comment.author
-    owner = feeling.user
+    owner = @feeling.user
+    @comment = comment
+    @feeling_url = url_for(:controller => 'feelings', :action => 'show', :id => @feeling)
     redmine_headers 'author' => author, 'feeling_owner'=> owner
     message_id comment
-    recipients [owner.mail]
-    cc [author.mail]
-    subject "Re: [#{Setting.app_title}]#{ll(owner.language, :label_niko_cale_feeling)} (#{owner}@#{feeling.at})"
-    body :feeling => feeling, :comment=>comment, :feeling_url=>url_for(:controller => 'feelings', :action => 'show', :id => feeling)
-    render_multipart('feeling_commented', body)
+    recipients = [owner.mail]
+    cc = [author.mail]
+    mail :to => recipients, :cc => cc,
+      :subject => "Re: [#{Setting.app_title}]#{ll(owner.language, :label_niko_cale_feeling)} (#{owner}@#{@feeling.at})"
   end
 end
 
