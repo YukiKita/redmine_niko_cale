@@ -11,14 +11,14 @@ class UserHooks < Redmine::Hook::ViewListener
 EOS
 
       if feeling.has_description?
-        header_and_image + <<EOS
+        description = <<EOS
 <div class="wiki">
 #{textilizable(feeling.description)}
 </div>
 EOS
-      else
-        header_and_image
+        header_and_image += description
       end
+      header_and_image.html_safe
     end
   end
 end
