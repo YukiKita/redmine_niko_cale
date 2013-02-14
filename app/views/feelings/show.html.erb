@@ -32,12 +32,7 @@
        <%= text_area 'comment', 'comments', :cols => 48, :rows => 3 %>
     </div>
     <p><%= submit_tag l(:button_add) %>
-    <%= link_to_remote l(:label_preview), 
-                   { :url => {:action => :edit_comment, :id => @feeling.id, :project_id=>((@project && @project.identifier) || nil)},
-                     :method => :post,
-                     :update => :preview,
-                     :with => "Form.serialize('add_comment_form')"
-                   } %></p>
+    <%= preview_link({:action => :edit_comment, :id => @feeling.id, :project_id=>((@project && @project.identifier) || nil)}, 'add_comment_form' ) %></p>
   <% end %>
   <div id="preview"></div>
 <% end %>

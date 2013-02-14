@@ -44,9 +44,8 @@
   <p><%= f.text_area :description, :cols=>56, :rows=>3 %></p>
   <%= wikitoolbar_for 'feeling_description' %>
   <%= submit_tag l(:button_save), :class => 'button-small', :name => nil %>
-  <% option = @feeling.new_record? ? {:url => {:action=>:create}, :method=>:post} : {:url => feeling_path(@feeling)} %>
-  <% option.merge! :update => :preview, :with => "Form.serialize('update_feeling')" %>
-  <%= link_to_remote l(:label_preview), option %>
+  <% option = @feeling.new_record? ? {:action=>:create}  : feeling_path(@feeling) %>
+  <%= preview_link(option, 'update_feeling' ) %></p>
 <% end %>
 <%= javascript_tag 'document.forms.update_feeling.feeling_description.focus()' %>
 <div id="preview"></div>
