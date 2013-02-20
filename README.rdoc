@@ -6,7 +6,7 @@ http://www.geocities.jp/nikonikocalendar/index_en.html
 
 == Requirements
 
-* This plugin works only with Redmine(>=2.0.0)
+* This plugin works only with Redmine(>=2.1.0)
 
 == Plugin installation
 
