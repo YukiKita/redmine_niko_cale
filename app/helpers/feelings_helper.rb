@@ -71,12 +71,6 @@ module FeelingsHelper
   def version_image
     image_tag("package.png")
   end
-  def previous_image title="", onclick=""
-    my_image 'previous.png', title, onclick, 'cursor: pointer;margin-right: 64px'
-  end
-  def next_image title="", onclick=""
-    my_image 'next.png', title, onclick, 'cursor: pointer;'
-  end
   def index_for feeling, with_link=false
     user = feeling.user
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(user) : h(user.name)) +")"

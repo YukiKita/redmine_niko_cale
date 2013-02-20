@@ -21,8 +21,8 @@
   <thead>
   <tr>
     <th rowspan="3" nowrap width="10%">
-      <%= previous_image(l(:label_previous), 'document.forms["scope"].date_scope.value = "' + (@dates.first - 1).to_s + '"') %>
-      <%= next_image(l(:label_next), 'document.forms["scope"].date_scope.value = "' + (@dates.last + @dates.size).to_s + '"') %>
+      <%= link_to (my_image 'previous.png', l(:label_previous), "", 'cursor: pointer;margin-right: 64px'), {:action=>"index", :date_scope=>(@dates.first - 1).to_s} %>
+      <%= link_to (my_image 'next.png', l(:label_next), "", 'cursor: pointer;'), {:action=>"index", :date_scope=>(@dates.last + @dates.size).to_s} %>
     </th>
     <% if @dates.first.year == @dates.last.year %>
       <th colspan=<%= "#{@dates.size}" %>><%= @dates.first.year %></th>
