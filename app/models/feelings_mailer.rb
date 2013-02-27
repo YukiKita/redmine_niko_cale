@@ -15,8 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class FeelingsMailer < Mailer
-  self.prepend_view_path File.join(File.dirname(__FILE__), '..', 'views')
-
   # Builds a Mail::Message object used to email to author of feeling
   #
   # Example:
