@@ -8,6 +8,7 @@ class Morale < Feeling
       false
     end
   end
+
   def level
     return nil unless @feelings
     return @cached_level if @cached_level

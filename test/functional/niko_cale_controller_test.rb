@@ -13,13 +13,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-require File.dirname(__FILE__) + '/../test_helper'
-require 'niko_cale_controller'
-
-# Re-raise errors caught by the controller.
-class NikoCaleController; def rescue_action(e) raise e end; end
+require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
 class NikoCaleControllerTest < ActionController::TestCase
+  fixtures :projects,
+           :users,
+           :roles,
+           :members,
+           :member_roles,
+           :enabled_modules,
+           :feelings
+
   # Replace this with your real tests.
   def setup
     @controller = NikoCaleController.new
@@ -28,16 +32,27 @@ class NikoCaleControllerTest < ActionController::TestCase
     User.current = User.find(1)
     def @controller.authorize_global
     end
+
+    enabled_module = EnabledModule.new
+    enabled_module.project_id = 1
+    enabled_module.name = 'niko_cale'
+    enabled_module.save
   end
+
+  def test_no_routes_match_when_project_id_blank
+    assert_raises(ActionController::UrlGenerationError) do
+      get '/niko_cale'
+    end
+  end
+
   def test_index
-    get :index
-    assert_response(404)
-    get :index, :project_id=>0
-    assert_response(404)
-    get :index, :project_id=>1
-    assert_response(:success)
-    assert_template "index"
-    xhr :get, :index, :project_id=>1
-    assert_response(:success)
+    get :index, project_id: 0
+    assert_response 404
+    get :index, project_id: 1
+    assert_response :success
+
+    assert_template 'index'
+    xhr :get, :index, project_id: 1
+    assert_response :success
   end
 end

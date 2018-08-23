@@ -14,9 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class NikoCaleController < ApplicationController
-  unloadable
-  include FeelingsHelper
-  helper :feelings
+  helper FeelingsHelper
   before_filter :find_project, :authorize_global
 
   def index
@@ -29,7 +27,9 @@ class NikoCaleController < ApplicationController
       update_information
     end
   end
+
   private
+
   def update_information
     @givable_roles = find_givable_roles
     @dates = get_dates
@@ -38,16 +38,23 @@ class NikoCaleController < ApplicationController
     @users = find_all_users(projects, @selected_role_ids)
     @feelings_per_user, @morales = get_feelings_per_user_and_morales(@users, @dates)
     @issues_count_per_user = issues_count_per_user @users, @project
-    @versions = Version.find(:all, :conditions=>["project_id =? and effective_date >= ? and effective_date <= ?", @project, @dates.first, @dates.last], :order=>"effective_date ASC")
+    #@versions = Version.where("project_id =? and effective_date >= ? and effective_date <= ?", @project, @dates.first, @dates.last).order(:effective_date)
+    @versions = Version.where(project_id: @project.id)
+                    .where(effective_date: @dates.first..@dates.last)
+                    .order(:effective_date)
   end
+
   def issues_count_per_user users, project
-    open_issue_statuses = IssueStatus.find_all_by_is_closed(false)
+    open_issue_statuses = IssueStatus.where(is_closed: false).pluck(:id)
     users.inject({}) do |result, user|
-      issues = Issue.find_all_by_assigned_to_id_and_status_id_and_project_id(User.find(user), open_issue_statuses, project).size
+      issues = Issue.where(assigned_to_id: User.find(user))
+                   .where(status_id: open_issue_statuses)
+                   .where(project_id: project.id).size
       result[user] = issues
       result
     end
   end
+
   def find_project
     begin
       @project = Project.find(params[:project_id])
@@ -55,9 +62,11 @@ class NikoCaleController < ApplicationController
       render_404
     end
   end
+
   def find_givable_roles
     Role.find_all_givable.select{|role| role.has_permission?(:edit_feelings)}
   end
+
   def find_all_users projects, selected_role_ids
     members = projects.inject([]) {|result, project| result + project.members}
     users = members.inject([]) do |result, member|
@@ -74,6 +83,7 @@ class NikoCaleController < ApplicationController
     end
     users
   end
+
   def get_feelings_per_user_and_morales(users, dates)
     morales = []
     feelings_per_user = {}
@@ -89,16 +99,20 @@ class NikoCaleController < ApplicationController
     end
     return feelings_per_user, morales
   end
+
   def get_selected_role_ids
     (params[:role_ids] || []).map {|role_id| role_id.to_i}
   end
+
   def with_subprojects?
     with_subproject = params[:with_subprojects]
     with_subproject && (with_subproject == '1')
   end
+
   def get_projects project, with_subprojects
     with_subprojects ? project.self_and_descendants : [project]
   end
+
   def get_dates
     begin
       date_scope = params[:date_scope].to_date

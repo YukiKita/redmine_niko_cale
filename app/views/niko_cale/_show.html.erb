@@ -45,11 +45,11 @@
         <%= link_to_date date, @project %>
         <% versions = @versions.select {|version| version.effective_date == date} %>
         <% versions.each do |version| %>
-          <span class="tooltip" style="position: absolute;top:">
+          <span class="tooltip" style="position: absolute; top:2px;">
             <%= link_to version_image, {:controller=>:versions, :action=>:show, :id=>version.id} %>       
-            <span class="tip"><%= version.name %><span>
+            <span class="tip"><%= version.name %></span>
           </span>
-      <% end %>
+        <% end %>
       </th>
     <% end %>
   </tr>

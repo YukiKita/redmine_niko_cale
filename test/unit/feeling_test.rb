@@ -16,6 +16,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class FeelingTest < ActiveSupport::TestCase
+  fixtures :users, :feelings
   test "feelings" do
     clean = lambda do
       assert Feeling.clean!
@@ -49,6 +50,7 @@ class FeelingTest < ActiveSupport::TestCase
     assert_equal Feeling.count, 3
     clean[]
   end
+
   test "exclude!" do
     assert Feeling.clean!
     assert Feeling.new{|f| f.at=1.years.ago.to_date; f.description="aa"; f.level=0; f.user=User.find(1)}.save
@@ -70,6 +72,7 @@ class FeelingTest < ActiveSupport::TestCase
     assert Feeling.exclude_before!((2.months + 0.days).ago.to_date)
     assert_equal Feeling.count, 0
   end
+
   test "find_by_user_and_date_range" do
     assert Feeling.clean!
     (0..13).each do |day|
@@ -95,6 +98,7 @@ class FeelingTest < ActiveSupport::TestCase
     assert Feeling.clean!
     assert_equal Feeling.count, 0
   end
+
   test "morale_test" do
     morale = Morale.new(:at => Date.today)
     14.times do |i|
@@ -124,6 +128,7 @@ class FeelingTest < ActiveSupport::TestCase
     assert_equal morale.ordinary?, false
     assert_equal morale.bad?, false
   end
+
   test "has_description?" do
     feeling = Feeling.for(User.find(1))
     assert !feeling.has_description?
@@ -132,6 +137,7 @@ class FeelingTest < ActiveSupport::TestCase
     assert feeling.good(" ").has_description?
     assert feeling.good("1     2").has_description?
   end
+
   test "self.for(date)" do
     assert Feeling.clean!
     assert_equal Feeling.for(User.find(1)).at, Date.today
@@ -147,6 +153,7 @@ class FeelingTest < ActiveSupport::TestCase
     assert_equal Feeling.for(User.find(1), (Date.today - 1.years)).at, (Date.today - 1.years)
     assert Feeling.clean!
   end
+
   test "self.latest" do
     Feeling.clean!
     user = User.find(1)
@@ -159,8 +166,9 @@ class FeelingTest < ActiveSupport::TestCase
     assert_equal Feeling.latest(user), f1
     f0 = Feeling.for(user, Date.today)
     f0.good!
-    assert_equal Feeling.latest(user), f0   
+    assert_equal Feeling.latest(user), f0
   end
+
   test "description" do
     assert Feeling.clean!
     feeling = Feeling.for(User.find(1)).good!
