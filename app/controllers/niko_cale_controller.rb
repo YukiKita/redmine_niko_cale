@@ -38,7 +38,6 @@ class NikoCaleController < ApplicationController
     @users = find_all_users(projects, @selected_role_ids)
     @feelings_per_user, @morales = get_feelings_per_user_and_morales(@users, @dates)
     @issues_count_per_user = issues_count_per_user @users, @project
-    #@versions = Version.where("project_id =? and effective_date >= ? and effective_date <= ?", @project, @dates.first, @dates.last).order(:effective_date)
     @versions = Version.where(project_id: @project.id)
                     .where(effective_date: @dates.first..@dates.last)
                     .order(:effective_date)
