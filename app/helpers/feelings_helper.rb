@@ -40,7 +40,7 @@ module FeelingsHelper
   def link_to_feeling_list option={}
     url = {:controller=>:feelings, :action=>:index}
     project = option[:project]
-    user = option[:user] 
+    user = option[:user]
     if project
       url[:project_id] = project
     elsif user
@@ -52,7 +52,7 @@ module FeelingsHelper
   def atom_conditions option={}
     conditions = {:key => User.current.rss_key}
     project = option[:project]
-    user = option[:user] 
+    user = option[:user]
     if project
       conditions[:project_id] = project.identifier
     elsif user
@@ -61,10 +61,11 @@ module FeelingsHelper
     conditions
   end
 
-  def face_image image, title="", onclick="", style="", name=(Setting.plugin_redmine_niko_cale['face_images'] || 'original')
-    path = 'faces/' + name + '/' + image + '.png'
-    path = path.gsub(/\.png/, '.gif') unless File.exist?(Rails.root.to_s + '/public/plugin_assets/redmine_niko_cale/images/' + path)
-    my_image path, title, onclick, style
+  def face_image(image, title = '', onclick = '', style = '')
+    name = Setting.plugin_redmine_niko_cale['face_images'] || 'original'
+    path = "faces/#{name}/#{image}.png"
+    path = path.gsub(/\.png/, '.gif') unless File.exist?("#{Rails.root}/public/plugin_assets/redmine_niko_cale/images/#{path}")
+    my_image(path, title, onclick, style)
   end
 
   def my_image path, title="", onclick="", style=""
@@ -84,28 +85,31 @@ module FeelingsHelper
     h(format_date(feeling.at)) + " (" + (with_link ? link_to_user(user) : h(user.name)) +")"
   end
 
-  def description_of feeling
-    strip_tags(index_for(feeling) + "\n" +  feeling.description).gsub(/\r\n|\r|\n/, "<br />").gsub(/["']/,'') +
-    (feeling.has_comments? ? "<br>(#{l(:label_x_comments, :count => feeling.comments_count)})"  : "")
+  def description_of(feeling)
+    description = index_for(feeling)
+    description << textilizable(feeling.description)
+    if feeling.has_comments?
+      description << "(#{l(:label_x_comments, count: feeling.comments_count)})"
+    end
+    description
   end
 
-  def image_for feeling
-    if feeling
-      image = feeling.good? ? face_image('good') : (feeling.bad? ? face_image('bad') : (feeling.ordinary? ? face_image('ordinary'): nil))
-      (feeling.has_description? || feeling.has_comments?) ? with_baloon(image, description_of(feeling)) : image
-    else
-      nil
-    end
+  def image_for(feeling)
+    return nil if feeling.blank? || feeling.level.blank?
+    image = feeling.level.present? ? face_image(feeling.level) : 'ordinary'
+    (feeling.has_description? || feeling.has_comments?) ? with_baloon(image,  description_of(feeling)) : image
   end
 
   def link_to_feeling feeling, project_id=nil
     null_image = ('&nbsp;' * 12).html_safe
     image = image_for(feeling)
-    image ? link_to(image, :controller => "feelings", :action => "show", :id => feeling, :project_id=>project_id) : null_image
+    image ? link_to(image, { :controller => "feelings", :action => "show", :id => feeling, :project_id=>project_id },
+                    { :class => 'niko-cale' }) : null_image
   end
 
   def with_baloon object, message=""
-    o = "<span onmouseover='showToolTip(event,\"#{message}\");return false;' onmouseout='hideToolTip();'>#{object}</span>"
+    o = "#{object}"
+    o << "<span class=\"tooltip\"><span class=\"text\">#{message}</span></span>"
     o.html_safe
   end
 
@@ -116,13 +120,13 @@ module FeelingsHelper
   def link_to_date date, project
     formatted_date = date.day.to_s
     case date.wday
-    when 6  
+    when 6
       style = 'color:blue'
     when 0
       style = 'color:red'
     else
       style = nil
-    end     
+    end
     link_to(formatted_date, {:controller=>:activities, :action=>:index, :id=>project, :from=>date}, {:style=>style})
   end
 
