@@ -28,9 +28,10 @@ class FeelingsMailer < Mailer
     redmine_headers 'author' => author, 'feeling_owner'=> owner
     message_id comment
     recipients = [owner.mail]
+    language = owner.language.blank? ? Setting.default_language : owner.language
     cc = [author.mail]
     mail :to => recipients, :cc => cc,
-      :subject => "Re: [#{Setting.app_title}]#{ll(owner.language, :label_niko_cale_feeling)} (#{owner}@#{@feeling.at})"
+      :subject => "Re: [#{Setting.app_title}]#{ll(language, :label_niko_cale_feeling)} (#{owner}@#{@feeling.at})"
   end
 end
 
