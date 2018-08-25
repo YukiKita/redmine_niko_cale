@@ -18,14 +18,8 @@ class NikoCaleController < ApplicationController
   before_filter :find_project, :authorize_global
 
   def index
-    if request.xhr?
-      @selected_role_ids = get_selected_role_ids
-      update_information
-      render :partial=>"show"
-    else
-      @selected_role_ids = find_givable_roles.map{|role| role.id}
-      update_information
-    end
+    @selected_role_ids = get_selected_role_ids
+    update_information
   end
 
   private
@@ -100,6 +94,7 @@ class NikoCaleController < ApplicationController
   end
 
   def get_selected_role_ids
+    return find_givable_roles.map{|role| role.id} if params[:role_ids].blank?
     (params[:role_ids] || []).map {|role_id| role_id.to_i}
   end
 
