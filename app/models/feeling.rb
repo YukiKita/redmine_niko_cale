@@ -14,29 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class Feeling < ActiveRecord::Base
-  FEELING_TYPES = ["bad", "ordinary", "good"]
   belongs_to :user
-  validates_inclusion_of :level, :in=>0...FEELING_TYPES.size
   acts_as_event :url => Proc.new {|feeling| {:controller => 'feelings', :action => 'show', :id => feeling.id}}, :datetime=>:at
   has_many :comments, lambda { order(:created_on) }, as: :commented, dependent: :delete_all
-
-  FEELING_TYPES.each do |feeling|
-    class_eval "def #{feeling}?;self.level == #{FEELING_TYPES.index(feeling)};end"
-    class_eval "def #{feeling}(description='')
-self.level = #{FEELING_TYPES.index(feeling)}
-self.description = description
-self
-end
-"
-    class_eval "def #{feeling}!(description='')
-self.#{feeling}(description).save
-self
-end
-"
-  end
+  enum level: { bad: 0, ordinary: 1, good: 2 }
+  validates :level, presence: true
+  validates :at, :uniqueness => {:scope => :user_id}
 
   def has_description?
-    description && (!description.empty?)
+    return description.present?
   end
 
   def has_comments?
@@ -53,8 +39,7 @@ end
 
   # for Atom feed
   def title
-    feeling = FEELING_TYPES[self.level]
-    "#{l(("label_niko_cale_" + feeling).to_sym)}"
+    "#{l(("label_niko_cale_" + lebel).to_sym)}"
   end
 
   # for Atom feed
@@ -68,7 +53,8 @@ end
   end
 
   def self.for(user, date = Date.today)
-    Feeling.find_by_user_id_and_at(user, date) || self.new{|feeling| feeling.at = date; feeling.user = user}
+    condition = Feeling.where(user: user).where(at: date).first
+    condition || Feeling.new({ at: date, user: user })
   end
 
   def self.clean!
@@ -87,5 +73,9 @@ end
 
   def self.latest user
     Feeling.where(user_id: user).order('at DESC').first
+  end
+
+  def level_name(level_value)
+    Feeling.levels.key(level_value)
   end
 end

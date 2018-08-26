@@ -89,7 +89,7 @@ class FeelingsController < ApplicationController
         FeelingsMailer.feeling_commented(comment).deliver
         flash[:notice] = l(:label_comment_added)
       end
-      redirect_to_index @feeling, @project
+      redirect_to action: 'show', id: @feeling.id, project_id: @project
     end
   end
 
@@ -97,7 +97,7 @@ class FeelingsController < ApplicationController
     flash[:notice] = l(:label_comment_delete)
     begin
       @feeling.comments.find(params[:comment_id]).destroy
-      redirect_to_index @feeling, @project
+      redirect_to action: 'show', id: @feeling.id, project_id: @project
     rescue ActiveRecord::RecordNotFound
       render_404
     end
@@ -122,11 +122,11 @@ class FeelingsController < ApplicationController
   end
 
   def save_feeling message
-    return render_not_found unless set_attributes_for(@feeling)
+    return render_not_found unless set_attributes_for
     if request.xhr?
       render :partial => "show", :locals => {:feeling => @feeling, :preview => true}
     else
-      @feeling.save
+      @feeling.save!
       flash[:notice] = message
       redirect_to_index(@feeling, @project)
     end
@@ -166,21 +166,11 @@ class FeelingsController < ApplicationController
     end
   end
 
-  def set_attributes_for feeling
+  def set_attributes_for
     new_feeling = params['feeling']
-    level = new_feeling['level']
-    return nil unless new_feeling && level
-    description = (new_feeling['description'] || '').strip
-    case level.to_i
-    when 0
-      feeling.bad(description)
-    when 1
-      feeling.ordinary(description)
-    when 2
-      feeling.good(description)
-    else
-      nil
-    end
+    return nil unless new_feeling
+    @feeling.description = (new_feeling['description'] || '').strip
+    @feeling.level = new_feeling[:level].to_i
   end
 
   def find_date

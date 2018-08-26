@@ -67,31 +67,33 @@ class FeelingsControllerTest < ActionController::TestCase
 
   def test_create
     post :create, 'feeling': { 'at': Date.today }
-    assert_response 404
+    assert_response 302
 
-    post :create, 'feeling': { 'at': Date.today , 'level': '3', 'description': 'aaa' }
-    assert_response 404
+    assert_raises ArgumentError do
+      post :create, 'feeling': { 'at': Date.today , 'level': '3', 'description': 'aaa' }
+    end
 
     post :create, 'feeling': { 'at': Date.today , 'level': '2', 'description': 'aaa' }
     assert_redirected_to controller: :feelings, action: :index, user_id: 1
 
-    post :create, 'feeling': { 'at': Date.today , 'level': '2', 'description': 'aaa' }, project_id: 1
+    post :create, 'feeling': { 'at': Date.today + 1 , 'level': '2', 'description': 'aaa' }, project_id: 1
     assert_redirected_to controller: :niko_cale, action: :index, project_id: 'ecookbook'
   end
 
   def test_delete
     Setting[:plugin_redmine_niko_cale]['retention_period'] = '3'
-    f1 = Feeling.for(User.find(1), (3.months.ago.to_date + 1)).good!
-    f2 = Feeling.for(User.find(1), (3.months.ago.to_date + 1)).good!
-    f3 = Feeling.for(User.find(1), (3.months.ago.to_date - 1)).good!
-    f4 = Feeling.for(User.find(1)).good!
-    f5 = Feeling.for(User.find(1), (Date.today - 1)).good!
+    user = User.find(1)
+    f1 = Feeling.good.create(user: user, at: 3.months.ago.to_date + 1)
+    f2 = Feeling.good.create(user: user, at: 3.months.ago.to_date + 1) # duplicate and not created
+    f3 = Feeling.good.create(user: user, at: 3.months.ago.to_date - 1)
+    f4 = Feeling.good.create(user: user, at: Date.today)
+    f5 = Feeling.good.create(user: user, at: Date.today - 1)
 
     delete :destroy, id: f4.id
     assert_redirected_to controller: :feelings, action: :index, user_id: 1
     assert_equal Feeling.find(f1.id), f1
-    assert_equal Feeling.find(f2.id), f2
-    assert_raise(ActiveRecord::RecordNotFound) { Feeling.find(f3.id)}
+
+    assert_raise(ActiveRecord::RecordNotFound) { Feeling.find(f3.id) }
     assert f1.destroy
     assert f2.destroy
 
@@ -103,8 +105,9 @@ class FeelingsControllerTest < ActionController::TestCase
     xhr :put, :update, id: 0
     assert_response 404
 
-    xhr :put, :update, id: 1, 'feeling': { 'level': '3', 'description': 'aaa' }
-    assert_response 404
+    assert_raises ArgumentError do
+      xhr :put, :update, id: 1, 'feeling': { 'level': '3', 'description': 'aaa' }
+    end
 
     xhr :put, :update, id: 1, 'feeling': { 'level': '2', 'description': 'aaa' }
     assert_response :success
@@ -150,15 +153,15 @@ class FeelingsControllerTest < ActionController::TestCase
     assert_response 404
 
     post :edit_comment, id: 1, 'comment': { 'comments': '' }
-    assert_redirected_to controller: :feelings, action: :index, user_id: 3
+    assert_redirected_to controller: :feelings, action: :show, id: 1
     assert_equal Feeling.find(1).comments.size, 0
 
     post :edit_comment, id: 1, 'comment': { 'comments': 'aaa' }
-    assert_redirected_to controller: :feelings, action: :index, user_id: 3
+    assert_redirected_to controller: :feelings, action: :show, id: 1
     assert_equal Feeling.find(1).comments.size, 1
 
     post :edit_comment, id: 1, 'comment': { 'comments': 'aaa' }, project_id: 1
-    assert_redirected_to controller: :niko_cale, action: :index, project_id: 'ecookbook'
+    assert_redirected_to controller: :feelings, action: :show, project_id: 'ecookbook', id: 1
     assert_equal Feeling.find(1).comments.size, 2
   end
 
@@ -177,10 +180,10 @@ class FeelingsControllerTest < ActionController::TestCase
     assert_response 404
 
     delete :edit_comment, id: 1, comment_id: comment.id
-    assert_redirected_to controller: :feelings, action: :index, user_id: 3
+    assert_redirected_to controller: :feelings, action: :show, id: 1
 
     delete :edit_comment, id: 1, comment_id: comment2.id, project_id: 1
-    assert_redirected_to controller: :niko_cale, action: :index, project_id: 'ecookbook'
+    assert_redirected_to controller: :feelings, action: :show, id: 1, project_id: 'ecookbook'
   end
 
   def test_preview_comment
