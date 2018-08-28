@@ -87,7 +87,7 @@ module FeelingsHelper
 
   def description_of(feeling)
     description = index_for(feeling)
-    description << textilizable(feeling.description)
+    description << textilizable(feeling.description, headings: false)
     if feeling.has_comments?
       description << "(#{l(:label_x_comments, count: feeling.comments_count)})"
     end
