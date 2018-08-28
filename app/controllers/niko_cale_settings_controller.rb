@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class NikoCaleSettingsController < ApplicationController
-  unloadable
   def preview
     render :partial=>'settings/legend', :locals=>{:face_images=>params['face_images']}
   end

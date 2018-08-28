@@ -1,0 +1,4 @@
+var calendarContent = document.getElementById('niko_niko_calendar');
+var replaced = document.createElement('div');
+replaced.innerHTML = '<%=j render partial: 'show' %>';
+calendarContent.outerHTML = replaced.innerHTML;

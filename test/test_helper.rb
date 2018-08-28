@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # Load the normal Rails helper
-require File.expand_path(File.dirname(__FILE__) + '/../../../../test/test_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../../test/test_helper')
+ActiveRecord::FixtureSet.create_fixtures(File.dirname(__FILE__) + '/fixtures/',
+                                         %i[feelings])
 
-# Ensure that we are using the temporary fixture path
-Engines::Testing.set_fixture_path

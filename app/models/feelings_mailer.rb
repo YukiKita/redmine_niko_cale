@@ -20,18 +20,18 @@ class FeelingsMailer < Mailer
   # Example:
   #   feeling_commented(comment) => Mail::Message object
   def feeling_commented(comment)
-    @feeling = Feeling.find(comment.commented)
+    @feeling = Feeling.find(comment.commented.id)
     author = comment.author
     owner = @feeling.user
     @comment = comment
-    @feeling_url = url_for(:controller => 'feelings', :action => 'show', :id => @feeling)
-    redmine_headers 'author' => author, 'feeling_owner'=> owner
+    @feeling_url = url_for(controller: 'feelings', action: 'show', id: @feeling)
+    redmine_headers 'author' => author, 'feeling_owner' => owner
     message_id comment
     recipients = [owner.mail]
+    language = owner.language.blank? ? Setting.default_language : owner.language
+    subject = "Re: [#{Setting.app_title}]#{ll(language, :label_niko_cale_feeling)} (#{owner}@#{@feeling.at})"
     cc = [author.mail]
-    mail :to => recipients, :cc => cc,
-      :subject => "Re: [#{Setting.app_title}]#{ll(owner.language, :label_niko_cale_feeling)} (#{owner}@#{@feeling.at})"
+    mail to: recipients, cc: cc, subject: subject
   end
 end
-
 

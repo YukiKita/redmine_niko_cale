@@ -24,8 +24,8 @@ Redmine::Plugin.register :redmine_niko_cale do
   author 'Yuki Kita'
   description 'This is a plugin that shows the mood of project members and the overall project on a daily basis'
   url         'http://github.com/YukiKita/redmine_niko_cale'
-  version '1.1.2'
-  requires_redmine :version_or_higher => '2.1.0'
+  version '1.1.3-dev'
+  requires_redmine :version_or_higher => '3.2.0'
 
   project_module :niko_cale do
     permission :view_feelings, {:niko_cale => [:index], :feelings=>[:index, :show]}

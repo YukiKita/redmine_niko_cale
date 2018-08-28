@@ -21,8 +21,8 @@
   <thead>
   <tr>
     <th rowspan="3" nowrap width="10%">
-      <%= link_to (my_image 'previous.png', l(:label_previous), "", 'cursor: pointer;margin-right: 64px'), {:action=>"index", :date_scope=>(@dates.first - 1).to_s} %>
-      <%= link_to (my_image 'next.png', l(:label_next), "", 'cursor: pointer;'), {:action=>"index", :date_scope=>(@dates.last + @dates.size).to_s} %>
+      <%= link_to (my_image 'previous.png', l(:label_previous), "", 'cursor: pointer;margin-right: 64px'), {:action=>"index", :date_scope=>(@dates.first - 1).to_s, role_ids: @selected_role_ids} %>
+      <%= link_to (my_image 'next.png', l(:label_next), "", 'cursor: pointer;'), {:action=>"index", :date_scope=>(@dates.last + @dates.size).to_s, role_ids: @selected_role_ids} %>
     </th>
     <% if @dates.first.year == @dates.last.year %>
       <th colspan=<%= "#{@dates.size}" %>><%= @dates.first.year %></th>
@@ -45,11 +45,11 @@
         <%= link_to_date date, @project %>
         <% versions = @versions.select {|version| version.effective_date == date} %>
         <% versions.each do |version| %>
-          <span class="tooltip" style="position: absolute;top:">
-            <%= link_to version_image, {:controller=>:versions, :action=>:show, :id=>version.id} %>       
-            <span class="tip"><%= version.name %><span>
+          <span class="tooltip">
+            <%= link_to version_image, {:controller=>:versions, :action=>:show, :id=>version.id} %>
+            <span class="tip"><%= version.name %></span>
           </span>
-      <% end %>
+        <% end %>
       </th>
     <% end %>
   </tr>
@@ -57,21 +57,21 @@
   <tfoot>
   <% unless @morales.empty? %>
   <tr class=morale feeling>
-    <td class=user><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %></td> 
+    <td class=user><%= link_to_feeling_list(:project=>@project, :title=>@project.name) %></td>
     <% @dates.each do |date| %>
       <% morale = @morales.find {|m| m.at == date} %>
-      <td class=feeling><%= image_for(morale) %></td>
+      <td class=feeling><%= image_for(morale)  %></td>
     <% end %>
   </tr>
   <% end %>
   </tfoot>
   <tbody>
   <% @users.each do |user| %>
-  <tr class=<%= cycle 'odd', 'even' %>> 
+  <tr class=<%= cycle 'odd', 'even' %>>
     <td class=user>
        <p><%= avatar(user, :size => "32") %><%= link_to_user(user) %></p>
        <p><%= link_to_issues_list @issues_count_per_user[user], @project.identifier, user.id %></p>
-    </td> 
+    </td>
     <% @dates.each do |date| %>
       <% feeling = @feelings_per_user[user].find {|feeling| feeling.at == date} %>
       <td class=feeling>
@@ -82,7 +82,7 @@
         <% end %>
       </td>
     <% end %>
-  </tr> 
+  </tr>
   <% end; reset_cycle %>
   </tbody>
 </table>
