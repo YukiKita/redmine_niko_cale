@@ -37,12 +37,12 @@ class NikoCaleController < ApplicationController
                     .order(:effective_date)
   end
 
-  def issues_count_per_user users, project
+  def issues_count_per_user(users, project)
     open_issue_statuses = IssueStatus.where(is_closed: false).pluck(:id)
     users.inject({}) do |result, user|
       issues = Issue.where(assigned_to_id: User.find(user.id))
-                   .where(status_id: open_issue_statuses)
-                   .where(project_id: project.id).size
+                    .where(status_id: open_issue_statuses)
+                    .where(project_id: project.id).size
       result[user] = issues
       result
     end
@@ -60,16 +60,16 @@ class NikoCaleController < ApplicationController
     Role.find_all_givable.select{|role| role.has_permission?(:edit_feelings)}
   end
 
-  def find_all_users projects, selected_role_ids
-    members = projects.inject([]) {|result, project| result + project.members}
+  def find_all_users(projects, selected_role_ids)
+    members = projects.inject([]) { |result, project| result + project.members }
     users = members.inject([]) do |result, member|
-      if (member.roles.map{|role| role.id} & selected_role_ids).empty?
+      if (member.roles.map(&:id) & selected_role_ids).empty?
         result
       else
         result << member.user
       end
     end.uniq
-    current_user =  User.current
+    current_user = User.current
     if users.include? current_user
       users.delete(current_user)
       users.unshift(current_user)
@@ -94,8 +94,8 @@ class NikoCaleController < ApplicationController
   end
 
   def get_selected_role_ids
-    return find_givable_roles.map{|role| role.id} if params[:role_ids].blank?
-    (params[:role_ids] || []).map {|role_id| role_id.to_i}
+    return find_givable_roles.map(&:id) if params[:role_ids].blank?
+    (params[:role_ids] || []).map(&:to_i)
   end
 
   def with_subprojects?
@@ -103,7 +103,7 @@ class NikoCaleController < ApplicationController
     with_subproject && (with_subproject == '1')
   end
 
-  def get_projects project, with_subprojects
+  def get_projects(project, with_subprojects)
     with_subprojects ? project.self_and_descendants : [project]
   end
 
