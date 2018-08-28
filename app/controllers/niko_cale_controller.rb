@@ -40,7 +40,7 @@ class NikoCaleController < ApplicationController
   def issues_count_per_user users, project
     open_issue_statuses = IssueStatus.where(is_closed: false).pluck(:id)
     users.inject({}) do |result, user|
-      issues = Issue.where(assigned_to_id: User.find(user))
+      issues = Issue.where(assigned_to_id: User.find(user.id))
                    .where(status_id: open_issue_statuses)
                    .where(project_id: project.id).size
       result[user] = issues
