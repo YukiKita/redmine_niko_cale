@@ -22,11 +22,10 @@
 <% project_id = @project && @project.identifier %>
 <% if @feeling.new_record? %>
   <% option = {:url=>{:action=>:create, :project_id=>project_id}, :html=>{:method=>:post, :id=>:update_feeling}} %>
-  <% @feeling.good %>
 <% else %>
   <% option = {:url=>{:action=>:update, :project_id=>project_id}, :html=>{:method=>:put, :id=>:update_feeling}} %>
 <% end %>
-<% form_for(:feeling, option) do |f| %>
+<%= form_for(:feeling, option) do |f| %>
    <%= f.hidden_field :at %>
    <table border="0">
      <tr>
@@ -36,7 +35,7 @@
      </tr>
      <tr>
        <% 2.downto(0) do |level| %>
-         <td align="center"><%= f.radio_button(:level, level, {:onclick=>'document.forms.update_feeling.feeling_description.focus()'}) %></td> 
+         <td align="center"><%= f.radio_button(:level, level, {:onclick=>'document.forms.update_feeling.feeling_description.focus()'}) %></td>
        <% end %>
      </tr>
   </table>
@@ -44,9 +43,8 @@
   <p><%= f.text_area :description, :cols=>56, :rows=>3 %></p>
   <%= wikitoolbar_for 'feeling_description' %>
   <%= submit_tag l(:button_save), :class => 'button-small', :name => nil %>
-  <% option = @feeling.new_record? ? {:url => {:action=>:create}, :method=>:post} : {:url => feeling_path(@feeling)} %>
-  <% option.merge! :update => :preview, :with => "Form.serialize('update_feeling')" %>
-  <%= link_to_remote l(:label_preview), option %>
+  <% option = @feeling.new_record? ? {:action=>:create}  : feeling_path(@feeling) %>
+  <%= preview_link(option, 'update_feeling' ) %></p>
 <% end %>
 <%= javascript_tag 'document.forms.update_feeling.feeling_description.focus()' %>
 <div id="preview"></div>

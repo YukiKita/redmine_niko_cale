@@ -33,7 +33,7 @@
 <% if editable?(feeling) && !preview %>
    <p><%= link_to l(:button_update), edit_feeling_path(:id=>feeling, :project_id=>(@project && @project.identifier)), {:class=>'icon icon-edit'}  %>
    <%= link_to l(:button_delete), feeling_path(:id=>feeling, :project_id=>(@project ? @project.identifier : nil)),
-       {:method=>:delete, :confirm=>l(:text_are_you_sure), :class=>'icon icon-del'}  %></p>
+     {:method=>:delete, :data => {:confirm=>l(:text_are_you_sure)}, :class=>'icon icon-del'}  %></p>
 <% end %>
 
 <% if feeling.has_comments? %>
@@ -43,7 +43,7 @@
     <div class="contextual">
       <% if current_user_allowed_to?(:feelings, :edit_comment) && ((User.current == comment.author) || (User.current == feeling.user)) %>
         <%= link_to l(:button_delete), {:action => 'edit_comment', :id => feeling.id, :comment_id => comment.id, :project_id=>(@project && @project.identifier)},
-                   {:confirm => l(:text_are_you_sure), :method => :delete, :title => l(:button_delete), :class=>'icon icon-del'} %>
+          {:data => {:confirm => l(:text_are_you_sure)}, :method => :delete, :title => l(:button_delete), :class=>'icon icon-del'} %>
      <% end %>
      </div>
      <p class="author"><%= authoring comment.created_on, comment.author %></p>

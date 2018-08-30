@@ -4,21 +4,21 @@ class UserHooks < Redmine::Hook::ViewListener
     user = context[:user]
     feeling = Feeling.latest(user)
     if feeling
-      image = feeling.good? ? face_image('good') : (feeling.bad? ? face_image('bad') : face_image('ordinary'))
-      header_and_image = <<EOS
-<h3>#{l(:label_niko_cale_feeling)}(#{feeling.at})</h3>
-<ul>#{link_to(image, :controller => "feelings", :action => "show", :id => feeling)}</ul>
+      image = face_image(feeling.level)
+      header_and_image = <<~EOS
+  <h3>#{l(:label_niko_cale_feeling)}(#{feeling.at})</h3>
+  <ul>#{link_to(image, :controller => "feelings", :action => "show", :id => feeling)}</ul>
 EOS
 
       if feeling.has_description?
-        header_and_image + <<EOS
+        description = <<EOS
 <div class="wiki">
 #{textilizable(feeling.description)}
 </div>
 EOS
-      else
-        header_and_image
+        header_and_image += description
       end
+      header_and_image.html_safe
     end
   end
 end
